@@ -25,3 +25,12 @@ export const teams = [
   { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
   { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
 ]
+
+
+export const tabs = [
+  { name: 'Applied', href: '#', current: false },
+  { name: 'Phone Screening', href: '#', current: false },
+  { name: 'Interview', href: '#', current: true },
+  { name: 'Offer', href: '#', current: false },
+  { name: 'Hired', href: '#', current: false },
+]
