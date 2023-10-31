@@ -2,14 +2,11 @@
 
 import { Fragment } from "react"
 import { navigation, teams } from "@/constants/nav-constants"
+import { classNames } from "@/constants/tailwind-constants"
 import { Dialog, Transition } from "@headlessui/react"
 import { Cog6ToothIcon, XMarkIcon } from "@heroicons/react/24/outline"
 
 import { useStateStore } from "@/lib/stores/state"
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ")
-}
 
 export function MobileDrawer() {
   const stateStore = useStateStore()

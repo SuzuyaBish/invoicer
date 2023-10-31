@@ -1,9 +1,6 @@
 import { navigation, teams } from "@/constants/nav-constants"
+import { classNames } from "@/constants/tailwind-constants"
 import { Cog6ToothIcon } from "@heroicons/react/24/outline"
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ")
-}
 
 export default function DesktopDrawer() {
   return (
