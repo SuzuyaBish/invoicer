@@ -9,7 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
+    "@radix-ui/react-tooltip": "^1.0.7",
+    "@supabase/auth-helpers-nextjs": "^0.8.4",
+    "@supabase/supabase-js": "^2.38.4",
+    "@tailwindcss/forms": "^0.5.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "eslint-config-prettier": "^9.0.0",
@@ -17,11 +26,13 @@
     "eslint-plugin-tailwindcss": "^3.13.0",
     "lucide-react": "^0.291.0",
     "next": "14.0.1",
+    "next-themes": "^0.2.1",
     "prettier": "^3.0.3",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.0.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
