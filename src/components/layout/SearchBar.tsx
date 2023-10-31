@@ -1,6 +1,7 @@
-'use client'
+"use client"
 
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
+import { userNavigation } from "@/constants/nav-constants"
 import { Menu, Transition } from "@headlessui/react"
 import {
   Bars3Icon,
@@ -8,12 +9,8 @@ import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline"
-import { useStateStore } from "@/lib/stores/state"
 
-const userNavigation = [
-  { name: "Your profile", href: "#" },
-  { name: "Sign out", href: "#" },
-]
+import { useStateStore } from "@/lib/stores/state"
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
