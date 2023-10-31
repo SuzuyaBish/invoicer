@@ -1,5 +1,23 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Inspo
+
+### Dashboard
+
+<https://dribbble.com/shots/18535951-Dashboard-Design-for-Invooce>
+
+### Invoice List
+
+<https://dribbble.com/shots/20540402-Invoices-Accounting-Web-App>
+
+### Invoice creator
+
+<https://dribbble.com/shots/20540456-Invoice-Creator-Accounting-Web-App>
+
+### New workspace
+
+<https://dribbble.com/shots/20743331-Create-new-workspace-modal-Accounting-Web-App>
+
 ## Getting Started
 
 First, run the development server:
