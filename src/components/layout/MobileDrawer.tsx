@@ -12,6 +12,7 @@ import {
   UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline"
+import { useStateStore } from "@/lib/stores/state"
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
@@ -32,13 +33,13 @@ function classNames(...classes: string[]) {
 }
 
 export function MobileDrawer() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const stateStore = useStateStore()
   return (
-    <Transition.Root show={sidebarOpen} as={Fragment}>
+    <Transition.Root show={stateStore.searchBarOpen} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-50 lg:hidden"
-        onClose={setSidebarOpen}
+        onClose={stateStore.setSearchBarClosed}
       >
         <Transition.Child
           as={Fragment}
@@ -76,7 +77,7 @@ export function MobileDrawer() {
                   <button
                     type="button"
                     className="-m-2.5 p-2.5"
-                    onClick={() => setSidebarOpen(false)}
+                    onClick={() => stateStore.setSearchBarClosed()}
                   >
                     <span className="sr-only">Close sidebar</span>
                     <XMarkIcon
