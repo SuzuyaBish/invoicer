@@ -1,4 +1,6 @@
-import { FC, Fragment } from "react"
+"use client"
+
+import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import {
   CalendarIcon,
@@ -29,15 +31,8 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }
 
-interface MobileDrawerProps {
-  sidebarOpen: boolean
-  setSidebarOpen: (value: boolean) => void
-}
-
-const MobileDrawer: FC<MobileDrawerProps> = ({
-  setSidebarOpen,
-  sidebarOpen,
-}) => {
+export function MobileDrawer() {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -172,5 +167,3 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
     </Transition.Root>
   )
 }
-
-export default MobileDrawer

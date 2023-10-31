@@ -1,4 +1,6 @@
-import { FC, Fragment } from "react"
+'use client'
+
+import { Fragment, useState } from "react"
 import { Menu, Transition } from "@headlessui/react"
 import {
   Bars3Icon,
@@ -16,12 +18,8 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }
 
-interface SearchBarProps {
-  sidebarOpen: boolean
-  setSidebarOpen: (value: boolean) => void
-}
-
-const SearchBar: FC<SearchBarProps> = ({ sidebarOpen, setSidebarOpen }) => {
+export function SearchBar() {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
       <button
@@ -123,5 +121,3 @@ const SearchBar: FC<SearchBarProps> = ({ sidebarOpen, setSidebarOpen }) => {
     </div>
   )
 }
-
-export default SearchBar
