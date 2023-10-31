@@ -1,151 +1,335 @@
 import { classNames } from "@/constants/tailwind-constants"
 
-const plans = [
+const people = [
   {
-    id: 1,
-    name: "Hobby",
-    memory: "4 GB RAM",
-    cpu: "4 CPUs",
-    storage: "128 GB SSD disk",
-    price: "$40",
-    isCurrent: false,
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
   },
   {
-    id: 2,
-    name: "Startup",
-    memory: "8 GB RAM",
-    cpu: "6 CPUs",
-    storage: "256 GB SSD disk",
-    price: "$80",
-    isCurrent: true,
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
   },
-  // More plans...
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
+  {
+    name: "Lindsay Walton",
+    title: "Front-end Developer",
+    email: "lindsay.walton@example.com",
+    role: "Member",
+  },
 ]
 
 export default function InvoiceTable() {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
-      <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">
-        <table className="min-w-full divide-y divide-gray-300">
-          <thead>
-            <tr>
-              <th
-                scope="col"
-                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-              >
-                Plan
-              </th>
-              <th
-                scope="col"
-                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-              >
-                Memory
-              </th>
-              <th
-                scope="col"
-                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-              >
-                CPU
-              </th>
-              <th
-                scope="col"
-                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-              >
-                Storage
-              </th>
-              <th
-                scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-              >
-                Price
-              </th>
-              <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                <span className="sr-only">Select</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {plans.map((plan, planIdx) => (
-              <tr key={plan.id}>
-                <td
-                  className={classNames(
-                    planIdx === 0 ? "" : "border-t border-transparent",
-                    "relative py-4 pl-4 pr-3 text-sm sm:pl-6"
-                  )}
-                >
-                  <div className="font-medium text-gray-900">
-                    {plan.name}
-                    {plan.isCurrent ? (
-                      <span className="ml-1 text-indigo-600">
-                        (Current Plan)
-                      </span>
-                    ) : null}
-                  </div>
-                  <div className="mt-1 flex flex-col text-gray-500 sm:block lg:hidden">
-                    <span>
-                      {plan.memory} / {plan.cpu}
-                    </span>
-                    <span className="hidden sm:inline">·</span>
-                    <span>{plan.storage}</span>
-                  </div>
-                  {planIdx !== 0 ? (
-                    <div className="absolute -top-px left-6 right-0 h-px bg-gray-200" />
-                  ) : null}
-                </td>
-                <td
-                  className={classNames(
-                    planIdx === 0 ? "" : "border-t border-gray-200",
-                    "hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"
-                  )}
-                >
-                  {plan.memory}
-                </td>
-                <td
-                  className={classNames(
-                    planIdx === 0 ? "" : "border-t border-gray-200",
-                    "hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"
-                  )}
-                >
-                  {plan.cpu}
-                </td>
-                <td
-                  className={classNames(
-                    planIdx === 0 ? "" : "border-t border-gray-200",
-                    "hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"
-                  )}
-                >
-                  {plan.storage}
-                </td>
-                <td
-                  className={classNames(
-                    planIdx === 0 ? "" : "border-t border-gray-200",
-                    "px-3 py-3.5 text-sm text-gray-500"
-                  )}
-                >
-                  <div className="sm:hidden">{plan.price}/mo</div>
-                  <div className="hidden sm:block">{plan.price}/month</div>
-                </td>
-                <td
-                  className={classNames(
-                    planIdx === 0 ? "" : "border-t border-transparent",
-                    "relative py-3.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
-                  )}
-                >
-                  <button
-                    type="button"
-                    className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"
-                    disabled={plan.isCurrent}
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle">
+            <table className="min-w-full border-separate border-spacing-0 rounded-lg border">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    className="sticky top-16 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur sm:pl-6 lg:pl-8"
                   >
-                    Select<span className="sr-only">, {plan.name}</span>
-                  </button>
-                  {planIdx !== 0 ? (
-                    <div className="absolute -top-px left-0 right-6 h-px bg-gray-200" />
-                  ) : null}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="sticky top-16 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur sm:table-cell"
+                  >
+                    Title
+                  </th>
+                  <th
+                    scope="col"
+                    className="sticky top-16 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur lg:table-cell"
+                  >
+                    Email
+                  </th>
+                  <th
+                    scope="col"
+                    className="sticky top-16 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur"
+                  >
+                    Role
+                  </th>
+                  <th
+                    scope="col"
+                    className="sticky top-16 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-3 pr-4 backdrop-blur sm:pr-6 lg:pr-8"
+                  >
+                    <span className="sr-only">Edit</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {people.map((person, personIdx) => (
+                  <tr key={person.email}>
+                    <td
+                      className={classNames(
+                        personIdx !== people.length - 1
+                          ? "border-b border-gray-200"
+                          : "",
+                        "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
+                      )}
+                    >
+                      {person.name}
+                    </td>
+                    <td
+                      className={classNames(
+                        personIdx !== people.length - 1
+                          ? "border-b border-gray-200"
+                          : "",
+                        "whitespace-nowrap hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"
+                      )}
+                    >
+                      {person.title}
+                    </td>
+                    <td
+                      className={classNames(
+                        personIdx !== people.length - 1
+                          ? "border-b border-gray-200"
+                          : "",
+                        "whitespace-nowrap hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"
+                      )}
+                    >
+                      {person.email}
+                    </td>
+                    <td
+                      className={classNames(
+                        personIdx !== people.length - 1
+                          ? "border-b border-gray-200"
+                          : "",
+                        "whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                      )}
+                    >
+                      {person.role}
+                    </td>
+                    <td
+                      className={classNames(
+                        personIdx !== people.length - 1
+                          ? "border-b border-gray-200"
+                          : "",
+                        "relative whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8"
+                      )}
+                    >
+                      <a
+                        href="#"
+                        className="text-indigo-600 hover:text-indigo-900"
+                      >
+                        Edit<span className="sr-only">, {person.name}</span>
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   )
