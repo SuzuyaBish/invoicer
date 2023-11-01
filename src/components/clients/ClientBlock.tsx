@@ -1,25 +1,23 @@
+import { FC, Fragment } from "react"
 import { statuses } from "@/constants/constants"
 import { classNames } from "@/constants/tailwind-constants"
-import { Client } from "@/lib/types"
 import { Menu, Transition } from "@headlessui/react"
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline"
-import { FC, Fragment } from "react"
+
+import { Client } from "@/lib/types"
 
 interface ClientBlockProps extends Client {}
 
 const ClientBlock: FC<ClientBlockProps> = (props) => {
   return (
-    <li
-      key={props.id}
-      className="overflow-hidden rounded-xl border border-gray-200"
-    >
-      <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
+    <li key={props.id} className="overflow-hidden rounded-xl border">
+      <div className="bg-muted flex items-center gap-x-4 border-b border-gray-900/5 p-6">
         <img
           src={props.imageUrl}
           alt={props.name}
-          className="h-12 w-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"
+          className="bg-muted h-12 w-12 flex-none rounded-lg object-cover ring-1 ring-gray-900/10"
         />
-        <div className="text-sm font-medium leading-6 text-gray-900">
+        <div className="text-foreground text-sm font-medium leading-6">
           {props.name}
         </div>
         <Menu as="div" className="relative ml-auto">
@@ -69,19 +67,19 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
           </Transition>
         </Menu>
       </div>
-      <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
+      <dl className="divide -my-3 divide-y px-6 py-4 text-sm leading-6">
         <div className="flex justify-between gap-x-4 py-3">
-          <dt className="text-gray-500">Last invoice</dt>
-          <dd className="text-gray-700">
+          <dt className="text-foreground">Last invoice</dt>
+          <dd className="text-muted-foreground">
             <time dateTime={props.lastInvoice.dateTime}>
               {props.lastInvoice.date}
             </time>
           </dd>
         </div>
         <div className="flex justify-between gap-x-4 py-3">
-          <dt className="text-gray-500">Amount</dt>
+          <dt className="text-foreground">Amount</dt>
           <dd className="flex items-start gap-x-2">
-            <div className="font-medium text-gray-900">
+            <div className="text-muted-foreground font-medium">
               {props.lastInvoice.amount}
             </div>
             <div

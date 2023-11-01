@@ -66,7 +66,7 @@ export function MobileDrawer() {
                 </div>
               </Transition.Child>
               {/* Sidebar component, swap this element with another sidebar if you like */}
-              <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
+              <div className="bg-muted flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4 ring-1 ring-white/10">
                 <div className="flex h-16 shrink-0 items-center">
                   <img
                     className="h-8 w-auto"
@@ -84,8 +84,8 @@ export function MobileDrawer() {
                               href={item.href}
                               className={classNames(
                                 pathname.endsWith(item.href)
-                                  ? "bg-gray-800 text-white"
-                                  : "text-gray-400 hover:text-white hover:bg-gray-800",
+                                  ? "bg-primary text-primary-foreground"
+                                  : "text-muted-foreground hover:text-primary-foreground hover:bg-primary",
                                 "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                               )}
                             >
@@ -100,7 +100,7 @@ export function MobileDrawer() {
                       </ul>
                     </li>
                     <li>
-                      <div className="text-xs font-semibold leading-6 text-gray-400">
+                      <div className="text-muted-foreground text-xs font-semibold leading-6">
                         Your teams
                       </div>
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
@@ -110,12 +110,12 @@ export function MobileDrawer() {
                               href={team.href}
                               className={classNames(
                                 team.current
-                                  ? "bg-gray-800 text-white"
-                                  : "text-gray-400 hover:text-white hover:bg-gray-800",
+                                  ? "bg-primary text-primary-foreground"
+                                  : "text-muted-foreground hover:text-primary-foreground hover:bg-primary",
                                 "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                               )}
                             >
-                              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                              <span className="bg-primary text-primary-foreground flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium group-hover:text-white">
                                 {team.initial}
                               </span>
                               <span className="truncate">{team.name}</span>
@@ -127,7 +127,7 @@ export function MobileDrawer() {
                     <li className="mt-auto">
                       <a
                         href="/account/settings"
-                        className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                        className="text-muted-foreground hover:bg-primary hover:text-primary-foreground group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
                       >
                         <Cog6ToothIcon
                           className="h-6 w-6 shrink-0"

@@ -16,7 +16,7 @@ export default function UserMenuDropdown() {
         />
         <span className="hidden lg:flex lg:items-center">
           <span
-            className="ml-4 text-sm font-semibold leading-6 text-gray-900"
+            className="text-foreground ml-4 text-sm font-semibold leading-6"
             aria-hidden="true"
           >
             Tom Cook

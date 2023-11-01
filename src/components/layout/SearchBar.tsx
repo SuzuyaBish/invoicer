@@ -8,15 +8,17 @@ import {
 
 import { useStateStore } from "@/lib/stores/state"
 
+import { ModeToggle } from "../ModeToggle"
+import { Input } from "../ui/input"
 import UserMenuDropdown from "./UserMenuDropdown"
 
 export function SearchBar() {
   const stateStore = useStateStore()
   return (
-    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+    <div className="bg-background sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
       <button
         type="button"
-        className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
+        className="text-foreground -m-2.5 p-2.5 lg:hidden"
         onClick={() => stateStore.setSearchBarOpen()}
       >
         <span className="sr-only">Open sidebar</span>
@@ -31,12 +33,12 @@ export function SearchBar() {
             Search
           </label>
           <MagnifyingGlassIcon
-            className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400"
+            className="text-muted-foreground pointer-events-none absolute inset-y-0 left-0 h-full w-5"
             aria-hidden="true"
           />
-          <input
+          <Input
             id="search-field"
-            className="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+            className="text-foreground placeholder:text-muted-foreground block h-full w-full border-0 py-0 pl-8 pr-0 focus:ring-0 sm:text-sm"
             placeholder="Search..."
             type="search"
             name="search"
@@ -45,14 +47,15 @@ export function SearchBar() {
         <div className="flex items-center gap-x-4 lg:gap-x-6">
           <button
             type="button"
-            className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+            className="text-muted-foreground hover:text-foreground -m-2.5 p-2.5"
           >
             <span className="sr-only">View notifications</span>
             <BellIcon className="h-6 w-6" aria-hidden="true" />
           </button>
+          <ModeToggle />
 
           <div
-            className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
+            className="lg:bg-muted hidden lg:block lg:h-6 lg:w-px"
             aria-hidden="true"
           />
 

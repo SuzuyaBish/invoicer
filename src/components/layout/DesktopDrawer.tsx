@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
+import { usePathname } from "next/navigation"
 import { navigation, teams } from "@/constants/nav-constants"
 import { classNames } from "@/constants/tailwind-constants"
 import { Cog6ToothIcon } from "@heroicons/react/24/outline"
-import { usePathname } from "next/navigation"
 
 export default function DesktopDrawer() {
   const pathname = usePathname()
   return (
     <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-      <div className="bg-primary flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4">
+      <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r px-6 pb-4">
         <div className="flex h-16 shrink-0 items-center">
           <img
             className="h-8 w-auto"
@@ -27,8 +27,8 @@ export default function DesktopDrawer() {
                       href={item.href}
                       className={classNames(
                         pathname.endsWith(item.href)
-                          ? "bg-gray-800 text-primary-foreground"
-                          : "text-gray-400 hover:text-white hover:bg-gray-800",
+                          ? "bg-muted text-foreground"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted",
                         "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                       )}
                     >
@@ -43,7 +43,7 @@ export default function DesktopDrawer() {
               </ul>
             </li>
             <li>
-              <div className="text-xs font-semibold leading-6 text-gray-400">
+              <div className="text-muted-foreground text-xs font-semibold leading-6">
                 Your teams
               </div>
               <ul role="list" className="-mx-2 mt-2 space-y-1">
@@ -53,12 +53,12 @@ export default function DesktopDrawer() {
                       href={team.href}
                       className={classNames(
                         team.current
-                          ? "bg-gray-800 text-white"
-                          : "text-gray-400 hover:text-white hover:bg-gray-800",
+                          ? "bg-muted text-primary-foreground"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted",
                         "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                       )}
                     >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                      <span className="bg-muted text-muted-foreground group-hover:text-foreground flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium">
                         {team.initial}
                       </span>
                       <span className="truncate">{team.name}</span>
@@ -70,7 +70,7 @@ export default function DesktopDrawer() {
             <li className="mt-auto">
               <a
                 href="/account/settings"
-                className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                className="text-muted-foreground hover:bg-muted hover:text-muted-foreground group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
               >
                 <Cog6ToothIcon
                   className="h-6 w-6 shrink-0"

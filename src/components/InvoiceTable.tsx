@@ -236,31 +236,31 @@ export default function InvoiceTable() {
                 <tr>
                   <th
                     scope="col"
-                    className="sticky top-16 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur sm:pl-6 lg:pl-8"
+                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
                   >
                     Name
                   </th>
                   <th
                     scope="col"
-                    className="sticky top-16 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur sm:table-cell"
+                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
                   >
                     Title
                   </th>
                   <th
                     scope="col"
-                    className="sticky top-16 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur lg:table-cell"
+                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
                   >
                     Email
                   </th>
                   <th
                     scope="col"
-                    className="sticky top-16 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur"
+                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
                   >
                     Role
                   </th>
                   <th
                     scope="col"
-                    className="sticky top-16 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-3 pr-4 backdrop-blur sm:pr-6 lg:pr-8"
+                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
                   >
                     <span className="sr-only">Edit</span>
                   </th>
@@ -271,56 +271,43 @@ export default function InvoiceTable() {
                   <tr key={person.email}>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1
-                          ? "border-b border-gray-200"
-                          : "",
-                        "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
+                        personIdx !== people.length - 1 ? "border-b" : "",
+                        "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-foreground sm:pl-6 lg:pl-8"
                       )}
                     >
                       {person.name}
                     </td>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1
-                          ? "border-b border-gray-200"
-                          : "",
-                        "whitespace-nowrap hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"
+                        personIdx !== people.length - 1 ? "border-b" : "",
+                        "whitespace-nowrap hidden px-3 py-4 text-sm text-foreground sm:table-cell"
                       )}
                     >
                       {person.title}
                     </td>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1
-                          ? "border-b border-gray-200"
-                          : "",
-                        "whitespace-nowrap hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"
+                        personIdx !== people.length - 1 ? "border-b" : "",
+                        "whitespace-nowrap hidden px-3 py-4 text-sm text-foreground lg:table-cell"
                       )}
                     >
                       {person.email}
                     </td>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1
-                          ? "border-b border-gray-200"
-                          : "",
-                        "whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        personIdx !== people.length - 1 ? "border-b" : "",
+                        "whitespace-nowrap px-3 py-4 text-sm text-foreground"
                       )}
                     >
                       {person.role}
                     </td>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1
-                          ? "border-b border-gray-200"
-                          : "",
+                        personIdx !== people.length - 1 ? "border-b" : "",
                         "relative whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8"
                       )}
                     >
-                      <a
-                        href="#"
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
+                      <a href="#" className="text-primary">
                         Edit<span className="sr-only">, {person.name}</span>
                       </a>
                     </td>

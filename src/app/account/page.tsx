@@ -11,6 +11,7 @@ import {
 } from "@heroicons/react/20/solid"
 
 import ClientBlock from "@/components/clients/ClientBlock"
+import { Button } from "@/components/ui/button"
 
 const secondaryNavigation = [
   { name: "Last 7 days", href: "#", current: true },
@@ -108,32 +109,33 @@ export default function Account() {
         {/* Secondary navigation */}
         <header className="pb-4 sm:pb-6">
           <div className="mx-auto flex flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
-            <h1 className="text-base font-semibold leading-7 text-gray-900">
+            <h1 className="text-foreground text-base font-semibold leading-7">
               Cashflow
             </h1>
-            <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
+            <div className="sm:border-muted order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:pl-6 sm:leading-7">
               {secondaryNavigation.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className={item.current ? "text-indigo-600" : "text-gray-700"}
+                  className={
+                    item.current ? "text-primary" : "text-muted-foreground"
+                  }
                 >
                   {item.name}
                 </a>
               ))}
             </div>
-            <a
-              href="#"
-              className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            <Button
+              className="ml-auto"
             >
               <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
               New invoice
-            </a>
+            </Button>
           </div>
         </header>
 
         {/* Stats */}
-        <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
+        <div className="border-b lg:border-t">
           <dl className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:px-2 xl:px-0">
             {stats.map((stat, statIdx) => (
               <div
@@ -144,23 +146,23 @@ export default function Account() {
                     : statIdx === 2
                     ? "lg:border-l"
                     : "",
-                  "flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8"
+                  "flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8"
                 )}
               >
-                <dt className="text-sm font-medium leading-6 text-gray-500">
+                <dt className="text-muted-foreground text-sm font-medium leading-6">
                   {stat.name}
                 </dt>
                 <dd
                   className={classNames(
                     stat.changeType === "negative"
                       ? "text-rose-600"
-                      : "text-gray-700",
+                      : "text-muted-foreground",
                     "text-xs font-medium"
                   )}
                 >
                   {stat.change}
                 </dd>
-                <dd className="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">
+                <dd className="text-foreground w-full flex-none text-3xl font-medium leading-10 tracking-tight">
                   {stat.value}
                 </dd>
               </div>
@@ -173,11 +175,11 @@ export default function Account() {
         {/* Recent activity table */}
         <div>
           <div className="mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">
+            <h2 className="text-muted-foreground mx-auto max-w-2xl text-base font-semibold leading-6 lg:mx-0 lg:max-w-none">
               Recent activity
             </h2>
           </div>
-          <div className="mt-6 overflow-hidden border-t border-gray-100">
+          <div className="mt-6 overflow-hidden border-t">
             <div className="mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
                 <table className="w-full text-left">
@@ -191,15 +193,15 @@ export default function Account() {
                   <tbody>
                     {days.map((day) => (
                       <Fragment key={day.dateTime}>
-                        <tr className="text-sm leading-6 text-gray-900">
+                        <tr className="text-muted-foreground text-sm leading-6">
                           <th
                             scope="colgroup"
                             colSpan={3}
                             className="relative isolate py-2 font-semibold"
                           >
                             <time dateTime={day.dateTime}>{day.date}</time>
-                            <div className="absolute inset-y-0 right-full -z-10 w-screen border-b border-gray-200 bg-gray-50" />
-                            <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
+                            <div className="bg-muted absolute inset-y-0 right-full -z-10 w-screen border-b" />
+                            <div className="bg-muted absolute inset-y-0 left-0 -z-10 w-screen border-b" />
                           </th>
                         </tr>
                         {day.transactions.map((transaction) => (
@@ -207,12 +209,12 @@ export default function Account() {
                             <td className="relative py-5 pr-6">
                               <div className="flex gap-x-6">
                                 <transaction.icon
-                                  className="hidden h-6 w-5 flex-none text-gray-400 sm:block"
+                                  className="text-muted-foreground hidden h-6 w-5 flex-none sm:block"
                                   aria-hidden="true"
                                 />
                                 <div className="flex-auto">
                                   <div className="flex items-start gap-x-3">
-                                    <div className="text-sm font-medium leading-6 text-gray-900">
+                                    <div className="text-foreground text-sm font-medium leading-6">
                                       {transaction.amount}
                                     </div>
                                     <div
@@ -225,20 +227,20 @@ export default function Account() {
                                     </div>
                                   </div>
                                   {transaction.tax ? (
-                                    <div className="mt-1 text-xs leading-5 text-gray-500">
+                                    <div className="text-muted-foreground mt-1 text-xs leading-5">
                                       {transaction.tax} tax
                                     </div>
                                   ) : null}
                                 </div>
                               </div>
-                              <div className="absolute bottom-0 right-full h-px w-screen bg-gray-100" />
-                              <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
+                              <div className="bg-muted absolute bottom-0 right-full h-px w-screen" />
+                              <div className="bg-muted absolute bottom-0 left-0 h-px w-screen" />
                             </td>
                             <td className="hidden py-5 pr-6 sm:table-cell">
-                              <div className="text-sm leading-6 text-gray-900">
+                              <div className="text-foreground text-sm leading-6">
                                 {transaction.client}
                               </div>
-                              <div className="mt-1 text-xs leading-5 text-gray-500">
+                              <div className="text-muted-foreground mt-1 text-xs leading-5">
                                 {transaction.description}
                               </div>
                             </td>
@@ -246,7 +248,7 @@ export default function Account() {
                               <div className="flex justify-end">
                                 <a
                                   href={transaction.href}
-                                  className="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
+                                  className="text-primary hover:text-primary text-sm font-medium leading-6"
                                 >
                                   View
                                   <span className="hidden sm:inline">
@@ -259,9 +261,9 @@ export default function Account() {
                                   </span>
                                 </a>
                               </div>
-                              <div className="mt-1 text-xs leading-5 text-gray-500">
+                              <div className="text-foreground mt-1 text-xs leading-5">
                                 Invoice{" "}
-                                <span className="text-gray-900">
+                                <span className="text-muted-foreground">
                                   #{transaction.invoiceNumber}
                                 </span>
                               </div>
@@ -281,12 +283,12 @@ export default function Account() {
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">
+              <h2 className="text-muted-foreground text-base font-semibold leading-7">
                 Recent clients
               </h2>
               <a
                 href="#"
-                className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                className="text-primary hover:text-primary text-sm font-semibold leading-6"
               >
                 View all<span className="sr-only">, clients</span>
               </a>
