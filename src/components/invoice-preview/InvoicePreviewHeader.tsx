@@ -1,12 +1,19 @@
+"use client"
+
 import { FC, Fragment } from "react"
-import { Button } from "../ui/button"
+import { classNames } from "@/constants/tailwind-constants"
 import { Menu, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline"
-import { classNames } from "@/constants/tailwind-constants"
 
-interface InvoicePreviewHeaderProps {}
+import { Button } from "../ui/button"
 
-const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({}) => {
+interface InvoicePreviewHeaderProps {
+  editVisible?: boolean
+}
+
+const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
+  editVisible = true,
+}) => {
   return (
     <header className="relative isolate">
       <div
@@ -44,7 +51,7 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({}) => {
           </div>
           <div className="flex items-center gap-x-4 sm:gap-x-6">
             <Button variant="ghost">Copy URL</Button>
-            <Button variant="outline">Edit</Button>
+            {editVisible && <Button variant="outline">Edit</Button>}
             <Button>Send</Button>
 
             <Menu as="div" className="relative sm:hidden">

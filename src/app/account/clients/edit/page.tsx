@@ -46,7 +46,7 @@ export default function ClientEdit() {
                   id="first-name"
                   autoComplete="given-name"
                   placeholder="Jane Doe"
-                  className="block w-full sm:max-w-xs focus:ring-transparent focus:ring-0 focus:outline-transparent focus:outline-none"
+                  className="block w-full focus:outline-none focus:outline-transparent focus:ring-0 focus:ring-transparent sm:max-w-xs"
                 />
               </div>
             </div>
@@ -355,4 +355,3 @@ export default function ClientEdit() {
     </form>
   )
 }
-

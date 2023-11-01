@@ -1,4 +1,5 @@
 import { FC } from "react"
+import Link from "next/link"
 import { PlusSmallIcon } from "@heroicons/react/24/outline"
 
 import { Button } from "../ui/button"
@@ -31,10 +32,12 @@ const DashBoardHeader: FC<DashBoardHeaderProps> = ({}) => {
             </a>
           ))}
         </div>
-        <Button className="ml-auto">
-          <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
-          New invoice
-        </Button>
+        <Link href="/account/invoice-list/edit" className="ml-auto">
+          <Button>
+            <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
+            New invoice
+          </Button>
+        </Link>
       </div>
     </header>
   )
