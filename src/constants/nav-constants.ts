@@ -19,7 +19,7 @@ export const navigation = [
     href: "/account/invoice-list",
     icon: DocumentDuplicateIcon,
   },
-  { name: "Clients", href: "#", icon: UsersIcon },
+  { name: "Clients", href: "/account/clients", icon: UsersIcon },
   { name: "Projects", href: "#", icon: FolderIcon },
   { name: "Calendar", href: "#", icon: CalendarIcon },
   { name: "Reports", href: "#", icon: ChartPieIcon },
