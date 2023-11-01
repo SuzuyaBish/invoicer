@@ -1,11 +1,14 @@
+'use client'
+
 import { navigation, teams } from "@/constants/nav-constants"
 import { classNames } from "@/constants/tailwind-constants"
 import { Cog6ToothIcon } from "@heroicons/react/24/outline"
+import { usePathname } from "next/navigation"
 
 export default function DesktopDrawer() {
+  const pathname = usePathname()
   return (
     <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-      {/* Sidebar component, swap this element with another sidebar if you like */}
       <div className="bg-primary flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4">
         <div className="flex h-16 shrink-0 items-center">
           <img
@@ -23,7 +26,7 @@ export default function DesktopDrawer() {
                     <a
                       href={item.href}
                       className={classNames(
-                        item.current
+                        pathname.endsWith(item.href)
                           ? "bg-gray-800 text-primary-foreground"
                           : "text-gray-400 hover:text-white hover:bg-gray-800",
                         "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"

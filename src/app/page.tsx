@@ -38,7 +38,7 @@ export default function Auth() {
         toast({
           title: "Success",
           description: "Signed in successfully",
-          variant: "success",
+          variant: "default",
         })
 
         router.refresh()
@@ -46,7 +46,7 @@ export default function Auth() {
     } catch (error) {
       toast({
         title: "Error",
-        description: error,
+        description: error as string,
         variant: "destructive",
       })
       setLoading(false)

@@ -1,6 +1,7 @@
 "use client"
 
 import { Fragment } from "react"
+import { usePathname } from "next/navigation"
 import { navigation, teams } from "@/constants/nav-constants"
 import { classNames } from "@/constants/tailwind-constants"
 import { Dialog, Transition } from "@headlessui/react"
@@ -10,6 +11,7 @@ import { useStateStore } from "@/lib/stores/state"
 
 export function MobileDrawer() {
   const stateStore = useStateStore()
+  const pathname = usePathname()
   return (
     <Transition.Root show={stateStore.searchBarOpen} as={Fragment}>
       <Dialog
@@ -81,7 +83,7 @@ export function MobileDrawer() {
                             <a
                               href={item.href}
                               className={classNames(
-                                item.current
+                                pathname.endsWith(item.href)
                                   ? "bg-gray-800 text-white"
                                   : "text-gray-400 hover:text-white hover:bg-gray-800",
                                 "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
