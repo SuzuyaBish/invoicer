@@ -20,9 +20,9 @@ export const navigation = [
     icon: DocumentDuplicateIcon,
   },
   { name: "Clients", href: "/account/clients", icon: UsersIcon },
-  { name: "Projects", href: "#", icon: FolderIcon },
-  { name: "Calendar", href: "#", icon: CalendarIcon },
-  { name: "Reports", href: "#", icon: ChartPieIcon },
+  // { name: "Projects", href: "#", icon: FolderIcon },
+  // { name: "Calendar", href: "#", icon: CalendarIcon },
+  // { name: "Reports", href: "#", icon: ChartPieIcon },
 ]
 
 export const teams = [
