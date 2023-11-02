@@ -1,3 +1,5 @@
+'use client'
+
 import { FC } from "react"
 import { Margin, Options, usePDF } from "react-to-pdf"
 
