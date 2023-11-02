@@ -1,9 +1,9 @@
 "use client"
 
-import { Margin, Options, usePDF } from "react-to-pdf"
+import { Margin, Options } from "react-to-pdf"
 
+import EditorPreview from "@/components/invoice-edit/EditorPreview"
 import InvoicePreviewHeader from "@/components/invoice-preview/InvoicePreviewHeader"
-import InvoicePreviewTable from "@/components/invoice-preview/InvoicePreviewTable"
 
 const invoice = {
   subTotal: "$8,800.00",
@@ -52,7 +52,6 @@ const options: Options = {
 }
 
 export default function InvoiceEdit() {
-  const { toPDF, targetRef } = usePDF({ filename: "invoice.pdf" })
   return (
     <div className="flex min-h-full flex-col">
       <div className="mx-auto flex w-full items-start gap-x-8 px-4 sm:px-6 lg:px-8">
@@ -60,14 +59,7 @@ export default function InvoiceEdit() {
           <InvoicePreviewHeader editVisible={false} />
         </main>
 
-        <aside className="sticky top-8 hidden flex-1 shrink-0 rounded border xl:block">
-          {/* <Button onClick={() => toPDF(options)}>Download</Button> */}
-          <div ref={targetRef}>
-            <div className="m-10">
-              <InvoicePreviewTable invoice={invoice} />
-            </div>
-          </div>
-        </aside>
+        <EditorPreview />
       </div>
     </div>
   )
