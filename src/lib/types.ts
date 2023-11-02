@@ -41,7 +41,7 @@ export type InvoiceTable = {
 }
 
 export type InvoiceTableItem = {
-  id: number
+  id: string
   title: string
   description: string
   hours: string

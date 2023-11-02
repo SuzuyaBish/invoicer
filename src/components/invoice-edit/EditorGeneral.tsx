@@ -45,7 +45,7 @@ export default function EditorGeneral() {
             type="text"
             value={table.taxRate}
             onChange={(e) => {
-              const value = parseInt(e.target.value) || 0
+              const value = parseFloat(e.target.value) || parseFloat("0.0")
               table.setTaxRate(value)
             }}
           />

@@ -5,17 +5,15 @@ import { InvoiceTable, InvoiceTableItem } from "../types"
 interface EditorTableState {
   invoice: InvoiceTable
   currency: string
-  rate: number
   taxRate: number
   setTaxRate: (rate: number) => void
-  setRate: (rate: number) => void
   setCurrency: (currency: string) => void
   setInvoiceTotal: () => void
   setInvoiceSubTotal: () => void
   setInvoiceTax: () => void
-  insertInvoiceItem: (item: InvoiceTableItem) => void
+  insertInvoiceItem: () => void
   updateInvoiceItem: (item: InvoiceTableItem) => void
-  deleteInvoiceItem: (id: number) => void
+  deleteInvoiceItem: (id: string) => void
 }
 
 export const useEditorTableStateStore = create<EditorTableState>(
@@ -27,10 +25,8 @@ export const useEditorTableStateStore = create<EditorTableState>(
       items: [],
     },
     currency: "$",
-    rate: 150,
     taxRate: 0.2,
     setTaxRate: (rate) => set({ taxRate: rate }),
-    setRate: (rate) => set({ rate }),
     setCurrency: (currency) => set({ currency }),
     setInvoiceTotal: () =>
       set((state) => ({
@@ -55,11 +51,21 @@ export const useEditorTableStateStore = create<EditorTableState>(
           tax: (parseInt(state.invoice.subTotal) * get().taxRate).toString(),
         },
       })),
-    insertInvoiceItem: (item) =>
+    insertInvoiceItem: () =>
       set((state) => ({
         invoice: {
           ...state.invoice,
-          items: [...state.invoice.items, item],
+          items: [
+            ...state.invoice.items,
+            {
+              id: Math.random().toString(36).substr(2, 9),
+              title: "New Item",
+              description: "",
+              hours: "0",
+              rate: "100",
+              price: "0.00",
+            },
+          ],
         },
       })),
     updateInvoiceItem: (item) =>
