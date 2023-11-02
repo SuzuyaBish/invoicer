@@ -11,13 +11,36 @@ export type Client = {
 }
 
 export type Invoice = {
+  id: string
+  client: Client
+  information: InvoiceInformation
+  table: InvoiceTable
+}
+
+export type InvoiceInformation = {
+  title: string
+  invoicedDate: string
+  dueDate: string
+  from: UserInfo
+  to: UserInfo
+}
+
+export type UserInfo = {
+  name: string
+  address: string
+  city: string
+  state: string
+  zipCode: string
+}
+
+export type InvoiceTable = {
   subTotal: string
   tax: string
   total: string
-  items: InvoiceItem[]
+  items: InvoiceTableItem[]
 }
 
-export type InvoiceItem = {
+export type InvoiceTableItem = {
   id: number
   title: string
   description: string

@@ -1,4 +1,4 @@
-import { Client, Invoice } from "@/lib/types"
+import { Client, InvoiceTable } from "@/lib/types"
 
 export const clients: Client[] = [
   {
@@ -42,7 +42,7 @@ export const statuses = {
   Overdue: "text-red-700 bg-red-50 ring-red-600/10",
 }
 
-export const invoice: Invoice = {
+export const invoice: InvoiceTable = {
   subTotal: "$8,800.00",
   tax: "$1,760.00",
   total: "$10,560.00",

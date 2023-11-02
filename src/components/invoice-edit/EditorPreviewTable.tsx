@@ -1,8 +1,8 @@
-import { useEditorStateStore } from "@/lib/stores/editor"
-import { InvoiceItem } from "@/lib/types"
+import { useEditorTableStateStore } from "@/lib/stores/editor-table"
+import { InvoiceTableItem } from "@/lib/types"
 
 export function EditorPreviewTable() {
-  const invoice = useEditorStateStore().invoice
+  const invoice = useEditorTableStateStore().invoice
   return (
     <table className="mt-16 w-full whitespace-nowrap text-left text-sm leading-6">
       <colgroup>
@@ -34,7 +34,7 @@ export function EditorPreviewTable() {
         </tr>
       </thead>
       <tbody>
-        {invoice.items.map((item: InvoiceItem) => (
+        {invoice.items.map((item: InvoiceTableItem) => (
           <tr key={item.id} className="border-b ">
             <td className="max-w-0 px-0 py-5 align-top">
               <div className="truncate font-medium text-black">
