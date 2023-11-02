@@ -21,9 +21,9 @@ interface EditorTableState {
 export const useEditorTableStateStore = create<EditorTableState>(
   (set, get) => ({
     invoice: {
-      subTotal: "$0.00",
-      tax: "$0.00",
-      total: "$0.00",
+      subTotal: "0.00",
+      tax: "0.00",
+      total: "0.00",
       items: [],
     },
     currency: "$",

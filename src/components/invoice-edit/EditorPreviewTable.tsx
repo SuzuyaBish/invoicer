@@ -1,8 +1,10 @@
+import { useEditorInformationStore } from "@/lib/stores/editor-information"
 import { useEditorTableStateStore } from "@/lib/stores/editor-table"
 import { InvoiceTableItem } from "@/lib/types"
 
 export function EditorPreviewTable() {
-  const invoice = useEditorTableStateStore().invoice
+  const table = useEditorTableStateStore()
+  const info = useEditorInformationStore()
   return (
     <table className="mt-16 w-full whitespace-nowrap text-left text-sm leading-6">
       <colgroup>
@@ -34,7 +36,7 @@ export function EditorPreviewTable() {
         </tr>
       </thead>
       <tbody>
-        {invoice.items.map((item: InvoiceTableItem) => (
+        {table.invoice.items.map((item: InvoiceTableItem) => (
           <tr key={item.id} className="border-b ">
             <td className="max-w-0 px-0 py-5 align-top">
               <div className="truncate font-medium text-black">
@@ -70,22 +72,24 @@ export function EditorPreviewTable() {
             Subtotal
           </th>
           <td className="pb-0 pl-8 pr-0 pt-6 text-right tabular-nums text-black">
-            {invoice.subTotal}
+            {table.currency}
+            {table.invoice.subTotal}
           </td>
         </tr>
         <tr>
           <th scope="row" className="pt-4 font-normal text-gray-500 sm:hidden">
-            Tax
+            Tax ({table.taxRate}%)
           </th>
           <th
             scope="row"
             colSpan={3}
             className="hidden pt-4 text-right font-normal text-gray-500 sm:table-cell"
           >
-            Tax
+            Tax ({table.taxRate}%)
           </th>
           <td className="pb-0 pl-8 pr-0 pt-4 text-right tabular-nums text-black">
-            {invoice.tax}
+            {table.currency}
+            {table.invoice.tax}
           </td>
         </tr>
         <tr>
@@ -100,7 +104,8 @@ export function EditorPreviewTable() {
             Total
           </th>
           <td className="pb-0 pl-8 pr-0 pt-4 text-right font-semibold tabular-nums text-black">
-            {invoice.total}
+            {table.currency}
+            {table.invoice.total}
           </td>
         </tr>
       </tfoot>

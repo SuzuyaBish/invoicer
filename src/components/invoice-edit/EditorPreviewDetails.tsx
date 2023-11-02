@@ -1,4 +1,5 @@
 import { useEditorInformationStore } from "@/lib/stores/editor-information"
+import { format } from "date-fns"
 
 export function EditorPreviewDetails() {
   const info = useEditorInformationStore().information
@@ -11,13 +12,13 @@ export function EditorPreviewDetails() {
         <div className="sm:pr-4">
           <dt className="inline text-gray-500">Issued on</dt>{" "}
           <dd className="inline text-gray-500">
-            <time dateTime="2023-23-01">{info.invoicedDate}</time>
+            <time dateTime="2023-23-01">{format(info.invoicedDate, "P")}</time>
           </dd>
         </div>
         <div className="mt-2 sm:mt-0 sm:pl-4">
           <dt className="inline text-gray-500">Due on</dt>{" "}
           <dd className="inline text-gray-500">
-            <time dateTime="2023-31-01">{info.dueDate}</time>
+            <time dateTime="2023-31-01">{format(info.dueDate, "P")}</time>
           </dd>
         </div>
         <div className="mt-6 border-t  pt-6 sm:pr-4">
@@ -27,7 +28,7 @@ export function EditorPreviewDetails() {
             <br />
             {info.from.address}
             <br />
-            {info.from.city}, {info.from.state} {info.from.zipCode}
+            {info.from.city}, {info.from.state}, {info.from.zipCode}
           </dd>
         </div>
         <div className="sm: mt-8 sm:mt-6 sm:border-t sm:pl-4 sm:pt-6">
@@ -37,7 +38,7 @@ export function EditorPreviewDetails() {
             <br />
             {info.to.address}
             <br />
-            {info.to.city}, {info.to.state} {info.to.zipCode}
+            {info.to.city}, {info.to.state}, {info.to.zipCode}
           </dd>
         </div>
       </dl>

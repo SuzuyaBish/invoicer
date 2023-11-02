@@ -15,7 +15,7 @@ export default function EditorTabViewer() {
     <EditorFields key={3} />,
   ]
   return (
-    <div className="border-b pb-5">
+    <div className="border-b pb-12">
       {
         tabPages[
           currentSection === "general"
