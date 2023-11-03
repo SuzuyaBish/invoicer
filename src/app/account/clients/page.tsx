@@ -1,9 +1,17 @@
-import { clients } from "@/constants/constants"
+"use server"
 
+import { cookies } from "next/headers"
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+
+import { Client } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import ClientBlock from "@/components/clients/ClientBlock"
 
-export default function ClientsPage() {
+export default async function ClientsPage() {
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  const { data } = await supabase.from("clients").select(`*, lastInvoice (*)`)
+  const clients = data as Client[]
   return (
     <div className="relative pb-5 sm:pb-0">
       <div className="md:flex md:items-center md:justify-between">
@@ -16,10 +24,7 @@ export default function ClientsPage() {
       </div>
       <ul className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
         {clients.map((client) => (
-          <>
-            <ClientBlock key={client.name} {...client} />
-            <ClientBlock key={client.name} {...client} />
-          </>
+          <ClientBlock key={client.name} {...client} />
         ))}
       </ul>
     </div>

@@ -5,6 +5,11 @@ import Link from "next/link"
 import { classNames } from "@/constants/tailwind-constants"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 
+import {
+  calculateSubTotal,
+  calculateTax,
+  calculateTotal,
+} from "@/lib/functions"
 import { Invoice } from "@/lib/types"
 
 export default async function InvoiceTable() {
@@ -23,39 +28,39 @@ export default async function InvoiceTable() {
                 <tr>
                   <th
                     scope="col"
-                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
+                    className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
                   >
                     Invoice Number
                   </th>
                   <th
                     scope="col"
-                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold backdrop-blur"
+                    className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur"
                   >
                     Client
                   </th>
                   <th
                     scope="col"
-                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold backdrop-blur"
+                    className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur"
                   >
                     Invoiced Date
                   </th>
                   <th
                     scope="col"
-                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold backdrop-blur"
+                    className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur"
                   >
                     Status
                   </th>
                   <th
                     scope="col"
-                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
+                    className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur"
                   >
-                    <span className="sr-only">Preview</span>
+                    Total
                   </th>
                   <th
                     scope="col"
-                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
+                    className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
                   >
-                    <span className="sr-only">Edit</span>
+                    <span className="sr-only">Preview</span>
                   </th>
                 </tr>
               </thead>
@@ -97,6 +102,21 @@ export default async function InvoiceTable() {
                     <td
                       className={classNames(
                         itemIdx !== items.length - 1 ? "border-b" : "",
+                        "whitespace-nowrap px-3 py-4 text-sm text-foreground"
+                      )}
+                    >
+                      {item.information.currency}{" "}
+                      {calculateTotal(
+                        calculateSubTotal(item.table.items),
+                        calculateTax(
+                          calculateSubTotal(item.table.items),
+                          Number(item.table.tax)
+                        )
+                      )}
+                    </td>
+                    <td
+                      className={classNames(
+                        itemIdx !== items.length - 1 ? "border-b" : "",
                         "relative whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8"
                       )}
                     >
@@ -106,16 +126,6 @@ export default async function InvoiceTable() {
                       >
                         Preview<span className="sr-only">, {item.id}</span>
                       </Link>
-                    </td>
-                    <td
-                      className={classNames(
-                        itemIdx !== items.length - 1 ? "border-b" : "",
-                        "relative whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8"
-                      )}
-                    >
-                      <a href="#" className="text-primary">
-                        Edit<span className="sr-only">, {item.id}</span>
-                      </a>
                     </td>
                   </tr>
                 ))}

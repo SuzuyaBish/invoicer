@@ -6,9 +6,15 @@ import { statuses } from "@/constants/constants"
 import { classNames } from "@/constants/tailwind-constants"
 import { Edit } from "lucide-react"
 
+import {
+  calculateSubTotal,
+  calculateTax,
+  calculateTotal,
+} from "@/lib/functions"
 import { Client } from "@/lib/types"
 
 import { Button } from "../ui/button"
+import UserAvatar from "../UserAvatar"
 
 interface ClientBlockProps extends Client {}
 
@@ -16,11 +22,7 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
   return (
     <li key={props.id} className="overflow-hidden rounded-xl border">
       <div className="bg-muted flex items-center gap-x-4 border-b border-gray-900/5 p-6">
-        <img
-          src={props.imageUrl}
-          alt={props.name}
-          className="bg-muted h-12 w-12 flex-none rounded-lg object-cover ring-1 ring-gray-900/10"
-        />
+        <UserAvatar />
         <div className="text-foreground text-sm font-medium leading-6">
           {props.name}
         </div>
@@ -36,8 +38,8 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
         <div className="flex justify-between gap-x-4 py-3">
           <dt className="text-foreground">Last invoice</dt>
           <dd className="text-muted-foreground">
-            <time dateTime={props.lastInvoice.dateTime}>
-              {props.lastInvoice.date}
+            <time dateTime={props.lastInvoice.information.dueDate}>
+              {props.lastInvoice.information.dueDate}
             </time>
           </dd>
         </div>
@@ -45,7 +47,14 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
           <dt className="text-foreground">Amount</dt>
           <dd className="flex items-start gap-x-2">
             <div className="text-muted-foreground font-medium">
-              {props.lastInvoice.amount}
+              {props.lastInvoice.information.currency}{" "}
+              {calculateTotal(
+                calculateSubTotal(props.lastInvoice.table.items),
+                calculateTax(
+                  calculateSubTotal(props.lastInvoice.table.items),
+                  Number(props.lastInvoice.table.tax)
+                )
+              )}
             </div>
             <div
               className={classNames(
