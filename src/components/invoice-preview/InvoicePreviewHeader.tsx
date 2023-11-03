@@ -5,14 +5,18 @@ import { classNames } from "@/constants/tailwind-constants"
 import { Menu, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline"
 
+import { Invoice } from "@/lib/types"
+
 import { Button } from "../ui/button"
 
 interface InvoicePreviewHeaderProps {
   editVisible?: boolean
+  info: Invoice
 }
 
 const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
   editVisible = true,
+  info,
 }) => {
   return (
     <header className="relative isolate">
@@ -42,10 +46,11 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
             />
             <h1>
               <div className="text-muted-foreground text-sm leading-6">
-                Invoice <span className="text-muted-foreground">#00011</span>
+                Invoice{" "}
+                <span className="text-muted-foreground">#{info.id}</span>
               </div>
               <div className="text-foreground mt-1 text-base font-semibold leading-6">
-                Tuple, Inc
+                {info.information.title}
               </div>
             </h1>
           </div>

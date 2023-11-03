@@ -1,231 +1,18 @@
+"use server"
+
+import { cookies } from "next/headers"
+import Link from "next/link"
 import { classNames } from "@/constants/tailwind-constants"
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 
-const people = [
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-]
+import { Invoice } from "@/lib/types"
 
-export default function InvoiceTable() {
+export default async function InvoiceTable() {
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  const { data } = await supabase.from("invoices").select(`*, client (*)`)
+  const items = data as Invoice[]
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="mt-8 flow-root">
@@ -238,25 +25,25 @@ export default function InvoiceTable() {
                     scope="col"
                     className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
                   >
-                    Name
+                    Invoice Number
                   </th>
                   <th
                     scope="col"
-                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
+                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold backdrop-blur"
                   >
-                    Title
+                    Client
                   </th>
                   <th
                     scope="col"
-                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
+                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold backdrop-blur"
                   >
-                    Email
+                    Invoiced Date
                   </th>
                   <th
                     scope="col"
-                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"
+                    className="bg-background text-muted-foreground sticky top-16 z-10 border-b bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold backdrop-blur"
                   >
-                    Role
+                    Status
                   </th>
                   <th
                     scope="col"
@@ -273,58 +60,61 @@ export default function InvoiceTable() {
                 </tr>
               </thead>
               <tbody>
-                {people.map((person, personIdx) => (
-                  <tr key={person.email}>
+                {items.map((item, itemIdx) => (
+                  <tr key={item.id}>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1 ? "border-b" : "",
+                        itemIdx !== items.length - 1 ? "border-b" : "",
                         "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-foreground sm:pl-6 lg:pl-8"
                       )}
                     >
-                      {person.name}
+                      INV# {item.id}
                     </td>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1 ? "border-b" : "",
+                        itemIdx !== items.length - 1 ? "border-b" : "",
                         "whitespace-nowrap hidden px-3 py-4 text-sm text-foreground sm:table-cell"
                       )}
                     >
-                      {person.title}
+                      {item.client.name}
                     </td>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1 ? "border-b" : "",
+                        itemIdx !== items.length - 1 ? "border-b" : "",
                         "whitespace-nowrap hidden px-3 py-4 text-sm text-foreground lg:table-cell"
                       )}
                     >
-                      {person.email}
+                      {item.information.invoicedDate}
                     </td>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1 ? "border-b" : "",
+                        itemIdx !== items.length - 1 ? "border-b" : "",
                         "whitespace-nowrap px-3 py-4 text-sm text-foreground"
                       )}
                     >
-                      {person.role}
+                      {item.status}
                     </td>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1 ? "border-b" : "",
+                        itemIdx !== items.length - 1 ? "border-b" : "",
                         "relative whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8"
                       )}
                     >
-                      <a href="/account/invoice-list/preview" className="text-primary">
-                        Preview<span className="sr-only">, {person.name}</span>
-                      </a>
+                      <Link
+                        href={`/account/invoice-list/preview/${item.id}`}
+                        className="text-primary"
+                      >
+                        Preview<span className="sr-only">, {item.id}</span>
+                      </Link>
                     </td>
                     <td
                       className={classNames(
-                        personIdx !== people.length - 1 ? "border-b" : "",
+                        itemIdx !== items.length - 1 ? "border-b" : "",
                         "relative whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8"
                       )}
                     >
                       <a href="#" className="text-primary">
-                        Edit<span className="sr-only">, {person.name}</span>
+                        Edit<span className="sr-only">, {item.id}</span>
                       </a>
                     </td>
                   </tr>

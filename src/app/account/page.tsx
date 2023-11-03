@@ -1,11 +1,11 @@
-"use client"
+"use server"
 
 import DashBoardHeader from "@/components/dashboard/DashBoardHeader"
 import DashboardRecentActivity from "@/components/dashboard/DashboardRecentActivity"
 import DashboardRecentClientList from "@/components/dashboard/DashboardRecentClientList"
 import DashboardStats from "@/components/dashboard/DashboardStats"
 
-export default function Account() {
+export default async function Account() {
   return (
     <main>
       <div className="relative isolate overflow-hidden ">

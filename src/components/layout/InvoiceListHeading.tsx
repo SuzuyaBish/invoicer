@@ -8,7 +8,7 @@ export default function InvoiceListHeading() {
     <div className="relative border-b pb-5 sm:pb-0">
       <div className="md:flex md:items-center md:justify-between">
         <h3 className="text-foreground text-base font-semibold leading-6">
-          Candidates
+          Invoices
         </h3>
         <div className="mt-3 flex md:absolute md:right-0 md:top-3 md:mt-0">
           <Button variant="secondary">Share</Button>

@@ -13,6 +13,7 @@ export type Client = {
 export type Invoice = {
   id: string
   client: Client
+  status: string
   information: InvoiceInformation
   table: InvoiceTable
 }
@@ -21,6 +22,7 @@ export type InvoiceInformation = {
   title: string
   invoicedDate: number
   dueDate: number
+  currency: string
   from: UserInfo
   to: UserInfo
 }

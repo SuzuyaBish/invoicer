@@ -32,9 +32,9 @@ export const teams = [
 ]
 
 export const tabs = [
-  { name: "Applied", href: "#", current: false },
+  { name: "Applied", href: "#", current: true },
   { name: "Phone Screening", href: "#", current: false },
-  { name: "Interview", href: "#", current: true },
+  { name: "Interview", href: "#", current: false },
   { name: "Offer", href: "#", current: false },
   { name: "Hired", href: "#", current: false },
 ]

@@ -5,9 +5,11 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline"
 
-interface InvoiceSummaryCardProps {}
+import { Invoice } from "@/lib/types"
 
-const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = ({}) => {
+interface InvoiceSummaryCardProps extends Invoice {}
+
+const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = (props) => {
   return (
     <div className="lg:col-start-3 lg:row-end-1">
       <h2 className="sr-only">Summary</h2>
@@ -18,13 +20,17 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = ({}) => {
               Amount
             </dt>
             <dd className="text-foreground mt-1 text-base font-semibold leading-6">
-              $10,560.00
+              {props.information.currency}{" "}
+              {Number(props.table.total).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </dd>
           </div>
           <div className="flex-none self-end px-6 pt-4">
             <dt className="sr-only">Status</dt>
             <dd className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
-              Paid
+              {props.status}
             </dd>
           </div>
           <div className="mt-6 flex w-full flex-none gap-x-4 border-t  px-6 pt-6">
@@ -36,7 +42,7 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = ({}) => {
               />
             </dt>
             <dd className="text-foreground text-sm font-medium leading-6">
-              Alex Curren
+              {props.client.name}
             </dd>
           </div>
           <div className="mt-4 flex w-full flex-none gap-x-4 px-6">
@@ -48,7 +54,7 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = ({}) => {
               />
             </dt>
             <dd className="text-muted-foreground text-sm leading-6">
-              <time dateTime="2023-01-31">January 31, 2023</time>
+              <time dateTime="2023-01-31">{props.information.invoicedDate}</time>
             </dd>
           </div>
           <div className="mt-4 flex w-full flex-none gap-x-4 px-6">

@@ -1,7 +1,14 @@
 import { FC } from "react"
 
+import {
+  calculateSubTotal,
+  calculateTax,
+  calculateTotal,
+} from "@/lib/functions"
+import { Invoice } from "@/lib/types"
+
 interface InvoicePreviewTableProps {
-  invoice: any
+  invoice: Invoice
 }
 
 const InvoicePreviewTable: FC<InvoicePreviewTableProps> = ({ invoice }) => {
@@ -36,7 +43,7 @@ const InvoicePreviewTable: FC<InvoicePreviewTableProps> = ({ invoice }) => {
         </tr>
       </thead>
       <tbody>
-        {invoice.items.map((item: any) => (
+        {invoice.table.items.map((item: any) => (
           <tr key={item.id} className="border-b ">
             <td className="max-w-0 px-0 py-5 align-top">
               <div className="text-foreground truncate font-medium">
@@ -74,7 +81,8 @@ const InvoicePreviewTable: FC<InvoicePreviewTableProps> = ({ invoice }) => {
             Subtotal
           </th>
           <td className="text-foreground pb-0 pl-8 pr-0 pt-6 text-right tabular-nums">
-            {invoice.subTotal}
+            {invoice.information.currency}{" "}
+            {calculateSubTotal(invoice.table.items)}
           </td>
         </tr>
         <tr>
@@ -89,10 +97,14 @@ const InvoicePreviewTable: FC<InvoicePreviewTableProps> = ({ invoice }) => {
             colSpan={3}
             className="text-muted-foreground hidden pt-4 text-right font-normal sm:table-cell"
           >
-            Tax
+            Tax ({invoice.table.tax}%)
           </th>
           <td className="text-foreground pb-0 pl-8 pr-0 pt-4 text-right tabular-nums">
-            {invoice.tax}
+            {invoice.information.currency}{" "}
+            {calculateTax(
+              calculateSubTotal(invoice.table.items),
+              Number(invoice.table.tax)
+            )}
           </td>
         </tr>
         <tr>
@@ -110,7 +122,14 @@ const InvoicePreviewTable: FC<InvoicePreviewTableProps> = ({ invoice }) => {
             Total
           </th>
           <td className="text-foreground pb-0 pl-8 pr-0 pt-4 text-right font-semibold tabular-nums">
-            {invoice.total}
+            {invoice.information.currency}{" "}
+            {calculateTotal(
+              calculateSubTotal(invoice.table.items),
+              calculateTax(
+                calculateSubTotal(invoice.table.items),
+                Number(invoice.table.tax)
+              )
+            )}
           </td>
         </tr>
       </tfoot>
