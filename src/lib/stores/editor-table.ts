@@ -11,7 +11,7 @@ interface EditorTableState {
   setInvoiceTotal: () => void
   setInvoiceSubTotal: () => void
   setInvoiceTax: () => void
-  insertInvoiceItem: () => void
+  insertInvoiceItem: (item: InvoiceTableItem) => void
   updateInvoiceItem: (item: InvoiceTableItem) => void
   deleteInvoiceItem: (id: string) => void
 }
@@ -51,21 +51,11 @@ export const useEditorTableStateStore = create<EditorTableState>(
           tax: (parseInt(state.invoice.subTotal) * get().taxRate).toString(),
         },
       })),
-    insertInvoiceItem: () =>
+    insertInvoiceItem: (item: InvoiceTableItem) =>
       set((state) => ({
         invoice: {
           ...state.invoice,
-          items: [
-            ...state.invoice.items,
-            {
-              id: Math.random().toString(36).substr(2, 9),
-              title: "New Item",
-              description: "",
-              hours: "0",
-              rate: "100",
-              price: "0.00",
-            },
-          ],
+          items: [...state.invoice.items, item],
         },
       })),
     updateInvoiceItem: (item) =>

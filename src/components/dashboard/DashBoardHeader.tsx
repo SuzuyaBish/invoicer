@@ -32,7 +32,7 @@ const DashBoardHeader: FC<DashBoardHeaderProps> = ({}) => {
             </a>
           ))}
         </div>
-        <Link href="/account/invoice-list/edit" className="ml-auto">
+        <Link href="/account/invoice-list/edit?section=general" className="ml-auto">
           <Button>
             <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
             New invoice
