@@ -36,7 +36,7 @@ export default async function InvoiceTable() {
                     scope="col"
                     className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur"
                   >
-                    Client
+                    Invoiced Client
                   </th>
                   <th
                     scope="col"
@@ -48,13 +48,13 @@ export default async function InvoiceTable() {
                     scope="col"
                     className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur"
                   >
-                    Status
+                    Invoice Status
                   </th>
                   <th
                     scope="col"
                     className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur"
                   >
-                    Total
+                    Invoiced Total
                   </th>
                   <th
                     scope="col"

@@ -1,11 +1,14 @@
 "use server"
 
 import EditorPreview from "@/components/invoice-edit/EditorPreview"
-import EditorTabViewer from "@/components/invoice-edit/EditorTabViewer"
 import EditorTabs from "@/components/invoice-edit/EditorTabs"
-import InvoicePreviewHeader from "@/components/invoice-preview/InvoicePreviewHeader"
+import EditorTabViewer from "@/components/invoice-edit/EditorTabViewer"
 
-export default async function InvoiceEdit() {
+export default async function InvoiceEdit({
+  params,
+}: {
+  params: { slug: string }
+}) {
   return (
     <div className="flex min-h-full flex-col">
       <div className="mx-auto flex w-full items-start gap-x-8 px-4 sm:px-6 lg:px-8">

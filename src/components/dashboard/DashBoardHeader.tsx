@@ -3,6 +3,8 @@ import Link from "next/link"
 import { PlusSmallIcon } from "@heroicons/react/24/outline"
 
 import { Button } from "../ui/button"
+import { NewInvoiceButton } from "../invoice-edit/NewInvoiceButton"
+import { Client } from "@/lib/types"
 
 const secondaryNavigation = [
   { name: "Last 7 days", href: "#", current: true },
@@ -10,9 +12,11 @@ const secondaryNavigation = [
   { name: "All-time", href: "#", current: false },
 ]
 
-interface DashBoardHeaderProps {}
+interface DashBoardHeaderProps {
+  clients: Client[]
+}
 
-const DashBoardHeader: FC<DashBoardHeaderProps> = ({}) => {
+const DashBoardHeader: FC<DashBoardHeaderProps> = ({clients}) => {
   return (
     <header className="pb-4 sm:pb-6">
       <div className="mx-auto flex flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
@@ -32,12 +36,7 @@ const DashBoardHeader: FC<DashBoardHeaderProps> = ({}) => {
             </a>
           ))}
         </div>
-        <Link href="/account/invoice-list/edit?section=general" className="ml-auto">
-          <Button>
-            <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
-            New invoice
-          </Button>
-        </Link>
+        <NewInvoiceButton clients={clients}/>
       </div>
     </header>
   )

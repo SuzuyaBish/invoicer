@@ -1,17 +1,6 @@
-"use server"
+import ClientItemFallback from "./ClientItemFallback";
 
-import { cookies } from "next/headers"
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-
-import { Client } from "@/lib/types"
-
-import ClientBlock from "../clients/ClientBlock"
-
-export default async function DashboardRecentClientList() {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
-  const { data } = await supabase.from("clients").select(`*, lastInvoice (*)`)
-  const clients = data as Client[]
+export default function ClientBlockFallback() {
   return (
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
@@ -30,9 +19,11 @@ export default async function DashboardRecentClientList() {
           role="list"
           className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8"
         >
-          {clients.map((client) => (
-            <ClientBlock key={client.name} {...client} />
-          ))}
+          {Array(3)
+            .fill(0)
+            .map((idx) => (
+              <ClientItemFallback key={idx} />
+            ))}
         </ul>
       </div>
     </div>

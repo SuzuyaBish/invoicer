@@ -1,5 +1,5 @@
 export type Client = {
-  id: number
+  id: string
   name: string
   imageUrl: string
   lastInvoice: Invoice
