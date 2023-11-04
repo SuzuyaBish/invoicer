@@ -43,7 +43,7 @@ const InvoicePreviewTable: FC<InvoicePreviewTableProps> = ({ invoice }) => {
         </tr>
       </thead>
       <tbody>
-        {invoice.table.items.map((item: any) => (
+        {invoice.table.items?.map((item: any) => (
           <tr key={item.id} className="border-b ">
             <td className="max-w-0 px-0 py-5 align-top">
               <div className="text-foreground truncate font-medium">

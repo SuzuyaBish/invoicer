@@ -16,7 +16,7 @@ export const navigation = [
   { name: "Dashboard", href: "/account", icon: HomeIcon },
   {
     name: "Invoices",
-    href: "/account/invoice-list",
+    href: "/account/invoice-list?tab=all",
     icon: DocumentDuplicateIcon,
   },
   { name: "Clients", href: "/account/clients", icon: UsersIcon },
@@ -32,9 +32,8 @@ export const teams = [
 ]
 
 export const tabs = [
-  { name: "Applied", href: "#", current: true },
-  { name: "Phone Screening", href: "#", current: false },
-  { name: "Interview", href: "#", current: false },
-  { name: "Offer", href: "#", current: false },
-  { name: "Hired", href: "#", current: false },
+  { name: "All", href: "/account/invoice-list?tab=all"},
+  { name: "Pending", href: "/account/invoice-list?tab=pending"},
+  { name: "Paid", href: "/account/invoice-list?tab=paid"},
+  { name: "Drafts", href: "/account/invoice-list?tab=draft"},
 ]

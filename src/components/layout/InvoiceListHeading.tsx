@@ -1,9 +1,16 @@
+"use client"
+
+import Link from "next/link"
+import { usePathname, useSearchParams } from "next/navigation"
 import { tabs } from "@/constants/nav-constants"
 import { classNames } from "@/constants/tailwind-constants"
 
 import { Button } from "../ui/button"
 
 export default function InvoiceListHeading() {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const path = pathname + "?" + searchParams
   return (
     <div className="relative border-b pb-5 sm:pb-0">
       <div className="md:flex md:items-center md:justify-between">
@@ -24,7 +31,7 @@ export default function InvoiceListHeading() {
             id="current-tab"
             name="current-tab"
             className="ring-muted-foreground focus:ring-primary block w-full rounded-md border-0 py-1.5 pl-3 pr-10 ring-1 ring-inset focus:ring-2 focus:ring-inset"
-            defaultValue={tabs.find((tab) => tab.current)?.name}
+            // defaultValue={tabs.find((tab) => tab.current)?.name}
           >
             {tabs.map((tab) => (
               <option key={tab.name}>{tab.name}</option>
@@ -34,19 +41,19 @@ export default function InvoiceListHeading() {
         <div className="hidden sm:block">
           <nav className="-mb-px flex space-x-8">
             {tabs.map((tab) => (
-              <a
+              <Link
                 key={tab.name}
                 href={tab.href}
                 className={classNames(
-                  tab.current
+                  path === tab.href
                     ? "border-primary text-foreground"
                     : "border-transparent text-muted-foreground hover:border-muted-foreground hover:text-foreground",
                   "whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium"
                 )}
-                aria-current={tab.current ? "page" : undefined}
+                aria-current={path === tab.href ? "page" : undefined}
               >
                 {tab.name}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>

@@ -1,19 +1,25 @@
-import { InvoiceTable, InvoiceTableItem } from "./types";
+import { InvoiceTableItem } from "./types"
 
 export const calculateSubTotal = (table: InvoiceTableItem[]) => {
-  let sum = 0;
+  let sum = 0
 
-  table.forEach(el => {
-    sum += Number(el.price); 
-  });
+  if (table && table.length > 0) {
+    table.forEach((el) => {
+      sum += Number(el.price)
+    })
+  }
 
-  return sum;
+  return sum === 0 ? -1 : sum
 }
 
 export const calculateTax = (subTotal: number, tax: number) => {
-  return Math.round((subTotal * tax) * 100) / 100;
+  return Number.isNaN(Math.round(subTotal * tax * 100) / 100)
+    ? -1
+    : Math.round(subTotal * tax * 100) / 100
 }
 
 export const calculateTotal = (subTotal: number, tax: number) => {
-  return subTotal + tax;
+  return Number.isNaN(subTotal + tax)
+    ? -1
+    : Math.round((subTotal + tax) * 100) / 100
 }
