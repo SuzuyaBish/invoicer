@@ -1,6 +1,7 @@
 "use client"
 
 import { FC, Fragment } from "react"
+import Link from "next/link"
 import { classNames } from "@/constants/tailwind-constants"
 import { Menu, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline"
@@ -56,7 +57,13 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
           </div>
           <div className="flex items-center gap-x-4 sm:gap-x-6">
             <Button variant="ghost">Copy URL</Button>
-            {editVisible && <Button variant="outline">Edit</Button>}
+            {editVisible && (
+              <Link
+                href={`/account/invoice-list/edit/${info.id}?section=general`}
+              >
+                <Button variant="outline">Edit</Button>
+              </Link>
+            )}
             <Button>Send</Button>
 
             <Menu as="div" className="relative sm:hidden">
@@ -93,7 +100,7 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
                   </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
-                      <a
+                      <Link
                         href="#"
                         className={classNames(
                           active ? "bg-gray-50" : "",
@@ -101,7 +108,7 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
                         )}
                       >
                         Edit
-                      </a>
+                      </Link>
                     )}
                   </Menu.Item>
                 </Menu.Items>

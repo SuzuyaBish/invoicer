@@ -1,76 +1,68 @@
 import { create } from "zustand"
 
-import { InvoiceTable, InvoiceTableItem } from "../types"
+import { Invoice, InvoiceTableItem } from "../types"
 
 interface EditorTableState {
-  invoice: InvoiceTable
-  currency: string
-  taxRate: number
+  invoice: Invoice
+  setInfo: (info: Invoice) => void
   setTaxRate: (rate: number) => void
   setCurrency: (currency: string) => void
-  setInvoiceTotal: () => void
-  setInvoiceSubTotal: () => void
-  setInvoiceTax: () => void
   insertInvoiceItem: (item: InvoiceTableItem) => void
   updateInvoiceItem: (item: InvoiceTableItem) => void
   deleteInvoiceItem: (id: string) => void
+  updateInvoice: (invoice: Invoice) => void
 }
 
 export const useEditorTableStateStore = create<EditorTableState>(
   (set, get) => ({
-    invoice: {
-      subTotal: "0.00",
-      tax: "0.00",
-      total: "0.00",
-      items: [],
+    invoice: {} as Invoice,
+    setInfo: (info: Invoice) => {
+      set({ invoice: info })
     },
-    currency: "$",
-    taxRate: 0.2,
-    setTaxRate: (rate) => set({ taxRate: rate }),
-    setCurrency: (currency) => set({ currency }),
-    setInvoiceTotal: () =>
+    setTaxRate: (rate) => {
       set((state) => ({
         invoice: {
           ...state.invoice,
-          total: get().invoice.subTotal + get().invoice.tax,
+          taxRate: rate,
         },
-      })),
-    setInvoiceSubTotal: () =>
+      }))
+    },
+    setCurrency: (currency) => {
       set((state) => ({
         invoice: {
           ...state.invoice,
-          subTotal: state.invoice.items
-            .reduce((acc, item) => acc + parseFloat(item.price), 0)
-            .toString(),
+          currency: currency,
         },
-      })),
-    setInvoiceTax: () =>
+      }))
+    },
+    insertInvoiceItem: (item: InvoiceTableItem) => {
       set((state) => ({
         invoice: {
           ...state.invoice,
-          tax: (parseInt(state.invoice.subTotal) * get().taxRate).toString(),
+          items: [...state.invoice.table.items, item],
         },
-      })),
-    insertInvoiceItem: (item: InvoiceTableItem) =>
+      }))
+    },
+    updateInvoiceItem: (item) => {
       set((state) => ({
         invoice: {
           ...state.invoice,
-          items: [...state.invoice.items, item],
+          items: state.invoice.table.items.map((i) =>
+            i.id === item.id ? item : i
+          ),
         },
-      })),
-    updateInvoiceItem: (item) =>
+      }))
+    },
+    deleteInvoiceItem: (id) => {
       set((state) => ({
         invoice: {
           ...state.invoice,
-          items: state.invoice.items.map((i) => (i.id === item.id ? item : i)),
+          items: state.invoice.table.items.filter((i) => i.id !== id),
         },
-      })),
-    deleteInvoiceItem: (id) =>
-      set((state) => ({
-        invoice: {
-          ...state.invoice,
-          items: state.invoice.items.filter((i) => i.id !== id),
-        },
-      })),
+      }))
+    },
+    updateInvoice: (invoice) => {
+      set({ invoice })
+    },
   })
 )

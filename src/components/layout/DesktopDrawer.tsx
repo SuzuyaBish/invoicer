@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { navigation, teams } from "@/constants/nav-constants"
 import { classNames } from "@/constants/tailwind-constants"
@@ -24,10 +25,10 @@ export default function DesktopDrawer() {
               <ul role="list" className="-mx-2 space-y-1">
                 {navigation.map((item) => (
                   <li key={item.name}>
-                    <a
+                    <Link
                       href={item.href}
                       className={classNames(
-                        pathname.endsWith(item.href)
+                        pathname.endsWith(item.href.split("?")[0])
                           ? "bg-muted text-foreground"
                           : "text-muted-foreground hover:text-foreground hover:bg-muted",
                         "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
@@ -38,7 +39,7 @@ export default function DesktopDrawer() {
                         aria-hidden="true"
                       />
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -69,7 +70,7 @@ export default function DesktopDrawer() {
               </ul>
             </li>
             <li className="mt-auto">
-              <a
+              <Link
                 href="/account/settings"
                 className="text-muted-foreground hover:bg-muted hover:text-muted-foreground group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
               >
@@ -78,7 +79,7 @@ export default function DesktopDrawer() {
                   aria-hidden="true"
                 />
                 Settings
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

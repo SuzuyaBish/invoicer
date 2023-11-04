@@ -7,7 +7,7 @@ import { Label } from "../ui/label"
 
 export default function EditorGeneral() {
   const table = useEditorTableStateStore()
-  const info = useEditorInformationStore()
+  const info = table.invoice.information
   return (
     <div className="flex flex-col space-y-12">
       <div>
@@ -25,8 +25,14 @@ export default function EditorGeneral() {
           <Input
             placeholder="Pet Sitting May 2023"
             type="text"
-            value={info.information.title}
-            onChange={(e) => info.setTitle(e.target.value)}
+            value={info.title}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: { ...info, title: e.target.value },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
@@ -34,8 +40,14 @@ export default function EditorGeneral() {
           <Input
             placeholder="$"
             type="text"
-            value={table.currency}
-            onChange={(e) => table.setCurrency(e.target.value)}
+            value={info.currency}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: { ...info, currency: e.target.value },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
@@ -43,25 +55,46 @@ export default function EditorGeneral() {
           <Input
             placeholder="14"
             type="text"
-            value={table.taxRate}
+            value={table.invoice.table.tax}
             onChange={(e) => {
-              const value = parseFloat(e.target.value) || parseFloat("0.0")
-              table.setTaxRate(value)
+              const newInvoice = {
+                ...table.invoice,
+                table: { ...table.invoice.table, tax: e.target.value },
+              }
+              table.updateInvoice(newInvoice)
             }}
           />
         </div>
         <div className="grid gap-y-3">
           <Label>Invoiced Date</Label>
           <DatePicker
-            date={new Date(info.information.invoicedDate)}
-            setDate={info.setInvoicedDate}
+            date={info.invoicedDate === undefined ? new Date(Date.now()) : new Date(info.invoicedDate)}
+            setDate={(date) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  invoicedDate: date,
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
           <Label>Due Date</Label>
           <DatePicker
-            date={new Date(info.information.dueDate)}
-            setDate={info.setDueDate}
+            date={new Date(info.dueDate) || Date.now()}
+            setDate={(date) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  dueDate: date,
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
       </form>

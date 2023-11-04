@@ -8,6 +8,7 @@ import { Dialog, Transition } from "@headlessui/react"
 import { Cog6ToothIcon, XMarkIcon } from "@heroicons/react/24/outline"
 
 import { useStateStore } from "@/lib/stores/state"
+import Link from "next/link"
 
 export function MobileDrawer() {
   const stateStore = useStateStore()
@@ -66,7 +67,7 @@ export function MobileDrawer() {
                 </div>
               </Transition.Child>
               {/* Sidebar component, swap this element with another sidebar if you like */}
-              <div className="bg-muted flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4 ring-1 ring-white/10">
+              <div className="bg-background flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4 ring-1 ring-white/10">
                 <div className="flex h-16 shrink-0 items-center">
                   <img
                     className="h-8 w-auto"
@@ -83,9 +84,9 @@ export function MobileDrawer() {
                             <a
                               href={item.href}
                               className={classNames(
-                                pathname.endsWith(item.href)
-                                  ? "bg-primary text-primary-foreground"
-                                  : "text-muted-foreground hover:text-primary-foreground hover:bg-primary",
+                                pathname.endsWith(item.href.split("?")[0])
+                                  ? "bg-muted text-foreground"
+                                  : "text-muted-foreground hover:text-foreground hover:bg-muted",
                                 "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                               )}
                             >
@@ -106,7 +107,7 @@ export function MobileDrawer() {
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {teams.map((team) => (
                           <li key={team.name}>
-                            <a
+                            <Link
                               href={team.href}
                               className={classNames(
                                 team.current
@@ -119,13 +120,13 @@ export function MobileDrawer() {
                                 {team.initial}
                               </span>
                               <span className="truncate">{team.name}</span>
-                            </a>
+                            </Link>
                           </li>
                         ))}
                       </ul>
                     </li>
                     <li className="mt-auto">
-                      <a
+                      <Link
                         href="/account/settings"
                         className="text-muted-foreground hover:bg-primary hover:text-primary-foreground group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
                       >
@@ -134,7 +135,7 @@ export function MobileDrawer() {
                           aria-hidden="true"
                         />
                         Settings
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </nav>

@@ -1,5 +1,3 @@
-"use server"
-
 import { Suspense } from "react"
 import { cookies } from "next/headers"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
@@ -14,8 +12,8 @@ import ClientBlockFallback from "@/components/fallbacks/ClientBlockFallback"
 export default async function Account() {
   const cookieStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookieStore })
-  const { data } = await supabase.from("clients").select(`*`)
-  const clients = data as Client[]
+  const { data: clientData } = await supabase.from("clients").select(`*`)
+  const clients = clientData as Client[]
   return (
     <main>
       <div className="relative isolate overflow-hidden ">

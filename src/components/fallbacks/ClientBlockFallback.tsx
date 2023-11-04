@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ClientItemFallback from "./ClientItemFallback";
 
 export default function ClientBlockFallback() {
@@ -8,12 +9,12 @@ export default function ClientBlockFallback() {
           <h2 className="text-muted-foreground text-base font-semibold leading-7">
             Recent clients
           </h2>
-          <a
+          <Link
             href="#"
             className="text-primary hover:text-primary text-sm font-semibold leading-6"
           >
             View all<span className="sr-only">, clients</span>
-          </a>
+          </Link>
         </div>
         <ul
           role="list"

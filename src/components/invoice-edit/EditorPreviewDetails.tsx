@@ -1,8 +1,9 @@
-import { useEditorInformationStore } from "@/lib/stores/editor-information"
 import { format } from "date-fns"
 
+import { useEditorTableStateStore } from "@/lib/stores/editor-table"
+
 export function EditorPreviewDetails() {
-  const info = useEditorInformationStore().information
+  const info = useEditorTableStateStore().invoice.information
   return (
     <>
       <h2 className="text-base font-semibold leading-6 text-black">
@@ -12,13 +13,19 @@ export function EditorPreviewDetails() {
         <div className="sm:pr-4">
           <dt className="inline text-gray-500">Issued on</dt>{" "}
           <dd className="inline text-gray-500">
-            <time dateTime="2023-23-01">{format(info.invoicedDate, "P")}</time>
+            {info.invoicedDate && (
+              <time dateTime="2023-23-01">
+                {format(info.invoicedDate, "P")}
+              </time>
+            )}
           </dd>
         </div>
         <div className="mt-2 sm:mt-0 sm:pl-4">
           <dt className="inline text-gray-500">Due on</dt>{" "}
           <dd className="inline text-gray-500">
-            <time dateTime="2023-31-01">{format(info.dueDate, "P")}</time>
+            {info.dueDate && (
+              <time dateTime="2023-31-01">{format(info.dueDate, "P")}</time>
+            )}
           </dd>
         </div>
         <div className="mt-6 border-t  pt-6 sm:pr-4">
