@@ -12,12 +12,14 @@ import { Button } from "../ui/button"
 
 interface InvoicePreviewHeaderProps {
   editVisible?: boolean
+  sendOrSave?: "send" | "save"
   info: Invoice
 }
 
 const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
   editVisible = true,
   info,
+  sendOrSave = "send",
 }) => {
   return (
     <header className="relative isolate">
@@ -64,7 +66,11 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
                 <Button variant="outline">Edit</Button>
               </Link>
             )}
-            <Button>Send</Button>
+            {sendOrSave === "send" ? (
+              <Button>Send</Button>
+            ) : (
+              <Button>Save</Button>
+            )}
 
             <Menu as="div" className="relative sm:hidden">
               <Menu.Button className="-m-3 block p-3">

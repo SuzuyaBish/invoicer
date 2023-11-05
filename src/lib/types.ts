@@ -15,8 +15,8 @@ export type Invoice = {
 
 export type InvoiceInformation = {
   title: string
-  invoicedDate: number
-  dueDate: number
+  invoicedDate: string
+  dueDate: string
   currency: string
   from: UserInfo
   to: UserInfo

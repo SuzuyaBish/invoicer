@@ -1,4 +1,3 @@
-import { useEditorInformationStore } from "@/lib/stores/editor-information"
 import { useEditorTableStateStore } from "@/lib/stores/editor-table"
 
 import DatePicker from "../DatePicker"
@@ -68,7 +67,7 @@ export default function EditorGeneral() {
         <div className="grid gap-y-3">
           <Label>Invoiced Date</Label>
           <DatePicker
-            date={info.invoicedDate === undefined ? new Date(Date.now()) : new Date(info.invoicedDate)}
+            date={info.invoicedDate === "" ? null : info.invoicedDate}
             setDate={(date) => {
               const newInvoice = {
                 ...table.invoice,
@@ -84,8 +83,9 @@ export default function EditorGeneral() {
         <div className="grid gap-y-3">
           <Label>Due Date</Label>
           <DatePicker
-            date={new Date(info.dueDate) || Date.now()}
+            date={info.dueDate === "" ? null : info.dueDate}
             setDate={(date) => {
+              console.log(date)
               const newInvoice = {
                 ...table.invoice,
                 information: {

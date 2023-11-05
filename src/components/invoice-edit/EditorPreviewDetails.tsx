@@ -1,4 +1,5 @@
 import { format } from "date-fns"
+import moment from "moment"
 
 import { useEditorTableStateStore } from "@/lib/stores/editor-table"
 
@@ -15,7 +16,7 @@ export function EditorPreviewDetails() {
           <dd className="inline text-gray-500">
             {info.invoicedDate && (
               <time dateTime="2023-23-01">
-                {format(info.invoicedDate, "P")}
+                {format(moment(info.invoicedDate).toDate(), "P")}
               </time>
             )}
           </dd>
@@ -24,7 +25,7 @@ export function EditorPreviewDetails() {
           <dt className="inline text-gray-500">Due on</dt>{" "}
           <dd className="inline text-gray-500">
             {info.dueDate && (
-              <time dateTime="2023-31-01">{format(info.dueDate, "P")}</time>
+              <time dateTime="2023-31-01">{format(moment(info.dueDate).toDate(), "P")}</time>
             )}
           </dd>
         </div>

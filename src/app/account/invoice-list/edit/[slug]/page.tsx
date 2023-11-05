@@ -30,7 +30,7 @@ export default function InvoiceEdit({ params }: { params: { slug: string } }) {
     <div className="flex min-h-full flex-col">
       <div className="mx-auto flex w-full items-start gap-x-8 px-4 sm:px-6 lg:px-8">
         <main className="flex w-full flex-col space-y-5 xl:w-[calc(0.3_*_100vw)]">
-          <InvoicePreviewHeader editVisible={false} info={tableState.invoice} />
+          <InvoicePreviewHeader sendOrSave="save" editVisible={false} info={tableState.invoice} />
           <EditorTabs />
           <EditorTabViewer />
         </main>

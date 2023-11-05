@@ -3,6 +3,7 @@
 import { FC } from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
+import moment from "moment"
 
 import { useEditorInformationStore } from "@/lib/stores/editor-information"
 import { cn } from "@/lib/utils"
@@ -15,8 +16,8 @@ import {
 } from "@/components/ui/popover"
 
 interface DatePickerProps {
-  date: Date 
-  setDate: (date: number) => void
+  date: string | null
+  setDate: (date: string) => void
 }
 
 const DatePicker: FC<DatePickerProps> = ({ date, setDate }) => {
@@ -32,15 +33,17 @@ const DatePicker: FC<DatePickerProps> = ({ date, setDate }) => {
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date.toString()}
+          {date ? format(moment(date).toDate(), "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
-          selected={date}
+          selected={new Date(date!)}
           onSelect={(date) => {
-            setDate(date !== undefined ? Date.parse(date.toISOString()) : Date.now())
+            const now = moment()
+            const pickedMoment = moment(date?.toDateString())
+            setDate(date !== undefined ? pickedMoment.format() : now.format())
           }}
           initialFocus
         />
