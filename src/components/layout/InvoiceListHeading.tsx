@@ -4,7 +4,9 @@ import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { tabs } from "@/constants/nav-constants"
 import { classNames } from "@/constants/tailwind-constants"
+import { AnimatePresence, motion } from "framer-motion"
 
+import PageTitles from "../PageTitles"
 import { Button } from "../ui/button"
 
 export default function InvoiceListHeading() {
@@ -14,9 +16,7 @@ export default function InvoiceListHeading() {
   return (
     <div className="relative border-b pb-5 sm:pb-0">
       <div className="md:flex md:items-center md:justify-between">
-        <h3 className="text-foreground text-base font-semibold leading-6">
-          Invoices
-        </h3>
+        <PageTitles title="Invoices" />
         <div className="mt-3 flex md:absolute md:right-0 md:top-3 md:mt-0">
           <Button variant="secondary">Share</Button>
           <Button className="ml-3">Create</Button>
@@ -40,21 +40,39 @@ export default function InvoiceListHeading() {
         </div>
         <div className="hidden sm:block">
           <nav className="-mb-px flex space-x-8">
-            {tabs.map((tab) => (
-              <Link
-                key={tab.name}
-                href={tab.href}
-                className={classNames(
-                  path === tab.href
-                    ? "border-primary text-foreground"
-                    : "border-transparent text-muted-foreground hover:border-muted-foreground hover:text-foreground",
-                  "whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium"
-                )}
-                aria-current={path === tab.href ? "page" : undefined}
-              >
-                {tab.name}
-              </Link>
-            ))}
+            <AnimatePresence>
+              {tabs.map((tab, index) => (
+                <Link
+                  key={tab.name}
+                  href={tab.href}
+                  className={classNames(
+                    path === tab.href
+                      ? "border-primary text-foreground"
+                      : "border-transparent text-muted-foreground hover:border-muted-foreground hover:text-foreground",
+                    "whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium"
+                  )}
+                  aria-current={path === tab.href ? "page" : undefined}
+                >
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0, y: -20 },
+                      visible: (idx) => ({
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                          delay: idx * 0.05,
+                        },
+                      }),
+                    }}
+                    initial="hidden"
+                    animate="visible"
+                    custom={index}
+                  >
+                    {tab.name}
+                  </motion.div>
+                </Link>
+              ))}
+            </AnimatePresence>
           </nav>
         </div>
       </div>

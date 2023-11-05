@@ -5,7 +5,8 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 
 import { Client } from "@/lib/types"
 import { Button } from "@/components/ui/button"
-import ClientBlock from "@/components/clients/ClientBlock"
+import ClientList from "@/components/clients/ClientList"
+import PageTitles from "@/components/PageTitles"
 
 export default async function ClientsPage() {
   const cookieStore = cookies()
@@ -15,17 +16,14 @@ export default async function ClientsPage() {
   return (
     <div className="relative pb-5 sm:pb-0">
       <div className="md:flex md:items-center md:justify-between">
-        <h3 className="text-foreground text-base font-semibold leading-6">
-          Clients
-        </h3>
+        <PageTitles title="Clients" />
         <div className="mt-3 flex md:absolute md:right-0 md:mt-0">
           <Button>Create</Button>
         </div>
       </div>
+
       <ul className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
-        {clients.map((client) => (
-          <ClientBlock key={client.name} {...client} />
-        ))}
+        <ClientList clients={clients} />
       </ul>
     </div>
   )

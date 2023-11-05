@@ -4,6 +4,7 @@ import { FC } from "react"
 import Link from "next/link"
 import { statuses } from "@/constants/constants"
 import { classNames } from "@/constants/tailwind-constants"
+import { motion } from "framer-motion"
 import { Edit } from "lucide-react"
 
 import {
@@ -16,12 +17,33 @@ import { Client } from "@/lib/types"
 import { Button } from "../ui/button"
 import UserAvatar from "../UserAvatar"
 
-interface ClientBlockProps extends Client {}
+interface ClientBlockProps extends Client {
+  idx: number
+}
 
 const ClientBlock: FC<ClientBlockProps> = (props) => {
   return (
-    <li key={props.id} className="overflow-hidden rounded-xl border">
-      <div className="bg-muted flex items-center gap-x-4 border-b border-gray-900/5 p-6">
+    <motion.li
+      variants={{
+        hidden: { opacity: 0, y: -20 },
+        visible: (idx) => ({
+          opacity: 1,
+          y: 0,
+          transition: {
+            delay: idx * 0.05,
+          },
+        }),
+      }}
+      initial="hidden"
+      animate="visible"
+      custom={props.idx}
+      key={props.id}
+      className="overflow-hidden rounded-xl border"
+    >
+      <div
+        key={props.id}
+        className="bg-muted flex items-center gap-x-4 border-b border-gray-900/5 p-6"
+      >
         <UserAvatar />
         <div className="text-foreground text-sm font-medium leading-6">
           {props.name}
@@ -67,7 +89,7 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
           </dd>
         </div>
       </dl>
-    </li>
+    </motion.li>
   )
 }
 
