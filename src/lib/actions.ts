@@ -3,7 +3,7 @@
 import { cookies } from "next/headers"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 
-import { Client, Invoice } from "./types"
+import { Invoice } from "./types"
 
 const cookieStore = cookies()
 const supabase = createServerComponentClient({ cookies: () => cookieStore })
@@ -39,7 +39,12 @@ export async function createInvoice(
               zipCode: "",
             },
           },
-          table: {},
+          table: {
+            subTotal: "",
+            tax: "",
+            total: "",
+            items: [],
+          },
         },
       ])
       .select("*")

@@ -3,6 +3,7 @@
 import { useState } from "react"
 
 import { useEditorTableStateStore } from "@/lib/stores/editor-table"
+import { InvoiceTableItem } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -16,7 +17,6 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { InvoiceTableItem } from "@/lib/types"
 
 export function FieldDialog() {
   const table = useEditorTableStateStore()

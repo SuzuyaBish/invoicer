@@ -35,11 +35,14 @@ export const useEditorTableStateStore = create<EditorTableState>(
         },
       }))
     },
-    insertInvoiceItem: (item: InvoiceTableItem) => {
+    insertInvoiceItem: (item) => {
       set((state) => ({
         invoice: {
           ...state.invoice,
-          items: [...state.invoice.table.items, item],
+          table: {
+            ...state.invoice.table,
+            items: [...state.invoice.table.items, item],
+          },
         },
       }))
     },
