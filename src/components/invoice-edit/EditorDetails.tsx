@@ -1,12 +1,12 @@
-import { useEditorInformationStore } from "@/lib/stores/editor-information"
 import { useEditorTableStateStore } from "@/lib/stores/editor-table"
+import { Invoice } from "@/lib/types"
 
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 
 export default function EditorDetails() {
   const table = useEditorTableStateStore()
-  const info = useEditorInformationStore()
+  const info = table.invoice.information
   return (
     <div className="flex flex-col space-y-12">
       <div>
@@ -24,8 +24,17 @@ export default function EditorDetails() {
           <Input
             placeholder="Jane Doe"
             type="text"
-            value={info.information.from.name}
-            onChange={(e) => info.setFromName(e.target.value)}
+            value={info.from.name}
+            onChange={(e) => {
+              const newInvoice: Invoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  from: { ...info.from, name: e.target.value },
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
@@ -33,8 +42,17 @@ export default function EditorDetails() {
           <Input
             placeholder="123 Main St"
             type="text"
-            value={info.information.from.address}
-            onChange={(e) => info.setFromAddress(e.target.value)}
+            value={info.from.address}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  from: { ...info.from, address: e.target.value },
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
@@ -42,8 +60,17 @@ export default function EditorDetails() {
           <Input
             placeholder="Buffalo"
             type="text"
-            value={info.information.from.city}
-            onChange={(e) => info.setFromCity(e.target.value)}
+            value={info.from.city}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  from: { ...info.from, city: e.target.value },
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
@@ -51,8 +78,17 @@ export default function EditorDetails() {
           <Input
             placeholder="New York"
             type="text"
-            value={info.information.from.state}
-            onChange={(e) => info.setFromState(e.target.value)}
+            value={info.from.state}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  from: { ...info.from, state: e.target.value },
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
@@ -60,8 +96,17 @@ export default function EditorDetails() {
           <Input
             placeholder="10001"
             type="text"
-            value={info.information.from.zipCode}
-            onChange={(e) => info.setFromZipCode(e.target.value)}
+            value={info.from.zipCode}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  from: { ...info.from, zipCode: e.target.value },
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
       </form>
@@ -81,8 +126,17 @@ export default function EditorDetails() {
           <Input
             placeholder="Jane Doe"
             type="text"
-            value={info.information.to.name}
-            onChange={(e) => info.setToName(e.target.value)}
+            value={info.to.name}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  to: { ...info.to, name: e.target.value },
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
@@ -90,8 +144,17 @@ export default function EditorDetails() {
           <Input
             placeholder="123 Main St"
             type="text"
-            value={info.information.to.address}
-            onChange={(e) => info.setToAddress(e.target.value)}
+            value={info.to.address}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  to: { ...info.to, address: e.target.value },
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
@@ -99,8 +162,17 @@ export default function EditorDetails() {
           <Input
             placeholder="Buffalo"
             type="text"
-            value={info.information.to.city}
-            onChange={(e) => info.setToCity(e.target.value)}
+            value={info.to.city}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  to: { ...info.to, city: e.target.value },
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
@@ -108,8 +180,17 @@ export default function EditorDetails() {
           <Input
             placeholder="New York"
             type="text"
-            value={info.information.to.state}
-            onChange={(e) => info.setToState(e.target.value)}
+            value={info.to.state}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  to: { ...info.to, state: e.target.value },
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
         <div className="grid gap-y-3">
@@ -117,8 +198,17 @@ export default function EditorDetails() {
           <Input
             placeholder="10001"
             type="text"
-            value={info.information.to.zipCode}
-            onChange={(e) => info.setToZipCode(e.target.value)}
+            value={info.to.zipCode}
+            onChange={(e) => {
+              const newInvoice = {
+                ...table.invoice,
+                information: {
+                  ...info,
+                  to: { ...info.to, zipCode: e.target.value },
+                },
+              }
+              table.updateInvoice(newInvoice)
+            }}
           />
         </div>
       </form>
