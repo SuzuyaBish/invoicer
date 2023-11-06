@@ -1,13 +1,15 @@
 "use client"
 
-import { FC, Fragment } from "react"
+import { FC, Fragment, useState } from "react"
 import Link from "next/link"
 import { classNames } from "@/constants/tailwind-constants"
 import { Menu, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline"
 
+import { saveInvoice } from "@/lib/actions"
 import { Invoice } from "@/lib/types"
 
+import { Icons } from "../Icons"
 import { Button } from "../ui/button"
 
 interface InvoicePreviewHeaderProps {
@@ -21,6 +23,7 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
   info,
   sendOrSave = "send",
 }) => {
+  const [loading, setLoading] = useState(false)
   return (
     <header className="relative isolate">
       <div
@@ -58,7 +61,9 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
             </h1>
           </div>
           <div className="flex items-center gap-x-4 sm:gap-x-6">
-            <Button variant="ghost">Copy URL</Button>
+            <Button variant="ghost" disabled={loading}>
+              Copy URL
+            </Button>
             {editVisible && (
               <Link
                 href={`/account/invoice-list/edit/${info.id}?section=general`}
@@ -69,7 +74,18 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
             {sendOrSave === "send" ? (
               <Button>Send</Button>
             ) : (
-              <Button>Save</Button>
+              <Button
+                disabled={loading}
+                onClick={async () => {
+                  setLoading(true)
+                  await saveInvoice(info).then(() => setLoading(false))
+                }}
+              >
+                {loading && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Save
+              </Button>
             )}
 
             <Menu as="div" className="relative sm:hidden">

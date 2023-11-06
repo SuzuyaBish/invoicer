@@ -17,7 +17,9 @@ export const useEditorTableStateStore = create<EditorTableState>(
   (set, get) => ({
     invoice: {} as Invoice,
     setInfo: (info: Invoice) => {
+      set({ invoice: {} as Invoice })
       set({ invoice: info })
+      console.log(get().invoice)
     },
     setTaxRate: (rate) => {
       set((state) => ({

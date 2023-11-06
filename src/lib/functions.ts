@@ -1,4 +1,5 @@
-import { InvoiceTableItem } from "./types"
+import { SupabaseClient } from "@supabase/auth-helpers-nextjs"
+import { Invoice, InvoiceTableItem } from "./types"
 
 export const calculateSubTotal = (table: InvoiceTableItem[]) => {
   let sum = 0
@@ -22,4 +23,27 @@ export const calculateTotal = (subTotal: number, tax: number) => {
   return Number.isNaN(subTotal + tax)
     ? -1
     : Math.round((subTotal + tax) * 100) / 100
+}
+
+
+export const fetchInvoiceById = async (id: string, supabase: SupabaseClient): Promise<Invoice | null> => {
+  try {
+    const { data, error } = await supabase
+      .from("invoices")
+      .select("*")
+      .eq("id", id)
+      .single()
+
+    if (error) {
+      console.log(error.message)
+      return null
+    }
+    if (data) {
+      console.log(data)
+      return data
+    }
+  } catch (error) {
+    return null
+  }
+  return null
 }
