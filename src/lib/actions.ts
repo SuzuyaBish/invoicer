@@ -62,13 +62,18 @@ export async function createInvoice(
   return "success"
 }
 
-
 export const saveInvoice = async (invoice: Invoice): Promise<boolean> => {
   try {
     const { data, error } = await supabase
       .from("invoices")
       .update(invoice)
       .eq("id", invoice.id)
+      .single()
+
+    const { data: clientData, error: clientError } = await supabase
+      .from("clients")
+      .update({ lastInvoice: invoice.id })
+      .eq("id", invoice.client)
       .single()
 
     if (error) {
