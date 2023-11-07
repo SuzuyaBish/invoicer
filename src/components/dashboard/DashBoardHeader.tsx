@@ -17,7 +17,7 @@ interface DashBoardHeaderProps {
 const DashBoardHeader: FC<DashBoardHeaderProps> = ({ clients }) => {
   return (
     <header className="pb-4 sm:pb-6">
-      <div className="mx-auto flex flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
+      <div className="mx-auto flex flex-wrap items-center gap-6 sm:flex-nowrap">
         <h1 className="text-foreground text-base font-semibold leading-7">
           Cashflow
         </h1>

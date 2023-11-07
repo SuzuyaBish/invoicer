@@ -4,6 +4,7 @@ import {
   CreditCardIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline"
+import { format } from "date-fns"
 
 import { Invoice } from "@/lib/types"
 
@@ -54,7 +55,9 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = (props) => {
               />
             </dt>
             <dd className="text-muted-foreground text-sm leading-6">
-              <time dateTime="2023-01-31">{props.information.invoicedDate}</time>
+              <time dateTime="2023-01-31">
+                {format(new Date(props.information.invoicedDate), "PP")}
+              </time>
             </dd>
           </div>
           <div className="mt-4 flex w-full flex-none gap-x-4 px-6">

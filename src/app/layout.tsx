@@ -1,12 +1,12 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import { ThemeProvider } from "@/providers/ThemeProvider"
 
 import { cn } from "@/lib/utils"
+import { Toaster } from "@/components/ui/toaster"
+import { TailwindIndicator } from "@/components/TailwindIndicator"
 
 import "./globals.css"
-import { ThemeProvider } from "@/providers/ThemeProvider"
-import { TailwindIndicator } from "@/components/TailwindIndicator"
-import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,7 +25,7 @@ export default function RootLayout({
       <head />
       <body
         className={cn(
-          "bg-background min-h-screen antialiased",
+          "bg-background min-h-screen scroll-smooth antialiased",
           inter.className
         )}
       >

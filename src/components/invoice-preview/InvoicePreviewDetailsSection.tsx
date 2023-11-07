@@ -1,6 +1,7 @@
 "use client"
 
 import { FC } from "react"
+import { format } from "date-fns"
 import { AnimatePresence, motion } from "framer-motion"
 
 import { InvoiceInformation } from "@/lib/types"
@@ -15,7 +16,7 @@ const InvoicePreviewDetailsSection: FC<InvoicePreviewDetailsSectionProps> = (
       <motion.div
         key={props.title}
         initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0}}
+        animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
       >
         <h2 className="text-foreground text-base font-semibold leading-6">
@@ -25,13 +26,17 @@ const InvoicePreviewDetailsSection: FC<InvoicePreviewDetailsSectionProps> = (
           <div className="sm:pr-4">
             <dt className="text-muted-foreground inline">Issued on</dt>{" "}
             <dd className="text-muted-foreground inline">
-              <time dateTime="2023-23-01">{props.invoicedDate}</time>
+              <time dateTime="2023-23-01">
+                {format(new Date(props.invoicedDate), "PP")}
+              </time>
             </dd>
           </div>
           <div className="mt-2 sm:mt-0 sm:pl-4">
             <dt className="text-muted-foreground inline">Due on</dt>{" "}
             <dd className="text-muted-foreground inline">
-              <time dateTime="2023-31-01">{props.dueDate}</time>
+              <time dateTime="2023-31-01">
+                {format(new Date(props.dueDate), "PP")}
+              </time>
             </dd>
           </div>
           <div className="mt-6 border-t  pt-6 sm:pr-4">

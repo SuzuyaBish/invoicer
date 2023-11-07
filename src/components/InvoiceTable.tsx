@@ -2,6 +2,7 @@ import { cookies } from "next/headers"
 import Link from "next/link"
 import { classNames } from "@/constants/tailwind-constants"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { format } from "date-fns"
 
 import {
   calculateSubTotal,
@@ -99,7 +100,10 @@ export default async function InvoiceTable({
                           "whitespace-nowrap hidden px-3 py-4 text-sm text-foreground lg:table-cell"
                         )}
                       >
-                        {item.information.invoicedDate || "N/A"}
+                        {format(
+                          new Date(item.information.invoicedDate),
+                          "PP"
+                        ) || "N/A"}
                       </td>
                       <td
                         className={classNames(
@@ -132,7 +136,7 @@ export default async function InvoiceTable({
                       >
                         <Link
                           href={`/account/invoice-list/preview/${item.id}`}
-                          className="text-primary"
+                          className="text-muted-foreground bg-muted hover:text-foreground rounded p-2"
                         >
                           Preview<span className="sr-only">, {item.id}</span>
                         </Link>

@@ -60,32 +60,46 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
         <div className="flex justify-between gap-x-4 py-3">
           <dt className="text-foreground">Last invoice</dt>
           <dd className="text-muted-foreground">
-            <time dateTime={props.lastInvoice.information.dueDate}>
-              {props.lastInvoice.information.dueDate}
-            </time>
+            {props.lastInvoice !== null ? (
+              <time dateTime={props.lastInvoice?.information.dueDate}>
+                {props?.lastInvoice?.information.dueDate}
+              </time>
+            ) : (
+              <span className="text-foreground">N/A</span>
+            )}
           </dd>
         </div>
         <div className="flex justify-between gap-x-4 py-3">
           <dt className="text-foreground">Amount</dt>
           <dd className="flex items-start gap-x-2">
-            <div className="text-muted-foreground font-medium">
-              {props.lastInvoice.information.currency}{" "}
-              {calculateTotal(
-                calculateSubTotal(props.lastInvoice.table.items),
-                calculateTax(
-                  calculateSubTotal(props.lastInvoice.table.items),
-                  Number(props.lastInvoice.table.tax)
-                )
-              )}
-            </div>
-            <div
-              className={classNames(
-                statuses[props.lastInvoice.status],
-                "rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset"
-              )}
-            >
-              {props.lastInvoice.status}
-            </div>
+            {props.lastInvoice !== null ? (
+              <div className="text-muted-foreground font-medium">
+                {props.lastInvoice?.information.currency}{" "}
+                {props.lastInvoice !== undefined && props !== null && (
+                  <>
+                    {calculateTotal(
+                      calculateSubTotal(props?.lastInvoice?.table.items),
+                      calculateTax(
+                        calculateSubTotal(props?.lastInvoice?.table.items),
+                        Number(props?.lastInvoice?.table.tax)
+                      )
+                    )}
+                  </>
+                )}
+              </div>
+            ) : (
+              <span className="text-foreground">N/A</span>
+            )}
+            {props.lastInvoice !== null && (
+              <div
+                className={classNames(
+                  statuses[props?.lastInvoice?.status],
+                  "rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset"
+                )}
+              >
+                {props?.lastInvoice?.status}
+              </div>
+            )}
           </dd>
         </div>
       </dl>
