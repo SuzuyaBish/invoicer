@@ -16,6 +16,7 @@ import { Client } from "@/lib/types"
 
 import { Button } from "../ui/button"
 import UserAvatar from "../UserAvatar"
+import { format } from "date-fns"
 
 interface ClientBlockProps extends Client {
   idx: number
@@ -62,7 +63,7 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
           <dd className="text-muted-foreground">
             {props.lastInvoice !== null ? (
               <time dateTime={props.lastInvoice?.information.dueDate}>
-                {props?.lastInvoice?.information.dueDate}
+                {format(new Date(props.lastInvoice?.information.dueDate), "PP")}
               </time>
             ) : (
               <span className="text-foreground">N/A</span>

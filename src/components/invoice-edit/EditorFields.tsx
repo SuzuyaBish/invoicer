@@ -72,10 +72,10 @@ function FieldList({
                     >
                       <div className="h-2 w-2 rounded-full bg-current" />
                     </div>
-                    <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
+                    <h2 className="text-foreground min-w-0 text-sm font-semibold leading-6">
                       <div className="flex gap-x-2">
                         <span className="truncate">{deployment.title}</span>
-                        <span className="text-gray-400">/</span>
+                        <span className="text-muted-foreground">/</span>
                         <span className="whitespace-nowrap">
                           {deployment.hours} hours
                         </span>
@@ -83,11 +83,11 @@ function FieldList({
                       </div>
                     </h2>
                   </div>
-                  <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
+                  <div className="text-muted-foreground mt-3 flex items-center gap-x-2.5 text-xs leading-5">
                     <p className="truncate">{deployment.description}</p>
                     <svg
                       viewBox="0 0 2 2"
-                      className="h-0.5 w-0.5 flex-none fill-gray-300"
+                      className="fill-muted-foreground h-0.5 w-0.5 flex-none"
                     >
                       <circle cx={1} cy={1} r={1} />
                     </svg>
@@ -107,7 +107,7 @@ function FieldList({
                   {deployment.price}
                 </div>
                 <ChevronRightIcon
-                  className="h-5 w-5 flex-none text-gray-400"
+                  className="text-muted-foreground h-5 w-5 flex-none"
                   aria-hidden="true"
                 />
               </li>
