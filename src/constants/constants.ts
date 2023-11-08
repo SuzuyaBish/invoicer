@@ -3,7 +3,7 @@ import { Client, InvoiceTable } from "@/lib/types"
 export const clients: Client[] = [
   {
     id: 1,
-    name: "Tuple",
+    first_name: "Tuple",
     imageUrl: "https://tailwindui.com/img/logos/48x48/tuple.svg",
     lastInvoice: {
       date: "December 13, 2022",
@@ -14,7 +14,7 @@ export const clients: Client[] = [
   },
   {
     id: 2,
-    name: "SavvyCal",
+    first_name: "SavvyCal",
     imageUrl: "https://tailwindui.com/img/logos/48x48/savvycal.svg",
     lastInvoice: {
       date: "January 22, 2023",
@@ -25,7 +25,7 @@ export const clients: Client[] = [
   },
   {
     id: 3,
-    name: "Reform",
+    first_name: "Reform",
     imageUrl: "https://tailwindui.com/img/logos/48x48/reform.svg",
     lastInvoice: {
       date: "January 23, 2023",

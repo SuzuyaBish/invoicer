@@ -1,4 +1,5 @@
 import { FC } from "react"
+import Link from "next/link"
 import {
   CalendarDaysIcon,
   CreditCardIcon,
@@ -12,7 +13,6 @@ import {
   calculateTotal,
 } from "@/lib/functions"
 import { Invoice } from "@/lib/types"
-import Link from "next/link"
 
 interface InvoiceSummaryCardProps extends Invoice {}
 
@@ -39,8 +39,7 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = (props) => {
               Amount
             </dt>
             <dd className="text-foreground mt-1 text-base font-semibold leading-6">
-              {props.information.currency}{" "}
-              {total}
+              {props.information.currency} {total}
             </dd>
           </div>
           <div className="flex-none self-end px-6 pt-4">
@@ -58,7 +57,7 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = (props) => {
               />
             </dt>
             <dd className="text-foreground text-sm font-medium leading-6">
-              {props.client.name}
+              {props.client.first_name}
             </dd>
           </div>
           <div className="mt-4 flex w-full flex-none gap-x-4 px-6">

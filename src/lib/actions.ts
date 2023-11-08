@@ -3,7 +3,7 @@
 import { cookies } from "next/headers"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 
-import { Invoice } from "./types"
+import { Client, Invoice } from "./types"
 
 const cookieStore = cookies()
 const supabase = createServerComponentClient({ cookies: () => cookieStore })

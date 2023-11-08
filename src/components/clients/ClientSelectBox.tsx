@@ -43,8 +43,9 @@ const ClientSelectBox: FC<ClientSelectBoxProps> = ({
         >
           {value
             ? clients.find(
-                (client) => client.name.toLowerCase() === value.toLowerCase()
-              )?.name
+                (client) =>
+                  client.first_name.toLowerCase() === value.toLowerCase()
+              )?.first_name
             : "Select client..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -57,13 +58,14 @@ const ClientSelectBox: FC<ClientSelectBoxProps> = ({
             {clients.map((client) => (
               <CommandItem
                 key={client.id}
-                value={client.name}
+                value={client.first_name}
                 onSelect={(currentValue: string) => {
                   setValue(currentValue === value ? "" : currentValue)
 
                   const selectedClientId = clients.find(
                     (client) =>
-                      client.name.toLowerCase() === currentValue.toLowerCase()
+                      client.first_name.toLowerCase() ===
+                      currentValue.toLowerCase()
                   )?.id
                   console.log(selectedClientId)
 
@@ -74,10 +76,10 @@ const ClientSelectBox: FC<ClientSelectBoxProps> = ({
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === client.name ? "opacity-100" : "opacity-0"
+                    value === client.first_name ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {client.name}
+                {client.first_name}
               </CommandItem>
             ))}
           </CommandGroup>

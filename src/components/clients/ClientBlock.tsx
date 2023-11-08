@@ -4,6 +4,7 @@ import { FC } from "react"
 import Link from "next/link"
 import { statuses } from "@/constants/constants"
 import { classNames } from "@/constants/tailwind-constants"
+import { format } from "date-fns"
 import { motion } from "framer-motion"
 import { Edit } from "lucide-react"
 
@@ -16,7 +17,6 @@ import { Client } from "@/lib/types"
 
 import { Button } from "../ui/button"
 import UserAvatar from "../UserAvatar"
-import { format } from "date-fns"
 
 interface ClientBlockProps extends Client {
   idx: number
@@ -45,12 +45,15 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
         key={props.id}
         className="bg-muted flex items-center gap-x-4 border-b border-gray-900/5 p-6"
       >
-        <UserAvatar />
+        <UserAvatar
+          imageUrl={props.imageUrl}
+          userName={props.first_name + " " + props.last_name}
+        />
         <div className="text-foreground text-sm font-medium leading-6">
-          {props.name}
+          {props.first_name} {props.last_name}
         </div>
         <div className="ml-auto">
-          <Link href="/account/clients/edit">
+          <Link href={`/account/clients/edit/${props.id}`}>
             <Button variant="ghost">
               <Edit className="h-4 w-4" />
             </Button>
@@ -95,7 +98,7 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
               <div
                 className={classNames(
                   statuses[props?.lastInvoice?.status],
-                  "rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset"
+                  "rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset capitalize"
                 )}
               >
                 {props?.lastInvoice?.status}

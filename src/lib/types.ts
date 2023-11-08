@@ -1,8 +1,15 @@
 export type Client = {
   id: string
-  name: string
+  first_name: string
   imageUrl: string
   lastInvoice: Invoice
+  about: string
+  last_name: string
+  email_address: string
+  street_address: string
+  city: string
+  state: string
+  zip: string
 }
 
 export type Invoice = {

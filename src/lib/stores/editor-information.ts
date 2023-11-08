@@ -6,8 +6,8 @@ import { SelectSingleEventHandler } from "react-day-picker"
 interface EditorInformationState {
   information: InvoiceInformation
   setTitle: (title: string) => void
-  setInvoicedDate: (date: number) => void
-  setDueDate: (date: number) => void
+  setInvoicedDate: (date: string) => void
+  setDueDate: (date: string) => void
   setFromName: (name: string) => void
   setFromAddress: (address: string) => void
   setFromCity: (city: string) => void
@@ -23,9 +23,10 @@ interface EditorInformationState {
 export const useEditorInformationStore = create<EditorInformationState>(
   (set, get) => ({
     information: {
-      dueDate: Date.now(),
-      invoicedDate: Date.now(),
+      dueDate: "",
+      invoicedDate: "",
       title: "",
+      currency: "",
       from: {
         name: "",
         address: "",

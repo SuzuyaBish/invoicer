@@ -31,7 +31,7 @@ export default async function DashboardRecentClientList() {
           className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8"
         >
           {clients.map((client) => (
-            <ClientBlock key={client.name} {...client} />
+            <ClientBlock key={client.first_name} {...client} />
           ))}
         </ul>
       </div>

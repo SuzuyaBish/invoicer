@@ -15,7 +15,7 @@ const ClientList: FC<ClientListProps> = ({ clients }) => {
   return (
     <AnimatePresence>
       {clients.map((client, idx) => (
-        <ClientBlock key={client.name} {...client} idx={idx} />
+        <ClientBlock key={client.first_name} {...client} idx={idx} />
       ))}
     </AnimatePresence>
   )

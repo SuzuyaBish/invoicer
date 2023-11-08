@@ -64,7 +64,7 @@ const InvoiceTableItems: FC<InvoiceTableItemsProps> = ({
                   "whitespace-nowrap hidden px-3 py-4 text-sm text-foreground sm:table-cell"
                 )}
               >
-                {item.client.name}
+                {item.client.first_name}
               </td>
               <td
                 className={classNames(
