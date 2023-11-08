@@ -10,6 +10,7 @@ import {
   calculateTotal,
 } from "@/lib/functions"
 import { Invoice } from "@/lib/types"
+import InvoiceTableItems from "./InvoiceTableItems"
 
 export default async function InvoiceTable({
   searchParams,
@@ -67,89 +68,7 @@ export default async function InvoiceTable({
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {items
-                  .filter((item) => {
-                    if (searchParams.tab === "all") {
-                      return item
-                    } else {
-                      return item.status === searchParams.tab
-                    }
-                  })
-                  .map((item, itemIdx) => (
-                    <tr key={item.id}>
-                      <td
-                        className={classNames(
-                          itemIdx !== items.length - 1 ? "border-b" : "",
-                          "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-foreground sm:pl-6 lg:pl-8"
-                        )}
-                      >
-                        INV# {item.id}
-                      </td>
-                      <td
-                        className={classNames(
-                          itemIdx !== items.length - 1 ? "border-b" : "",
-                          "whitespace-nowrap hidden px-3 py-4 text-sm text-foreground sm:table-cell"
-                        )}
-                      >
-                        {item.client.name}
-                      </td>
-                      <td
-                        className={classNames(
-                          itemIdx !== items.length - 1 ? "border-b" : "",
-                          "whitespace-nowrap hidden px-3 py-4 text-sm text-foreground lg:table-cell"
-                        )}
-                      >
-                        {item.information.invoicedDate !== "" ? (
-                          <>
-                            {format(
-                              new Date(item.information.invoicedDate),
-                              "PP"
-                            )}
-                          </>
-                        ) : (
-                          <div>N/A</div>
-                        )}
-                      </td>
-                      <td
-                        className={classNames(
-                          itemIdx !== items.length - 1 ? "border-b" : "",
-                          "whitespace-nowrap px-3 py-4 text-sm text-foreground capitalize"
-                        )}
-                      >
-                        {item.status}
-                      </td>
-                      <td
-                        className={classNames(
-                          itemIdx !== items.length - 1 ? "border-b" : "",
-                          "whitespace-nowrap px-3 py-4 text-sm text-foreground"
-                        )}
-                      >
-                        {item.information.currency}{" "}
-                        {calculateTotal(
-                          calculateSubTotal(item.table.items),
-                          calculateTax(
-                            calculateSubTotal(item.table.items),
-                            Number(item.table.tax)
-                          )
-                        )}
-                      </td>
-                      <td
-                        className={classNames(
-                          itemIdx !== items.length - 1 ? "border-b" : "",
-                          "relative whitespace-nowrap py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8"
-                        )}
-                      >
-                        <Link
-                          href={`/account/invoice-list/preview/${item.id}`}
-                          className="text-muted-foreground bg-muted hover:text-foreground rounded p-2"
-                        >
-                          Preview<span className="sr-only">, {item.id}</span>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
+              <InvoiceTableItems items={items} searchParams={searchParams} />
             </table>
           </div>
         </div>

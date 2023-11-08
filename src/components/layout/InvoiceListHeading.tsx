@@ -53,7 +53,7 @@ export default function InvoiceListHeading({ clients }: { clients: Client[] }) {
                     path === tab.href
                       ? "border-primary text-foreground"
                       : "border-transparent text-muted-foreground hover:border-muted-foreground hover:text-foreground",
-                    "whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium"
+                    "whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium transition-colors duration-300"
                   )}
                   aria-current={path === tab.href ? "page" : undefined}
                 >
