@@ -12,6 +12,7 @@ import {
   calculateTotal,
 } from "@/lib/functions"
 import { Invoice } from "@/lib/types"
+import Link from "next/link"
 
 interface InvoiceSummaryCardProps extends Invoice {}
 
@@ -92,12 +93,12 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = (props) => {
           </div>
         </dl>
         <div className="mt-6 border-t  p-6">
-          <a
-            href="#"
+          <Link
+            href={`/account/invoice-list/download/${props.id}`}
             className="text-foreground text-sm font-semibold leading-6"
           >
-            Download receipt <span aria-hidden="true">&rarr;</span>
-          </a>
+            Download invoice <span aria-hidden="true">&rarr;</span>
+          </Link>
         </div>
       </div>
     </div>
