@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { AnimatePresence, motion } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 
 import { fetchInvoiceById } from "@/lib/functions"
@@ -44,12 +45,21 @@ export default function InvoiceEdit({ params }: { params: { slug: string } }) {
             <ArrowLeft className="mr-2 h-4 w-4" />
             <div>Go Back</div>
           </Button>
-          <InvoicePreviewHeader
-            sendOrSave="save"
-            copyVisible={false}
-            editVisible={false}
-            info={tableState.invoice}
-          />
+          <AnimatePresence>
+            <motion.div
+              key="header"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <InvoicePreviewHeader
+                sendOrSave="save"
+                copyVisible={false}
+                editVisible={false}
+                info={tableState.invoice}
+              />
+            </motion.div>
+          </AnimatePresence>
           <EditorTabs />
           <EditorTabViewer />
         </main>

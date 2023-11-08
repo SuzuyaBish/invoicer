@@ -1,6 +1,7 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
+import { AnimatePresence, motion } from "framer-motion"
 
 import EditorDetails from "./EditorDetails"
 import EditorFields from "./EditorFields"
@@ -15,16 +16,24 @@ export default function EditorTabViewer() {
     <EditorFields key={3} />,
   ]
   return (
-    <div className="border-b pb-12">
-      {
-        tabPages[
-          currentSection === "general"
-            ? 0
-            : currentSection === "details"
-            ? 1
-            : 2
-        ]
-      }
-    </div>
+    <AnimatePresence>
+      <motion.div
+        key={currentSection}
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ ease: "easeInOut", duration: 0.3 }}
+        className="border-b pb-12"
+      >
+        {
+          tabPages[
+            currentSection === "general"
+              ? 0
+              : currentSection === "details"
+              ? 1
+              : 2
+          ]
+        }
+      </motion.div>
+    </AnimatePresence>
   )
 }
