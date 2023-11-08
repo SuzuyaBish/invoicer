@@ -14,8 +14,7 @@ export default function EditorDetails() {
           Your Information
         </h2>
         <p className="text-muted-foreground mt-1 text-sm leading-6">
-          This information will be displayed publicly so be careful what you
-          share.
+          This is your personal information including your name and address.
         </p>
       </div>
       <form className="mt-10 grid grid-cols-2 gap-5">
@@ -116,8 +115,7 @@ export default function EditorDetails() {
           Client Information
         </h2>
         <p className="text-muted-foreground mt-1 text-sm leading-6">
-          This information will be displayed publicly so be careful what you
-          share.
+          This is the clients information including their name and address.
         </p>
       </div>
       <form className="mt-10 grid grid-cols-2 gap-5">

@@ -5,6 +5,7 @@ import Link from "next/link"
 import { classNames } from "@/constants/tailwind-constants"
 import { Menu, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline"
+import { Save } from "lucide-react"
 
 import { saveInvoice } from "@/lib/actions"
 import { Invoice } from "@/lib/types"
@@ -15,6 +16,7 @@ import { Button } from "../ui/button"
 interface InvoicePreviewHeaderProps {
   editVisible?: boolean
   sendOrSave?: "send" | "save"
+  copyVisible?: boolean
   info: Invoice
 }
 
@@ -22,6 +24,7 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
   editVisible = true,
   info,
   sendOrSave = "send",
+  copyVisible = true,
 }) => {
   const [loading, setLoading] = useState(false)
   return (
@@ -61,9 +64,11 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
             </h1>
           </div>
           <div className="flex items-center gap-x-4 sm:gap-x-6">
-            <Button variant="ghost" disabled={loading}>
-              Copy URL
-            </Button>
+            {copyVisible && (
+              <Button variant="ghost" disabled={loading}>
+                Copy URL
+              </Button>
+            )}
             {editVisible && (
               <Link
                 href={`/account/invoice-list/edit/${info.id}?section=general`}
@@ -81,8 +86,10 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
                   await saveInvoice(info).then(() => setLoading(false))
                 }}
               >
-                {loading && (
+                {loading ? (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="mr-2 h-4 w-4" />
                 )}
                 Save
               </Button>

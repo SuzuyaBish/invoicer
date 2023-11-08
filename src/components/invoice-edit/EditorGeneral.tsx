@@ -3,6 +3,7 @@ import { useEditorTableStateStore } from "@/lib/stores/editor-table"
 import DatePicker from "../DatePicker"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
+import DeleteButton from "./DeleteButton"
 
 export default function EditorGeneral() {
   const table = useEditorTableStateStore()
@@ -14,8 +15,8 @@ export default function EditorGeneral() {
           General Information
         </h2>
         <p className="text-muted-foreground mt-1 text-sm leading-6">
-          This information will be displayed publicly so be careful what you
-          share.
+          This is general information that will be applied throughout the
+          invoice.
         </p>
       </div>
       <form className="mt-10 grid grid-cols-2 gap-5">
@@ -99,6 +100,17 @@ export default function EditorGeneral() {
           />
         </div>
       </form>
+      <div>
+        <h2 className="text-base font-semibold leading-7 text-rose-500">
+          Danger Zone
+        </h2>
+        <p className="text-muted-foreground mt-1 text-sm leading-6">
+          The actions here cannot be undone.
+        </p>
+        <div className="mt-10">
+          <DeleteButton info={table.invoice} />
+        </div>
+      </div>
     </div>
   )
 }

@@ -28,8 +28,7 @@ export default function EditorFields() {
             Field Values
           </h2>
           <p className="text-muted-foreground mt-1 max-w-sm text-sm leading-6">
-            This information will be displayed publicly so be careful what you
-            share.
+            These are the fields that will be used in the table of your invoice.
           </p>
         </div>
 

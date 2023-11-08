@@ -88,3 +88,24 @@ export const saveInvoice = async (invoice: Invoice): Promise<boolean> => {
   }
   return false
 }
+
+export const deleteInvoice = async (id: string): Promise<boolean> => {
+  try {
+    const { data, error } = await supabase
+      .from("invoices")
+      .delete()
+      .eq("id", id)
+      .single()
+
+    if (error) {
+      console.log(error.message)
+      return false
+    }
+    if (data) {
+      return true
+    }
+  } catch (error) {
+    return false
+  }
+  return false
+}
