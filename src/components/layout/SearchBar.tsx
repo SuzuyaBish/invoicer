@@ -9,13 +9,12 @@ import {
 import { useStateStore } from "@/lib/stores/state"
 
 import { ModeToggle } from "../ModeToggle"
-import { Input } from "../ui/input"
 import UserMenuDropdown from "./UserMenuDropdown"
 
 export function SearchBar() {
   const stateStore = useStateStore()
   return (
-    <div className="bg-background sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+    <div className="bg-background/60 sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b px-4 shadow-sm backdrop-blur sm:gap-x-6 sm:px-6 lg:px-8">
       <button
         type="button"
         className="text-foreground -m-2.5 p-2.5 lg:hidden"
@@ -36,9 +35,9 @@ export function SearchBar() {
             className="text-muted-foreground pointer-events-none absolute inset-y-0 left-0 h-full w-5"
             aria-hidden="true"
           />
-          <Input
+          <input
             id="search-field"
-            className="text-foreground placeholder:text-muted-foreground block h-full w-full border-0 py-0 pl-8 pr-0 focus:ring-0 sm:text-sm"
+            className="text-foreground placeholder:text-muted-foreground block h-full w-full border-0 border-none bg-transparent py-0 pl-8 pr-0 outline-none focus:ring-0 sm:text-sm"
             placeholder="Search..."
             type="search"
             name="search"
