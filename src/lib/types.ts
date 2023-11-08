@@ -18,6 +18,8 @@ export type Invoice = {
   status: string
   information: InvoiceInformation
   table: InvoiceTable
+  created_at: string
+  last_updated: string
 }
 
 export type InvoiceInformation = {
