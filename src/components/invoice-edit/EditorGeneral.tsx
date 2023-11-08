@@ -100,8 +100,8 @@ export default function EditorGeneral() {
           />
         </div>
       </form>
-      <div>
-        <h2 className="text-base font-semibold leading-7 text-rose-500">
+      <div className="border-t">
+        <h2 className="mt-10 text-base font-semibold leading-7 text-rose-500">
           Danger Zone
         </h2>
         <p className="text-muted-foreground mt-1 text-sm leading-6">
