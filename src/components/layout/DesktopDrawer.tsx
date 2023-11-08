@@ -29,13 +29,13 @@ export default function DesktopDrawer() {
                       href={item.href}
                       className={classNames(
                         pathname.endsWith(item.href.split("?")[0])
-                          ? "bg-muted text-foreground"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted",
-                        "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                          ? "bg-muted text-foreground border-border"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted border-transparent",
+                        "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors border duration-300 items-center"
                       )}
                     >
                       <item.icon
-                        className="h-6 w-6 shrink-0"
+                        className="h-5 w-5 shrink-0"
                         aria-hidden="true"
                       />
                       {item.name}
@@ -57,7 +57,7 @@ export default function DesktopDrawer() {
                         team.current
                           ? "bg-muted text-primary-foreground"
                           : "text-muted-foreground hover:text-foreground hover:bg-muted",
-                        "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                        "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-all duration-300"
                       )}
                     >
                       <span className="bg-muted text-muted-foreground group-hover:text-foreground flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium">
@@ -72,10 +72,10 @@ export default function DesktopDrawer() {
             <li className="mt-auto">
               <Link
                 href="/account/settings"
-                className="text-muted-foreground hover:bg-muted hover:text-muted-foreground group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
+                className="text-muted-foreground hover:bg-muted hover:text-muted-foreground hover:border-border group -mx-2 flex items-center gap-x-3 rounded-md border border-transparent p-2 text-sm font-semibold leading-6 transition-colors duration-300"
               >
                 <Cog6ToothIcon
-                  className="h-6 w-6 shrink-0"
+                  className="h-5 w-5 shrink-0"
                   aria-hidden="true"
                 />
                 Settings
