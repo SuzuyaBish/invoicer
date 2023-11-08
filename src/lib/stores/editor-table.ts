@@ -19,7 +19,6 @@ export const useEditorTableStateStore = create<EditorTableState>(
     setInfo: (info: Invoice) => {
       set({ invoice: {} as Invoice })
       set({ invoice: info })
-      console.log(get().invoice)
     },
     setTaxRate: (rate) => {
       set((state) => ({
@@ -52,9 +51,12 @@ export const useEditorTableStateStore = create<EditorTableState>(
       set((state) => ({
         invoice: {
           ...state.invoice,
-          items: state.invoice.table.items.map((i) =>
-            i.id === item.id ? item : i
-          ),
+          table: {
+            ...state.invoice.table,
+            items: state.invoice.table.items.map((i) =>
+              i.id === item.id ? item : i
+            ),
+          },
         },
       }))
     },
@@ -62,7 +64,10 @@ export const useEditorTableStateStore = create<EditorTableState>(
       set((state) => ({
         invoice: {
           ...state.invoice,
-          items: state.invoice.table.items.filter((i) => i.id !== id),
+          table: {
+            ...state.invoice.table,
+            items: state.invoice.table.items.filter((i) => i.id !== id),
+          },
         },
       }))
     },

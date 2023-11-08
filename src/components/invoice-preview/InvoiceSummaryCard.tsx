@@ -6,11 +6,28 @@ import {
 } from "@heroicons/react/24/outline"
 import { format } from "date-fns"
 
+import {
+  calculateSubTotal,
+  calculateTax,
+  calculateTotal,
+} from "@/lib/functions"
 import { Invoice } from "@/lib/types"
 
 interface InvoiceSummaryCardProps extends Invoice {}
 
 const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = (props) => {
+  const total = Number(
+    calculateTotal(
+      calculateSubTotal(props.table.items),
+      calculateTax(
+        calculateSubTotal(props.table.items),
+        Number(props.table.tax)
+      )
+    )
+  ).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
   return (
     <div className="lg:col-start-3 lg:row-end-1">
       <h2 className="sr-only">Summary</h2>
@@ -22,15 +39,12 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = (props) => {
             </dt>
             <dd className="text-foreground mt-1 text-base font-semibold leading-6">
               {props.information.currency}{" "}
-              {Number(props.table.total).toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+              {total}
             </dd>
           </div>
           <div className="flex-none self-end px-6 pt-4">
             <dt className="sr-only">Status</dt>
-            <dd className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
+            <dd className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium capitalize text-green-600 ring-1 ring-inset ring-green-600/20">
               {props.status}
             </dd>
           </div>
@@ -55,9 +69,13 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = (props) => {
               />
             </dt>
             <dd className="text-muted-foreground text-sm leading-6">
-              <time dateTime="2023-01-31">
-                {format(new Date(props.information.invoicedDate), "PP")}
-              </time>
+              {props.information.invoicedDate !== "" ? (
+                <time dateTime="2023-01-31">
+                  {format(new Date(props.information.invoicedDate), "PP")}
+                </time>
+              ) : (
+                <div>N/A</div>
+              )}
             </dd>
           </div>
           <div className="mt-4 flex w-full flex-none gap-x-4 px-6">

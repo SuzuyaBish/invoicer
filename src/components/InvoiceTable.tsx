@@ -100,10 +100,16 @@ export default async function InvoiceTable({
                           "whitespace-nowrap hidden px-3 py-4 text-sm text-foreground lg:table-cell"
                         )}
                       >
-                        {format(
-                          new Date(item.information.invoicedDate),
-                          "PP"
-                        ) || "N/A"}
+                        {item.information.invoicedDate !== "" ? (
+                          <>
+                            {format(
+                              new Date(item.information.invoicedDate),
+                              "PP"
+                            )}
+                          </>
+                        ) : (
+                          <div>N/A</div>
+                        )}
                       </td>
                       <td
                         className={classNames(

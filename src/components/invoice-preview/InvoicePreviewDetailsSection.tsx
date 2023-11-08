@@ -26,17 +26,25 @@ const InvoicePreviewDetailsSection: FC<InvoicePreviewDetailsSectionProps> = (
           <div className="sm:pr-4">
             <dt className="text-muted-foreground inline">Issued on</dt>{" "}
             <dd className="text-muted-foreground inline">
-              <time dateTime="2023-23-01">
-                {format(new Date(props.invoicedDate), "PP")}
-              </time>
+              {props.invoicedDate !== "" ? (
+                <time dateTime="2023-23-01">
+                  {format(new Date(props.invoicedDate), "PP")}
+                </time>
+              ) : (
+                <div>N/A</div>
+              )}
             </dd>
           </div>
           <div className="mt-2 sm:mt-0 sm:pl-4">
             <dt className="text-muted-foreground inline">Due on</dt>{" "}
             <dd className="text-muted-foreground inline">
-              <time dateTime="2023-31-01">
-                {format(new Date(props.dueDate), "PP")}
-              </time>
+              {props.dueDate !== "" ? (
+                <time dateTime="2023-23-01">
+                  {format(new Date(props.dueDate), "PP")}
+                </time>
+              ) : (
+                <div>N/A</div>
+              )}
             </dd>
           </div>
           <div className="mt-6 border-t  pt-6 sm:pr-4">

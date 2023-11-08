@@ -40,6 +40,7 @@ export default function EditorGeneral() {
             placeholder="$"
             type="text"
             value={info.currency}
+            maxLength={1}
             onChange={(e) => {
               const newInvoice = {
                 ...table.invoice,

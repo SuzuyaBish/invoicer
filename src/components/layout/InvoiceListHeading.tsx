@@ -6,10 +6,13 @@ import { tabs } from "@/constants/nav-constants"
 import { classNames } from "@/constants/tailwind-constants"
 import { AnimatePresence, motion } from "framer-motion"
 
+import { Client } from "@/lib/types"
+
+import { NewInvoiceButton } from "../invoice-edit/NewInvoiceButton"
 import PageTitles from "../PageTitles"
 import { Button } from "../ui/button"
 
-export default function InvoiceListHeading() {
+export default function InvoiceListHeading({ clients }: { clients: Client[] }) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const path = pathname + "?" + searchParams
@@ -18,8 +21,9 @@ export default function InvoiceListHeading() {
       <div className="md:flex md:items-center md:justify-between">
         <PageTitles title="Invoices" />
         <div className="mt-3 flex md:absolute md:right-0 md:top-3 md:mt-0">
-          <Button variant="secondary">Share</Button>
-          <Button className="ml-3">Create</Button>
+          <Button variant="secondary" className="mr-2">Share</Button>
+          {/* <Button className="ml-3">Create</Button> */}
+          <NewInvoiceButton clients={clients} />
         </div>
       </div>
       <div className="mt-4">

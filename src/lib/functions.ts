@@ -19,13 +19,13 @@ export const calculateSubTotal = (table?: InvoiceTableItem[]) => {
 export const calculateTax = (subTotal: number, tax: number) => {
   return Number.isNaN(Math.round(subTotal * tax * 100) / 100)
     ? -1
-    : Math.round(subTotal * tax * 100) / 100
+    : Math.round(subTotal * (tax / 100) * 100) / 100
 }
 
-export const calculateTotal = (subTotal: number, tax: number) => {
-  return Number.isNaN(subTotal + tax)
-    ? -1
-    : Math.round((subTotal + tax) * 100) / 100
+export const calculateTotal = (subTotal: number, tax: number): string => {
+  return (subTotal + tax) < 0
+    ? "N/A"
+    : (Math.round((subTotal + tax) * 100) / 100).toString()
 }
 
 export const fetchInvoiceById = async (

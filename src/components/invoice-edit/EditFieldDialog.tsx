@@ -7,7 +7,6 @@ import { InvoiceTableItem } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -84,6 +83,7 @@ export function EditFieldDialog({
                 const newItem: InvoiceTableItem = {
                   ...item,
                   hours: e.target.value,
+                  price: (Number(e.target.value) * Number(item.rate)).toString(),
                 }
 
                 table.updateInvoiceItem(newItem)
@@ -100,6 +100,7 @@ export function EditFieldDialog({
                 const newItem: InvoiceTableItem = {
                   ...item,
                   rate: e.target.value,
+                  price: (Number(item.hours) * Number(e.target.value)).toString(),
                 }
 
                 table.updateInvoiceItem(newItem)
@@ -108,11 +109,16 @@ export function EditFieldDialog({
           </div>
         </form>
         <DialogFooter>
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={() => {
+              table.deleteInvoiceItem(item.id)
+              setOpen(false)
+            }}
+          >
+            Remove
+          </Button>
           <Button
             type="button"
             variant="default"
@@ -120,7 +126,7 @@ export function EditFieldDialog({
               setOpen(false)
             }}
           >
-            Add
+            Update
           </Button>
         </DialogFooter>
       </DialogContent>

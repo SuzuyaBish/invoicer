@@ -1,3 +1,8 @@
+import {
+  calculateSubTotal,
+  calculateTax,
+  calculateTotal,
+} from "@/lib/functions"
 import { useEditorTableStateStore } from "@/lib/stores/editor-table"
 import { InvoiceTableItem } from "@/lib/types"
 
@@ -53,7 +58,7 @@ export function EditorPreviewTable() {
                   {item.rate}
                 </td>
                 <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-500">
-                  {item.price}
+                  {Number(item.hours) * Number(item.rate)}
                 </td>
               </tr>
             ))}
@@ -77,7 +82,7 @@ export function EditorPreviewTable() {
           </th>
           <td className="pb-0 pl-8 pr-0 pt-6 text-right tabular-nums text-black">
             {table.invoice.information.currency}
-            {table.invoice.table.subTotal}
+            {calculateSubTotal(table.invoice.table.items)}
           </td>
         </tr>
         <tr>
@@ -93,7 +98,10 @@ export function EditorPreviewTable() {
           </th>
           <td className="pb-0 pl-8 pr-0 pt-4 text-right tabular-nums text-black">
             {table.invoice.information.currency}
-            {table.invoice.table.tax}
+            {calculateTax(
+              calculateSubTotal(table.invoice.table.items),
+              Number(table.invoice.table.tax)
+            )}
           </td>
         </tr>
         <tr>
@@ -109,7 +117,13 @@ export function EditorPreviewTable() {
           </th>
           <td className="pb-0 pl-8 pr-0 pt-4 text-right font-semibold tabular-nums text-black">
             {table.invoice.information.currency}
-            {table.invoice.table.total}
+            {calculateTotal(
+              calculateSubTotal(table.invoice.table.items),
+              calculateTax(
+                calculateSubTotal(table.invoice.table.items),
+                Number(table.invoice.table.tax)
+              )
+            )}
           </td>
         </tr>
       </tfoot>
