@@ -3,7 +3,7 @@ import { useId } from "react"
 export function HeroPattern() {
   return (
     <div className="absolute inset-0 -z-10 mx-0 max-w-none overflow-hidden">
-      <div className="absolute right-0 top-0 ml-[-38rem] h-[25rem] w-[81.25rem] dark:[mask-image:linear-gradient(white,transparent)]">
+      <div className="absolute -right-1/2 top-0 ml-[-38rem] h-[25rem] w-[81.25rem] dark:[mask-image:linear-gradient(white,transparent)] lg:right-0">
         <div className="absolute inset-0 bg-gradient-to-r from-[#36b49f] to-[] opacity-40 [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] dark:from-black dark:to-[] dark:opacity-100">
           <GridPattern
             width={72}
