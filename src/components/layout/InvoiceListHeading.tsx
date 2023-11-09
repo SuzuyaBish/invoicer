@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useSearchParams } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { tabs } from "@/constants/nav-constants"
 import { classNames } from "@/constants/tailwind-constants"
 import { AnimatePresence, motion } from "framer-motion"
@@ -11,9 +11,17 @@ import { Client } from "@/lib/types"
 import { NewInvoiceButton } from "../invoice-edit/NewInvoiceButton"
 import PageTitles from "../PageTitles"
 import { Button } from "../ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select"
 
 export default function InvoiceListHeading({ clients }: { clients: Client[] }) {
   const pathname = usePathname()
+  const router = useRouter()
   const searchParams = useSearchParams()
   const path = pathname + "?" + searchParams
   return (
@@ -21,7 +29,9 @@ export default function InvoiceListHeading({ clients }: { clients: Client[] }) {
       <div className="md:flex md:items-center md:justify-between">
         <PageTitles title="Invoices" />
         <div className="mt-3 flex md:absolute md:right-0 md:top-3 md:mt-0">
-          <Button variant="secondary" className="mr-2">Share</Button>
+          <Button variant="secondary" className="mr-2">
+            Share
+          </Button>
           {/* <Button className="ml-3">Create</Button> */}
           <NewInvoiceButton clients={clients} />
         </div>
@@ -31,16 +41,29 @@ export default function InvoiceListHeading({ clients }: { clients: Client[] }) {
           <label htmlFor="current-tab" className="sr-only">
             Select a tab
           </label>
-          <select
-            id="current-tab"
-            name="current-tab"
-            className="ring-muted-foreground focus:ring-primary block w-full rounded-md border-0 py-1.5 pl-3 pr-10 ring-1 ring-inset focus:ring-2 focus:ring-inset"
-            // defaultValue={tabs.find((tab) => tab.current)?.name}
+          <Select
+            onValueChange={(v) => {
+              router.push(v)
+            }}
           >
-            {tabs.map((tab) => (
-              <option key={tab.name}>{tab.name}</option>
-            ))}
-          </select>
+            <SelectTrigger className="w-full">
+              <SelectValue
+                placeholder={
+                  searchParams.get("tab")?.split("")[0].toUpperCase() +
+                  searchParams.get("tab")?.slice(1)!
+                }
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {tabs.map((tab) => {
+                return (
+                  <SelectItem key={tab.name} value={tab.href}>
+                    {tab.name}
+                  </SelectItem>
+                )
+              })}
+            </SelectContent>
+          </Select>
         </div>
         <div className="hidden sm:block">
           <nav className="-mb-px flex space-x-8">

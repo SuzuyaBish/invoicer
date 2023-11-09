@@ -1,11 +1,16 @@
 import {
-  CalendarIcon,
-  ChartPieIcon,
   DocumentDuplicateIcon,
-  FolderIcon,
   HomeIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline"
+
+interface NavGroup {
+  title: string
+  links: Array<{
+    title: string
+    href: string
+  }>
+}
 
 export const userNavigation = [
   { name: "Your profile", href: "#" },
@@ -32,8 +37,39 @@ export const teams = [
 ]
 
 export const tabs = [
-  { name: "All", href: "/account/invoice-list?tab=all"},
-  { name: "Pending", href: "/account/invoice-list?tab=pending"},
-  { name: "Paid", href: "/account/invoice-list?tab=paid"},
-  { name: "Drafts", href: "/account/invoice-list?tab=draft"},
+  { name: "All", href: "/account/invoice-list?tab=all" },
+  { name: "Pending", href: "/account/invoice-list?tab=pending" },
+  { name: "Paid", href: "/account/invoice-list?tab=paid" },
+  { name: "Drafts", href: "/account/invoice-list?tab=draft" },
+]
+
+export const navigations: Array<NavGroup> = [
+  {
+    title: "Dashboard",
+    links: [
+      { title: "Home", href: "/home" },
+      { title: "Account", href: "/account" },
+      { title: "Settings", href: "/settings" },
+    ],
+  },
+  {
+    title: "Invoices",
+    links: [
+      { title: "All", href: "/account/invoice-list?tab=all" },
+      { title: "Pending", href: "/account/invoice-list?tab=pending" },
+      { title: "Paid", href: "/account/invoice-list?tab=paid" },
+      { title: "Drafts", href: "/account/invoice-list?tab=draft" },
+    ],
+  },
+  {
+    title: "Clients",
+    links: [
+      { title: "All", href: "/account/clients/" },
+      {
+        title: "Edit",
+        href: "/account/clients/edit",
+      },
+      { title: "View", href: "/account/clients/view" },
+    ],
+  },
 ]

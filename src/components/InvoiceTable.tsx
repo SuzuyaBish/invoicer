@@ -1,15 +1,8 @@
 import { cookies } from "next/headers"
-import Link from "next/link"
-import { classNames } from "@/constants/tailwind-constants"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { format } from "date-fns"
 
-import {
-  calculateSubTotal,
-  calculateTax,
-  calculateTotal,
-} from "@/lib/functions"
 import { Invoice } from "@/lib/types"
+
 import InvoiceTableItems from "./InvoiceTableItems"
 
 export default async function InvoiceTable({
@@ -38,13 +31,13 @@ export default async function InvoiceTable({
                   </th>
                   <th
                     scope="col"
-                    className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur"
+                    className="bg-background/75 text-muted-foreground sticky top-16 z-10 hidden border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur sm:table-cell"
                   >
                     Invoiced Client
                   </th>
                   <th
                     scope="col"
-                    className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur"
+                    className="bg-background/75 text-muted-foreground sticky top-16 z-10 hidden border-b py-3.5 pl-2 pr-3 text-left text-sm font-semibold backdrop-blur lg:table-cell"
                   >
                     Invoiced Date
                   </th>

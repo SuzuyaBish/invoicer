@@ -6,7 +6,7 @@ import { statuses } from "@/constants/constants"
 import { classNames } from "@/constants/tailwind-constants"
 import { format } from "date-fns"
 import { motion } from "framer-motion"
-import { Edit } from "lucide-react"
+import { Edit, Expand, View } from "lucide-react"
 
 import {
   calculateSubTotal,
@@ -53,9 +53,9 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
           {props.first_name} {props.last_name}
         </div>
         <div className="ml-auto">
-          <Link href={`/account/clients/edit/${props.id}`}>
+          <Link href={`/account/clients/view/${props.id}`}>
             <Button variant="ghost">
-              <Edit className="h-4 w-4" />
+              <Expand className="h-4 w-4" />
             </Button>
           </Link>
         </div>

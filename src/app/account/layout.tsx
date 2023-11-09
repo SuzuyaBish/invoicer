@@ -1,4 +1,5 @@
 import DesktopDrawer from "@/components/layout/DesktopDrawer"
+import { HeroPattern } from "@/components/layout/HeroPattern"
 import { MobileDrawer } from "@/components/layout/MobileDrawer"
 import { SearchBar } from "@/components/layout/SearchBar"
 
@@ -11,6 +12,10 @@ export default function AccountLayout({
     <div>
       <MobileDrawer />
       <DesktopDrawer />
+
+      <div className="ml-auto">
+        <HeroPattern />
+      </div>
 
       <div className="lg:pl-72">
         <SearchBar />
