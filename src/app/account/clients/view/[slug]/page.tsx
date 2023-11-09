@@ -1,15 +1,41 @@
+import { cookies } from "next/headers"
+import Link from "next/link"
 import { PaperClipIcon } from "@heroicons/react/20/solid"
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { Edit, ExternalLink } from "lucide-react"
 
-export default function ClientView({ params }: { params: { slug: string } }) {
+import { Client } from "@/lib/types"
+import { Button } from "@/components/ui/button"
+
+export default async function ClientView({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const cookiesStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookiesStore })
+  const { data } = await supabase
+    .from("clients")
+    .select("*, lastInvoice(id, information)")
+    .eq("id", params.slug)
+    .single()
+  const client = data as Client
   return (
     <div className="mx-auto max-w-7xl">
-      <div className="px-4 sm:px-0">
-        <h3 className="text-foreground text-base font-semibold leading-7">
-          Applicant Information
-        </h3>
-        <p className="text-foreground mt-1 max-w-2xl text-sm leading-6">
-          Personal details and application.
-        </p>
+      <div className="flex items-center justify-between px-4 sm:px-0">
+        <div>
+          <h3 className="text-foreground text-base font-semibold leading-7">
+            Client Information
+          </h3>
+          <p className="text-muted-foreground mt-1 max-w-2xl text-sm leading-6">
+            Personal details and invoices.
+          </p>
+        </div>
+        <Button variant="secondary" asChild>
+          <Link href={`/account/clients/edit/${client.id}`}>
+            <Edit className="h-4 w-4" />
+          </Link>
+        </Button>
       </div>
       <div className="mt-6 border-t">
         <dl className="divide-border divide-y">
@@ -18,31 +44,39 @@ export default function ClientView({ params }: { params: { slug: string } }) {
               Full name
             </dt>
             <dd className="text-foreground mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
-              Margot Foster
+              {client.first_name} {client.last_name}
             </dd>
           </div>
           <div className="bg-muted px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
-            <dt className="text-muted-foreground text-sm font-medium leading-6">
-              Application for
-            </dt>
-            <dd className="text-foreground mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
-              Backend Developer
-            </dd>
-          </div>
-          <div className="bg-background px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
             <dt className="text-muted-foreground text-sm font-medium leading-6">
               Email address
             </dt>
             <dd className="text-foreground mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
-              margotfoster@example.com
+              <Link href={`mailto:${client.email_address}`}>
+                {client.email_address}
+              </Link>
+            </dd>
+          </div>
+          <div className="bg-background px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+            <dt className="text-muted-foreground text-sm font-medium leading-6">
+              Total Invoiced Amount
+            </dt>
+            <dd className="text-foreground mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
+              $120,000
             </dd>
           </div>
           <div className="bg-muted px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
             <dt className="text-muted-foreground text-sm font-medium leading-6">
-              Salary expectation
+              Last Invoice
             </dt>
             <dd className="text-foreground mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
-              $120,000
+              <Link
+                href={`/account/invoice-list/preview/${client.lastInvoice.id}`}
+                className="flex items-center"
+              >
+                {client.lastInvoice.information.title}
+                <ExternalLink className="mb-0.5 ml-3 h-4 w-4" />
+              </Link>
             </dd>
           </div>
           <div className="bg-background px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
@@ -50,13 +84,10 @@ export default function ClientView({ params }: { params: { slug: string } }) {
               About
             </dt>
             <dd className="text-foreground mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
-              Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
-              incididunt cillum culpa consequat. Excepteur qui ipsum aliquip
-              consequat sint. Sit id mollit nulla mollit nostrud in ea officia
-              proident. Irure nostrud pariatur mollit ad adipisicing
-              reprehenderit deserunt qui eu.
+              {client.about}
             </dd>
           </div>
+
           <div className="bg-muted px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
             <dt className="text-muted-foreground text-sm font-medium leading-6">
               Attachments
