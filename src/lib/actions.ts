@@ -3,7 +3,7 @@
 import { cookies } from "next/headers"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 
-import { Client, Invoice } from "./types"
+import { Invoice } from "./types"
 
 const cookieStore = cookies()
 const supabase = createServerComponentClient({ cookies: () => cookieStore })
@@ -13,7 +13,7 @@ export async function createInvoice(
   clientId: string
 ): Promise<"error" | string> {
   try {
-    const { data, error } = await supabase
+    const { data: invoiceData, error: invoiceError } = await supabase
       .from("invoices")
       .insert([
         {
@@ -45,16 +45,44 @@ export async function createInvoice(
             total: "",
             items: [],
           },
+          activity: [
+            {
+              name: "Current User",
+              action: "created the invoice",
+              timestamp: new Date().toISOString(),
+            },
+          ],
         },
       ])
       .select("*")
 
-    if (error) {
-      console.log(error.message)
+    if (invoiceError) {
       return "error"
     }
-    if (data) {
-      return data[0].id
+    if (invoiceData) {
+      const { data: clientData, error: clientError } = await supabase
+        .from("clients")
+        .select("*")
+        .eq("id", clientId)
+        .single()
+
+      const { data: updateClientData, error: updateClientError } =
+        await supabase
+          .from("clients")
+          .update({
+            lastInvoice: invoiceData[0].id,
+            invoices: [
+              ...clientData.invoices,
+              {
+                id: invoiceData[0].id,
+                title: title,
+              },
+            ],
+          })
+          .eq("id", clientId)
+          .single()
+
+      return invoiceData[0].id
     }
   } catch (error) {
     return "error"
@@ -66,7 +94,14 @@ export const saveInvoice = async (invoice: Invoice): Promise<boolean> => {
   try {
     const { data, error } = await supabase
       .from("invoices")
-      .update(invoice)
+      .update({
+        client: invoice.client.id,
+        status: invoice.status,
+        information: invoice.information,
+        table: invoice.table,
+        last_updated: new Date().toISOString(),
+        activity: invoice.activity,
+      })
       .eq("id", invoice.id)
       .single()
 

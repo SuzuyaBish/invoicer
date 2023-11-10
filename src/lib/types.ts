@@ -10,6 +10,12 @@ export type Client = {
   city: string
   state: string
   zip: string
+  invoices: ClientInvoicesList[]
+}
+
+export type ClientInvoicesList = {
+  id: string
+  title: string
 }
 
 export type Invoice = {
@@ -20,6 +26,13 @@ export type Invoice = {
   table: InvoiceTable
   created_at: string
   last_updated: string
+  activity: InvoiceActivity[]
+}
+
+export type InvoiceActivity = {
+  name: string
+  action: string
+  timestamp: string
 }
 
 export type InvoiceInformation = {

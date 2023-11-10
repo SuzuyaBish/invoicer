@@ -1,8 +1,7 @@
 import { cookies } from "next/headers"
 import Link from "next/link"
-import { PaperClipIcon } from "@heroicons/react/20/solid"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { Edit, ExternalLink } from "lucide-react"
+import { Edit, ExternalLink, File } from "lucide-react"
 
 import { Client } from "@/lib/types"
 import { Button } from "@/components/ui/button"
@@ -16,7 +15,7 @@ export default async function ClientView({
   const supabase = createServerComponentClient({ cookies: () => cookiesStore })
   const { data } = await supabase
     .from("clients")
-    .select("*, lastInvoice(id, information)")
+    .select("*, lastInvoice(*)")
     .eq("id", params.slug)
     .single()
   const client = data as Client
@@ -70,13 +69,17 @@ export default async function ClientView({
               Last Invoice
             </dt>
             <dd className="text-foreground mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
-              <Link
-                href={`/account/invoice-list/preview/${client.lastInvoice.id}`}
-                className="flex items-center"
-              >
-                {client.lastInvoice.information.title}
-                <ExternalLink className="mb-0.5 ml-3 h-4 w-4" />
-              </Link>
+              {client.lastInvoice !== null ? (
+                <Link
+                  href={`/account/invoice-list/preview/${client.lastInvoice.id}`}
+                  className="flex items-center"
+                >
+                  {client.lastInvoice.information.title}
+                  <ExternalLink className="mb-0.5 ml-3 h-4 w-4" />
+                </Link>
+              ) : (
+                "No invoice yet"
+              )}
             </dd>
           </div>
           <div className="bg-background px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
@@ -90,57 +93,44 @@ export default async function ClientView({
 
           <div className="bg-muted px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
             <dt className="text-muted-foreground text-sm font-medium leading-6">
-              Attachments
+              Invoices
             </dt>
             <dd className="text-foreground mt-2 text-sm sm:col-span-2 sm:mt-0">
               <ul
                 role="list"
                 className="divide-border divide-y rounded-md border"
               >
-                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                  <div className="flex w-0 flex-1 items-center">
-                    <PaperClipIcon
-                      className="h-5 w-5 shrink-0 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                      <span className="truncate font-medium">
-                        resume_back_end_developer.pdf
-                      </span>
-                      <span className="shrink-0 text-gray-400">2.4mb</span>
-                    </div>
-                  </div>
-                  <div className="ml-4 shrink-0">
-                    <a
-                      href="#"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                {client.invoices.map((invoice) => {
+                  return (
+                    <li
+                      key={invoice.id}
+                      className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
                     >
-                      Download
-                    </a>
-                  </div>
-                </li>
-                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                  <div className="flex w-0 flex-1 items-center">
-                    <PaperClipIcon
-                      className="h-5 w-5 shrink-0 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                      <span className="truncate font-medium">
-                        coverletter_back_end_developer.pdf
-                      </span>
-                      <span className="shrink-0 text-gray-400">4.5mb</span>
-                    </div>
-                  </div>
-                  <div className="ml-4 shrink-0">
-                    <a
-                      href="#"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      Download
-                    </a>
-                  </div>
-                </li>
+                      <div className="flex w-0 flex-1 items-center">
+                        <File
+                          className="h-5 w-5 shrink-0 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                          <span className="truncate font-medium">
+                            {invoice.title}
+                          </span>
+                          <span className="shrink-0 text-gray-400">
+                            #INV {invoice.id}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="ml-4 shrink-0">
+                        <Link
+                          href={`/account/invoice-list/download/${invoice.id}`}
+                          className="text-muted-foreground hover:text-foreground font-medium transition-colors duration-300"
+                        >
+                          Download
+                        </Link>
+                      </div>
+                    </li>
+                  )
+                })}
               </ul>
             </dd>
           </div>

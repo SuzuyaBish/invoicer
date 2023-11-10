@@ -64,7 +64,7 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
         <div className="flex justify-between gap-x-4 py-3">
           <dt className="text-foreground">Last invoice</dt>
           <dd className="text-muted-foreground">
-            {props.lastInvoice !== null ? (
+            {props.lastInvoice !== null && props.lastInvoice.information.dueDate !== "" ? (
               <time dateTime={props.lastInvoice?.information.dueDate}>
                 {format(new Date(props.lastInvoice?.information.dueDate), "PP")}
               </time>

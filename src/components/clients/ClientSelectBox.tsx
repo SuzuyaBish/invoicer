@@ -45,7 +45,10 @@ const ClientSelectBox: FC<ClientSelectBoxProps> = ({
             ? clients.find(
                 (client) =>
                   client.first_name.toLowerCase() === value.toLowerCase()
-              )?.first_name
+              )?.first_name + " " + clients.find(
+                (client) =>
+                  client.first_name.toLowerCase() === value.toLowerCase()
+              )?.last_name
             : "Select client..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -79,7 +82,7 @@ const ClientSelectBox: FC<ClientSelectBoxProps> = ({
                     value === client.first_name ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {client.first_name}
+                {client.first_name} {client.last_name}
               </CommandItem>
             ))}
           </CommandGroup>

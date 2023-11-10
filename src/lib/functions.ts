@@ -35,7 +35,7 @@ export const fetchInvoiceById = async (
   try {
     const { data, error } = await supabase
       .from("invoices")
-      .select("*")
+      .select("*, client(imageUrl)")
       .eq("id", id)
       .single()
 

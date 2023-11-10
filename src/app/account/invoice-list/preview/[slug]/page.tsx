@@ -135,7 +135,7 @@ export default async function InvoicePreview({
             <InvoicePreviewDetailsSection {...invoice!.information} />
             <InvoicePreviewTable invoice={invoice!} />
           </div>
-          <InvoiceActivityFeed activity={activity} />
+          <InvoiceActivityFeed activity={invoice!.activity} />
         </div>
       </div>
     </main>

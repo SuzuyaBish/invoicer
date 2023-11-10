@@ -57,7 +57,7 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = (props) => {
               />
             </dt>
             <dd className="text-foreground text-sm font-medium leading-6">
-              {props.client.first_name}
+              {props.client.first_name} {props.client.last_name}
             </dd>
           </div>
           <div className="mt-4 flex w-full flex-none gap-x-4 px-6">
