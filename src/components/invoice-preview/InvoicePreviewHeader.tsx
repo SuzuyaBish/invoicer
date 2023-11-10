@@ -6,6 +6,7 @@ import { classNames } from "@/constants/tailwind-constants"
 import { Menu, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline"
 import { Save } from "lucide-react"
+import { toast } from "sonner"
 
 import { saveInvoice } from "@/lib/actions"
 import { Invoice } from "@/lib/types"
@@ -88,7 +89,11 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
                     ],
                   }
 
-                  await saveInvoice(newInvoice).then(() => setLoading(false))
+                  await saveInvoice(newInvoice).then((v) => {
+                    setLoading(false)
+
+                    toast.success("Invoice saved successfully")
+                  })
                 }}
               >
                 {loading ? (

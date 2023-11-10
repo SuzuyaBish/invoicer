@@ -49,6 +49,11 @@
   }
 }
 
+.my-toast {
+  background: red;
+  color: var(--foreground);
+}
+
 @layer base {
   * {
     @apply border-border;

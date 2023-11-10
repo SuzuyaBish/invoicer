@@ -5,6 +5,7 @@ import { Client } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import ClientList from "@/components/clients/ClientList"
 import PageTitles from "@/components/PageTitles"
+import CreateClientButton from "@/components/clients/CreateClientButton"
 
 export default async function ClientsPage() {
   const cookieStore = cookies()
@@ -16,7 +17,7 @@ export default async function ClientsPage() {
       <div className="md:flex md:items-center md:justify-between">
         <PageTitles title="Clients" />
         <div className="mt-3 flex md:absolute md:right-0 md:mt-0">
-          <Button>Create</Button>
+          <CreateClientButton />
         </div>
       </div>
 

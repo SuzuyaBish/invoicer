@@ -57,7 +57,7 @@ export async function createInvoice(
             },
           ],
           user_id: user?.id,
-          auth_users: []
+          auth_users: [],
         },
       ])
       .select("*")
@@ -144,6 +144,66 @@ export const deleteInvoice = async (id: string): Promise<boolean> => {
     }
     if (data) {
       return true
+    }
+  } catch (error) {
+    return false
+  }
+  return false
+}
+
+export const clearActivity = async (id: string): Promise<boolean> => {
+  try {
+    const { data, error } = await supabase
+      .from("invoices")
+      .update({ activity: [] })
+      .eq("id", id)
+      .single()
+
+    if (error) {
+      console.log(error.message)
+      return false
+    }
+    if (data) {
+      return true
+    }
+  } catch (error) {
+    return false
+  }
+  return false
+}
+
+export const createClient = async (): Promise<boolean> => {
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    const { data, error } = await supabase
+      .from("clients")
+      .insert([
+        {
+          first_name: "",
+          imageUrl: "",
+          about: "",
+          last_name: "",
+          email_address: "",
+          street_address: "",
+          city: "",
+          state: "",
+          zip: "",
+          invoices: [],
+          user_id: user?.id,
+          auth_users: [],
+        },
+      ])
+      .select("*")
+
+    if (error) {
+      console.log(error.message)
+      return false
+    }
+    if (data) {
+      return data[0].id
     }
   } catch (error) {
     return false

@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/providers/ThemeProvider"
+import { Toaster } from "sonner"
 
 import { cn } from "@/lib/utils"
-import { Toaster } from "@/components/ui/toaster"
 import { TailwindIndicator } from "@/components/TailwindIndicator"
 
 import "./globals.css"
@@ -34,8 +34,9 @@ export default function RootLayout({
             <div className="flex-1">{children}</div>
           </div>
           <TailwindIndicator />
+
+          <Toaster position="top-right" richColors />
         </ThemeProvider>
-        <Toaster />
       </body>
     </html>
   )
