@@ -13,6 +13,10 @@ export async function createInvoice(
   clientId: string
 ): Promise<"error" | string> {
   try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
     const { data: invoiceData, error: invoiceError } = await supabase
       .from("invoices")
       .insert([
@@ -52,6 +56,8 @@ export async function createInvoice(
               timestamp: new Date().toISOString(),
             },
           ],
+          user_id: user?.id,
+          auth_users: []
         },
       ])
       .select("*")

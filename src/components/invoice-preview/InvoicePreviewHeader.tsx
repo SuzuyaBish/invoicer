@@ -1,7 +1,6 @@
 "use client"
 
 import { FC, Fragment, useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { classNames } from "@/constants/tailwind-constants"
 import { Menu, Transition } from "@headlessui/react"
@@ -13,6 +12,7 @@ import { Invoice } from "@/lib/types"
 
 import { Icons } from "../Icons"
 import { Button } from "../ui/button"
+import UserAvatar from "../UserAvatar"
 
 interface InvoicePreviewHeaderProps {
   editVisible?: boolean
@@ -40,12 +40,10 @@ const InvoicePreviewHeader: FC<InvoicePreviewHeaderProps> = ({
       <div className="mx-auto px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-2xl flex-col items-center justify-between gap-x-8 space-y-10 md:flex-row md:space-y-0 lg:mx-0 lg:max-w-none">
           <div className="flex items-center gap-x-6">
-            <Image
-              src={info.client.imageUrl}
-              alt=""
-              height={64}
-              width={64}
-              className="h-16 w-16 flex-none rounded-full ring-1 ring-gray-900/10"
+            <UserAvatar
+              imageUrl={info.client.imageUrl}
+              userName={info.client.first_name + " " + info.client.last_name}
+              isLarge
             />
             <h1>
               <div className="text-muted-foreground text-sm leading-6">

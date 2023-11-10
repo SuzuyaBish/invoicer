@@ -11,6 +11,8 @@ export type Client = {
   state: string
   zip: string
   invoices: ClientInvoicesList[]
+  user_id: string
+  auth_users: string[]
 }
 
 export type ClientInvoicesList = {
