@@ -5,6 +5,8 @@ import {
   BellIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { LogOut } from "lucide-react"
 
 import { useStateStore } from "@/lib/stores/state"
 
@@ -14,6 +16,7 @@ import UserMenuDropdown from "./UserMenuDropdown"
 
 export function SearchBar() {
   const stateStore = useStateStore()
+  const supabase = createClientComponentClient()
   return (
     <div className="bg-background/60 sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b px-4 shadow-sm backdrop-blur sm:gap-x-6 sm:px-6 lg:px-8">
       <button
@@ -54,6 +57,13 @@ export function SearchBar() {
             <BellIcon className="h-6 w-6" aria-hidden="true" />
           </Button>
           <ModeToggle />
+          <Button
+            onClick={async () => {
+              await supabase.auth.signOut()
+            }}
+          >
+            <LogOut className="h-6 w-6" />
+          </Button>
 
           <div
             className="lg:bg-muted hidden lg:block lg:h-6 lg:w-px"

@@ -3,8 +3,11 @@
 import { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import { PlusSmallIcon } from "@heroicons/react/24/outline"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { toast } from "sonner"
 
-import { createInvoice } from "@/lib/actions"
+import { createClient, createInvoice } from "@/lib/actions"
+import { checkIfUserHasClients } from "@/lib/functions"
 import { Client } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import {
@@ -15,24 +18,21 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 import ClientSelectBox from "../clients/ClientSelectBox"
-import { useToast } from "../ui/use-toast"
-
-const initialState = {
-  message: null,
-}
+import { Icons } from "../Icons"
 
 export function NewInvoiceButton({ clients }: { clients: Client[] }) {
-  const { toast } = useToast()
+  const supabase = createClientComponentClient()
+
   const router = useRouter()
   const [title, setTitle] = useState("")
   const [selectedClientId, setSelectedClientId] = useState("")
   const [loading, setLoading] = useState(false)
+  const [buttonLoading, setButtonLoading] = useState(false)
 
   const [open, setOpen] = useState(false)
 
@@ -42,10 +42,9 @@ export function NewInvoiceButton({ clients }: { clients: Client[] }) {
     setLoading(true)
 
     if (title === "" || selectedClientId === "") {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: "Please fill out all fields.",
-        variant: "destructive",
+        important: true,
       })
       setLoading(false)
       return
@@ -55,15 +54,13 @@ export function NewInvoiceButton({ clients }: { clients: Client[] }) {
 
     if (response === "error") {
       setLoading(false)
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: "There was an error creating the invoice.",
-        variant: "destructive",
+        important: true,
       })
     } else {
       setLoading(false)
-      toast({
-        title: "Success",
+      toast.success("Success", {
         description: "Invoice created successfully.",
       })
       router.push(`/account/invoice-list/edit/${response}?section=general`)
@@ -72,12 +69,44 @@ export function NewInvoiceButton({ clients }: { clients: Client[] }) {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
-      <DialogTrigger asChild>
-        <Button className="ml-auto">
+      <Button
+        className="ml-auto"
+        disabled={buttonLoading}
+        onClick={async () => {
+          setButtonLoading(true)
+          await checkIfUserHasClients(supabase).then((res) => {
+            if (!res) {
+              toast.message(
+                "Please create a client first.",
+                {
+                  important: true,
+                  action: {
+                    label: "Create Client",
+                    onClick: async () => {
+                      await createClient().then(async (res) => {
+                        if (res) {
+                          router.replace(`/account/clients/edit/${res}`)
+                        }
+                        setLoading(false)
+                      })
+                    },
+                  },
+                }
+              )
+            } else {
+              setOpen(true)
+            }
+            setButtonLoading(false)
+          })
+        }}
+      >
+        {buttonLoading ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
           <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
-          New Invoice
-        </Button>
-      </DialogTrigger>
+        )}
+        New Invoice
+      </Button>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>New Invoice</DialogTitle>

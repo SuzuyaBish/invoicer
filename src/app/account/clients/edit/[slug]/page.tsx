@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { Save } from "lucide-react"
+import { Save, Trash } from "lucide-react"
 
-import { fetchClientById, saveClient } from "@/lib/functions"
+import { deleteClient, fetchClientById, saveClient } from "@/lib/functions"
 import { useClientStore } from "@/lib/stores/client-profile"
 import { Client } from "@/lib/types"
 import { Button } from "@/components/ui/button"
@@ -29,8 +29,17 @@ export default function ClientEdit({ params }: { params: { slug: string } }) {
       clientStore.setClient(client as Client)
     })
   }, [])
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    setSaveLoading(true)
+    await saveClient(supabase, client, selectedImage).then(() => {
+      setSaveLoading(false)
+    })
+  }
   return (
-    <form className="mx-auto max-w-7xl">
+    <form onSubmit={onSubmit} className="mx-auto max-w-7xl">
       <div className="space-y-12">
         <div className="border-b  pb-12">
           <h2 className="text-foreground text-base font-semibold leading-7">
@@ -112,7 +121,9 @@ export default function ClientEdit({ params }: { params: { slug: string } }) {
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
-              <Label htmlFor="first-name">First name</Label>
+              <Label htmlFor="first-name">
+                First name <span className="text-rose-500">*</span>
+              </Label>
               <div className="mt-2">
                 <Input
                   type="text"
@@ -120,6 +131,7 @@ export default function ClientEdit({ params }: { params: { slug: string } }) {
                   id="first-name"
                   autoComplete="given-name"
                   value={client.first_name}
+                  required
                   onChange={(e) => {
                     const newClient: Client = {
                       ...client,
@@ -132,9 +144,12 @@ export default function ClientEdit({ params }: { params: { slug: string } }) {
             </div>
 
             <div className="sm:col-span-3">
-              <Label htmlFor="last-name">Last name</Label>
+              <Label htmlFor="last-name">
+                Last name <span className="text-rose-500">*</span>
+              </Label>
               <div className="mt-2">
                 <Input
+                  required
                   type="text"
                   name="last-name"
                   id="last-name"
@@ -254,34 +269,45 @@ export default function ClientEdit({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      <div className="mt-6 flex items-center justify-end gap-x-6">
+      <div className="mt-6 flex items-center justify-between">
         <Button
           type="button"
           disabled={saveLoading}
-          variant="secondary"
-          onClick={() => {
-            router.replace("/account/clients")
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          disabled={saveLoading}
+          variant="destructive"
           onClick={async () => {
             setSaveLoading(true)
-            await saveClient(supabase, client, selectedImage).then(() => {
-              setSaveLoading(false)
+            await deleteClient(supabase, client.id).then(() => {
+              router.replace("/account/clients")
             })
           }}
         >
           {saveLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           ) : (
-            <Save className="mr-2 h-4 w-4" />
+            <Trash className="mr-2 h-4 w-4" />
           )}
-          Save
+          Delete Client
         </Button>
+        <div className="flex items-center gap-x-6">
+          <Button
+            type="button"
+            disabled={saveLoading}
+            variant="secondary"
+            onClick={() => {
+              router.replace("/account/clients")
+            }}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" disabled={saveLoading}>
+            {saveLoading ? (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Save className="mr-2 h-4 w-4" />
+            )}
+            Save
+          </Button>
+        </div>
       </div>
     </form>
   )

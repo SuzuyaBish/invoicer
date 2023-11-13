@@ -1,4 +1,5 @@
 import { SupabaseClient } from "@supabase/auth-helpers-nextjs"
+import { toast } from "sonner"
 
 import { Client, Invoice, InvoiceTableItem } from "./types"
 
@@ -115,6 +116,51 @@ export const saveClient = async (
       .from("clients")
       .update(client)
       .eq("id", client.id)
+      .single()
+
+    if (error) {
+      console.log(error.message)
+      return false
+    }
+    if (data) {
+      return true
+    }
+  } catch (error) {
+    return false
+  }
+  return false
+}
+
+export const deleteClient = async (
+  supabase: SupabaseClient,
+  id: string
+): Promise<boolean> => {
+  try {
+    const { data, error } = await supabase
+      .from("clients")
+      .delete()
+      .eq("id", id)
+      .single()
+
+    if (error) {
+      toast.error("Can't delete client if an invoice is assigned to them.")
+      return false
+    } else {
+      toast.success("Client deleted successfully.")
+      return true
+    }
+  } catch (error) {
+    return false
+  }
+}
+
+export const checkIfUserHasClients = async (
+  supabase: SupabaseClient
+): Promise<boolean> => {
+  try {
+    const { data, error } = await supabase
+      .from("clients")
+      .select("*")
       .single()
 
     if (error) {

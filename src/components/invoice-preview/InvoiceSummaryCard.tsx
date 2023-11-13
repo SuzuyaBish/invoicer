@@ -32,7 +32,7 @@ const InvoiceSummaryCard: FC<InvoiceSummaryCardProps> = (props) => {
   return (
     <div className="lg:col-start-3 lg:row-end-1">
       <h2 className="sr-only">Summary</h2>
-      <div className="bg-muted/40 border-foreground/20 rounded-lg border shadow-sm">
+      <div className="bg-muted border-foreground/20 rounded-lg border shadow-sm">
         <dl className="flex flex-wrap">
           <div className="flex-auto pl-6 pt-6">
             <dt className="text-foreground text-sm font-semibold leading-6">

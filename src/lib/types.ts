@@ -42,11 +42,11 @@ export type InvoiceInformation = {
   invoicedDate: string
   dueDate: string
   currency: string
-  from: UserInfo
-  to: UserInfo
+  from: PersonInfo
+  to: PersonInfo
 }
 
-export type UserInfo = {
+export type PersonInfo = {
   name: string
   address: string
   city: string
