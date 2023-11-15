@@ -1,11 +1,12 @@
+"use server"
+
 import { cookies } from "next/headers"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 
 import { Client } from "@/lib/types"
-import { Button } from "@/components/ui/button"
 import ClientList from "@/components/clients/ClientList"
-import PageTitles from "@/components/PageTitles"
 import CreateClientButton from "@/components/clients/CreateClientButton"
+import PageTitles from "@/components/PageTitles"
 
 export default async function ClientsPage() {
   const cookieStore = cookies()

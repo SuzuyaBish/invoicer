@@ -158,10 +158,7 @@ export const checkIfUserHasClients = async (
   supabase: SupabaseClient
 ): Promise<boolean> => {
   try {
-    const { data, error } = await supabase
-      .from("clients")
-      .select("*")
-      .single()
+    const { data, error } = await supabase.from("clients").select("*").single()
 
     if (error) {
       console.log(error.message)

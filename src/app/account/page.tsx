@@ -1,3 +1,5 @@
+"use server"
+
 import { Suspense } from "react"
 import { cookies } from "next/headers"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
@@ -17,7 +19,9 @@ export default async function Account() {
   return (
     <main>
       <div className="relative isolate overflow-hidden ">
-        <DashBoardHeader clients={clients} />
+        <Suspense>
+          <DashBoardHeader clients={clients} />
+        </Suspense>
         <DashboardStats />
       </div>
       <div className="space-y-16 py-16 xl:space-y-20">

@@ -6,7 +6,7 @@ import { statuses } from "@/constants/constants"
 import { classNames } from "@/constants/tailwind-constants"
 import { format } from "date-fns"
 import { motion } from "framer-motion"
-import { Edit, Expand, View } from "lucide-react"
+import { Expand } from "lucide-react"
 
 import {
   calculateSubTotal,
@@ -26,10 +26,9 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
   return (
     <motion.li
       variants={{
-        hidden: { opacity: 0, y: -20 },
+        hidden: { opacity: 0 },
         visible: (idx) => ({
           opacity: 1,
-          y: 0,
           transition: {
             delay: idx * 0.05,
           },
@@ -64,7 +63,8 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
         <div className="flex justify-between gap-x-4 py-3">
           <dt className="text-foreground">Last invoice</dt>
           <dd className="text-muted-foreground">
-            {props.lastInvoice !== null && props.lastInvoice.information.dueDate !== "" ? (
+            {props.lastInvoice !== null &&
+            props.lastInvoice.information.dueDate !== "" ? (
               <time dateTime={props.lastInvoice?.information.dueDate}>
                 {format(new Date(props.lastInvoice?.information.dueDate), "PP")}
               </time>
@@ -97,7 +97,7 @@ const ClientBlock: FC<ClientBlockProps> = (props) => {
             {props.lastInvoice !== null && (
               <div
                 className={classNames(
-                  statuses[props?.lastInvoice?.status],
+                  props.lastInvoice.status,
                   "rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset capitalize"
                 )}
               >

@@ -50,7 +50,7 @@ export default function InvoiceTableFallback() {
                 </tr>
               </thead>
               <tbody>
-                {Array(5)
+                {Array(1)
                   .fill(0)
                   .map((item, itemIdx) => (
                     <tr key={item.id}>

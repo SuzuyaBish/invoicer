@@ -70,29 +70,27 @@ export function NewInvoiceButton({ clients }: { clients: Client[] }) {
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <Button
+        variant="secondary"
         className="ml-auto"
         disabled={buttonLoading}
         onClick={async () => {
           setButtonLoading(true)
           await checkIfUserHasClients(supabase).then((res) => {
             if (!res) {
-              toast.message(
-                "Please create a client first.",
-                {
-                  important: true,
-                  action: {
-                    label: "Create Client",
-                    onClick: async () => {
-                      await createClient().then(async (res) => {
-                        if (res) {
-                          router.replace(`/account/clients/edit/${res}`)
-                        }
-                        setLoading(false)
-                      })
-                    },
+              toast.message("Please create a client first.", {
+                important: true,
+                action: {
+                  label: "Create Client",
+                  onClick: async () => {
+                    await createClient().then(async (res) => {
+                      if (res) {
+                        router.replace(`/account/clients/edit/${res}`)
+                      }
+                      setLoading(false)
+                    })
                   },
-                }
-              )
+                },
+              })
             } else {
               setOpen(true)
             }

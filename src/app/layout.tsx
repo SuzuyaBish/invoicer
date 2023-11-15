@@ -1,14 +1,12 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/providers/ThemeProvider"
+import { GeistSans } from "geist/font/sans"
 import { Toaster } from "sonner"
 
 import { cn } from "@/lib/utils"
 import { TailwindIndicator } from "@/components/TailwindIndicator"
 
 import "./globals.css"
-
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,7 +24,7 @@ export default function RootLayout({
       <body
         className={cn(
           "bg-background min-h-screen scroll-smooth antialiased",
-          inter.className
+          GeistSans.className
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

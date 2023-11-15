@@ -16,6 +16,7 @@ const CreateClientButton: FC<CreateClientButtonProps> = ({}) => {
   const [loading, setLoading] = useState(false)
   return (
     <Button
+      variant="secondary"
       disabled={loading}
       onClick={async () => {
         setLoading(true)

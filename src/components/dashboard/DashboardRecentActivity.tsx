@@ -115,7 +115,7 @@ const DashboardRecentActivity: FC<DashboardRecentActivityProps> = ({}) => {
                                 </div>
                                 <div
                                   className={classNames(
-                                    statuses[transaction.status],
+                                    transaction.status,
                                     "rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset"
                                   )}
                                 >
