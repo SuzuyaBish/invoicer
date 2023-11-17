@@ -1,7 +1,7 @@
 import { SupabaseClient } from "@supabase/auth-helpers-nextjs"
 import { toast } from "sonner"
 
-import { Client, Invoice, InvoiceTableItem } from "./types"
+import { Client, Friend, Invoice, InvoiceTableItem } from "./types"
 
 export const calculateSubTotal = (table?: InvoiceTableItem[]) => {
   let sum = 0
@@ -171,4 +171,94 @@ export const checkIfUserHasClients = async (
     return false
   }
   return false
+}
+
+export const findUserByEmail = async (
+  email: string,
+  supabase: SupabaseClient
+): Promise<any> => {
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select(
+        "id, first_name, last_name, imageUrl, email_address, friend_requests"
+      )
+      .eq("email_address", email)
+      .single()
+
+    if (error) {
+      console.log(error.message)
+      return false
+    }
+    if (data) {
+      return data
+    }
+  } catch (error) {
+    return false
+  }
+  return false
+}
+
+export const sendFriendRequest = async (
+  friend: Friend,
+  supabase: SupabaseClient
+): Promise<boolean> => {
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    const { data: currentUserData, error: currentUserError } = await supabase
+      .from("users")
+      .select("id, friend_requests")
+      .eq("user_id", user?.id)
+      .single()
+
+    const { data, error } = await supabase
+      .from("users")
+      .update({
+        friend_requests: [
+          ...currentUserData?.friend_requests,
+          {
+            id: friend.id,
+            email_address: friend.email_address,
+            status: "pending",
+          },
+        ],
+      })
+      .eq("user_id", user?.id)
+
+    const { data: friendData, error: friendError } = await supabase
+      .from("users")
+      .update({
+        friend_requests: [
+          ...friend.friend_requests,
+          {
+            id: currentUserData?.id,
+            email_address: user?.email,
+            status: "pending",
+          },
+        ],
+      })
+      .eq("id", friend.id)
+
+    if (error?.message) {
+      console.log("Me", error?.message)
+      return false
+    }
+
+    if (friendError?.message) {
+      console.log("Friend", friendError?.message)
+      return false
+    }
+
+    if (currentUserError?.message) {
+      console.log("Current User", currentUserError?.message)
+      return false
+    }
+    return true
+  } catch (error) {
+    console.log(error)
+    return false
+  }
 }

@@ -69,3 +69,18 @@ export type InvoiceTableItem = {
   rate: string
   price: string
 }
+
+export type Friend = {
+  id: string
+  first_name: string
+  last_name: string
+  email_address: string
+  imageUrl: string
+  friend_requests: FriendRequest[]
+}
+
+export type FriendRequest = {
+  id: string
+  email_address: string
+  status: string
+}

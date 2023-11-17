@@ -1,5 +1,8 @@
 import {
+  ChatBubbleBottomCenterIcon,
+  ChatBubbleBottomCenterTextIcon,
   DocumentDuplicateIcon,
+  FolderIcon,
   HomeIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline"
@@ -25,7 +28,7 @@ export const navigation = [
     icon: DocumentDuplicateIcon,
   },
   { name: "Clients", href: "/account/clients", icon: UsersIcon },
-  // { name: "Projects", href: "#", icon: FolderIcon },
+  { name: "Friends", href: "/account/friends", icon: ChatBubbleBottomCenterTextIcon },
   // { name: "Calendar", href: "#", icon: CalendarIcon },
   // { name: "Reports", href: "#", icon: ChartPieIcon },
 ]
