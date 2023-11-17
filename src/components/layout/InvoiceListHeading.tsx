@@ -5,7 +5,9 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { tabs } from "@/constants/nav-constants"
 import { classNames } from "@/constants/tailwind-constants"
 import { AnimatePresence, motion } from "framer-motion"
+import { XIcon } from "lucide-react"
 
+import { useStateStore } from "@/lib/stores/state"
 import { Client } from "@/lib/types"
 
 import { NewInvoiceButton } from "../invoice-edit/NewInvoiceButton"
@@ -24,16 +26,30 @@ export default function InvoiceListHeading({ clients }: { clients: Client[] }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const path = pathname + "?" + searchParams
+
+  const globalState = useStateStore()
   return (
     <div className="relative border-b pb-5 sm:pb-0">
       <div className="md:flex md:items-center md:justify-between">
         <PageTitles title="Invoices" />
         <div className="mt-3 flex md:absolute md:right-0 md:top-3 md:mt-0">
-          <Button variant="secondary" className="mr-2">
+          <Button
+            variant={globalState.multiSelectOn ? "default" : "outline"}
+            className="mr-2"
+            onClick={() => globalState.setMultiSelectOn()}
+          >
             Share
           </Button>
-          {/* <Button className="ml-3">Create</Button> */}
-          <NewInvoiceButton clients={clients} />
+          {globalState.multiSelectOn ? (
+            <Button
+              variant="outline"
+              onClick={() => globalState.setMultiSelectOff()}
+            >
+              <XIcon className="h-4 w-4" />
+            </Button>
+          ) : (
+            <NewInvoiceButton clients={clients} />
+          )}
         </div>
       </div>
       <div className="mt-4">

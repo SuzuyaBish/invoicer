@@ -4,6 +4,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Invoice } from "@/lib/types"
 
 import InvoiceTableItems from "./InvoiceTableItems"
+import { InvoiceListCheckColumn } from "./InvoiceCheckColumn"
 
 export default async function InvoiceTable({
   searchParams,
@@ -23,6 +24,7 @@ export default async function InvoiceTable({
             <table className="min-w-full border-separate border-spacing-0 rounded-lg border">
               <thead>
                 <tr>
+                  <InvoiceListCheckColumn />
                   <th
                     scope="col"
                     className="bg-background/75 text-muted-foreground sticky top-16 z-10 border-b py-3.5 pl-4 pr-3 text-left text-sm font-semibold backdrop-blur sm:pl-6 lg:pl-8"

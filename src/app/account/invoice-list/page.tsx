@@ -4,8 +4,8 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 
 import { Client } from "@/lib/types"
 import InvoiceTableFallback from "@/components/fallbacks/InvoiceTableFallback"
-import InvoiceTable from "@/components/InvoiceTable"
 import InvoiceListHeading from "@/components/layout/InvoiceListHeading"
+import InvoiceTable from "@/components/invoice-table/InvoiceTable"
 
 export default async function InvoiceList({
   searchParams,
