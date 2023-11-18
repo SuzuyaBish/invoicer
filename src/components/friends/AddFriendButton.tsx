@@ -22,7 +22,6 @@ import {
 } from "../ui/dialog"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
-import { set } from "date-fns"
 
 export default function AddFriendButton() {
   const supabase = createClientComponentClient()
@@ -129,18 +128,19 @@ export default function AddFriendButton() {
                   imageUrl: friendData.imageUrl,
                 }
 
-                console.log(newFriend)
-
                 await sendFriendRequest(newFriend, supabase).then((v) => {
                   if (v) {
                     setEmail("")
                     setFriendData({} as Friend)
                     setAddFriendLoading(false)
                     setOpen(false)
-                    toast.success("Friend request sent!")
+                    // toast.success("Friend request sent!")
                   } else {
                     setAddFriendLoading(false)
-                    toast.error("Something went wrong.")
+                    toast.error("Something went wrong.", {
+                      description:
+                        "Either you are already friends or you have already sent a friend request.",
+                    })
                   }
                 })
               }}

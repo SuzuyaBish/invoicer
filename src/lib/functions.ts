@@ -214,42 +214,49 @@ export const sendFriendRequest = async (
       .eq("user_id", user?.id)
       .single()
 
-    const { data, error } = await supabase
-      .from("users")
-      .update({
-        friend_requests: [
-          ...currentUserData?.friend_requests,
-          {
-            id: friend.id,
-            email_address: friend.email_address,
-            status: "pending",
-          },
-        ],
-      })
-      .eq("user_id", user?.id)
+    const friendInFriendRequests = currentUserData?.friend_requests?.find(
+      (el: any) => el.id === friend.id
+    ) as Friend
 
-    const { data: friendData, error: friendError } = await supabase
-      .from("users")
-      .update({
-        friend_requests: [
-          ...friend.friend_requests,
-          {
-            id: currentUserData?.id,
-            email_address: user?.email,
-            status: "pending",
-          },
-        ],
-      })
-      .eq("id", friend.id)
-
-    if (error?.message) {
-      console.log("Me", error?.message)
+    if (friendInFriendRequests) {
       return false
-    }
-
-    if (friendError?.message) {
-      console.log("Friend", friendError?.message)
-      return false
+    } else {
+      const { data, error } = await supabase
+        .from("users")
+        .update({
+          friend_requests: [
+            ...currentUserData?.friend_requests,
+            {
+              id: friend.id,
+              email_address: friend.email_address,
+              status: "pending",
+              type: "sent",
+            },
+          ],
+        })
+        .eq("user_id", user?.id)
+      const { data: friendData, error: friendError } = await supabase
+        .from("users")
+        .update({
+          friend_requests: [
+            ...friend.friend_requests,
+            {
+              id: currentUserData?.id,
+              email_address: user?.email,
+              status: "pending",
+              type: "received",
+            },
+          ],
+        })
+        .eq("id", friend.id)
+      if (error?.message) {
+        console.log("Me", error?.message)
+        return false
+      }
+      if (friendError?.message) {
+        console.log("Friend", friendError?.message)
+        return false
+      }
     }
 
     if (currentUserError?.message) {

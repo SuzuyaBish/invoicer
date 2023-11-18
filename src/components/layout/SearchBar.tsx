@@ -13,6 +13,7 @@ import { useStateStore } from "@/lib/stores/state"
 import { ModeToggle } from "../ModeToggle"
 import { Button } from "../ui/button"
 import UserMenuDropdown from "./UserMenuDropdown"
+import { NotificationBell } from "./NotificationBell"
 
 export function SearchBar() {
   const stateStore = useStateStore()
@@ -48,14 +49,7 @@ export function SearchBar() {
           />
         </form>
         <div className="flex items-center gap-x-4 lg:gap-x-6">
-          <Button
-            variant="secondary"
-            type="button"
-            className="text-muted-foreground hover:text-foreground -m-2.5 p-2.5"
-          >
-            <span className="sr-only">View notifications</span>
-            <BellIcon className="h-6 w-6" aria-hidden="true" />
-          </Button>
+          <NotificationBell />
           <ModeToggle />
           <Button
             onClick={async () => {

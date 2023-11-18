@@ -83,4 +83,5 @@ export type FriendRequest = {
   id: string
   email_address: string
   status: string
+  type: "sent" | "received"
 }
