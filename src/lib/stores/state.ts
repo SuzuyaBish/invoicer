@@ -4,17 +4,20 @@ interface State {
   searchBarOpen: boolean
   multiSelectOn: boolean
   selectedIndexes: number[]
+  newNotification: boolean
   setSearchBarOpen: () => void
   setSearchBarClosed: () => void
   setMultiSelectOn: () => void
   setMultiSelectOff: () => void
   insertSelectedIndex: (index: number) => void
+  setNewNotification: (v: boolean) => void
 }
 
 export const useStateStore = create<State>((set, get) => ({
   searchBarOpen: false,
   multiSelectOn: false,
   selectedIndexes: [],
+  newNotification: false,
   setSearchBarOpen: () => set({ searchBarOpen: true }),
   setSearchBarClosed: () => set({ searchBarOpen: false }),
   setMultiSelectOn: () => set({ multiSelectOn: true }),
@@ -27,4 +30,5 @@ export const useStateStore = create<State>((set, get) => ({
       set({ selectedIndexes: [...selectedIndexes, index] })
     }
   },
+  setNewNotification: (v: boolean) => set({ newNotification: v }),
 }))

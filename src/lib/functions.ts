@@ -1,7 +1,7 @@
 import { SupabaseClient } from "@supabase/auth-helpers-nextjs"
 import { toast } from "sonner"
 
-import { Client, Friend, Invoice, InvoiceTableItem } from "./types"
+import { Client, Friend, FriendRequest, Invoice, InvoiceTableItem } from "./types"
 
 export const calculateSubTotal = (table?: InvoiceTableItem[]) => {
   let sum = 0
@@ -231,10 +231,12 @@ export const sendFriendRequest = async (
               email_address: friend.email_address,
               status: "pending",
               type: "sent",
+              seen: false,
             },
           ],
         })
         .eq("user_id", user?.id)
+
       const { data: friendData, error: friendError } = await supabase
         .from("users")
         .update({
@@ -245,10 +247,12 @@ export const sendFriendRequest = async (
               email_address: user?.email,
               status: "pending",
               type: "received",
+              seen: false,
             },
           ],
         })
         .eq("id", friend.id)
+
       if (error?.message) {
         console.log("Me", error?.message)
         return false
@@ -268,4 +272,29 @@ export const sendFriendRequest = async (
     console.log(error)
     return false
   }
+}
+
+export const clearNotifications = async (
+  user_id: string,
+  friend_requests: FriendRequest[],
+  supabase: SupabaseClient
+): Promise<boolean> => {
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .update({ friend_requests: friend_requests })
+      .eq("user_id", user_id)
+      .single()
+
+    if (error) {
+      console.log(error.message)
+      return false
+    }
+    if (data) {
+      return true
+    }
+  } catch (error) {
+    return false
+  }
+  return false
 }

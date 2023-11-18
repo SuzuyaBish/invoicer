@@ -70,6 +70,21 @@ export type InvoiceTableItem = {
   price: string
 }
 
+export type User = {
+  id: string 
+  user_id: string
+  first_name: string
+  last_name: string
+  imageUrl: string
+  email_address: string
+  street_address: string
+  city: string
+  state: string
+  zip: string
+  friends: Friend[]
+  friend_requests: FriendRequest[]
+}
+
 export type Friend = {
   id: string
   first_name: string
@@ -84,4 +99,5 @@ export type FriendRequest = {
   email_address: string
   status: string
   type: "sent" | "received"
+  seen: boolean
 }
