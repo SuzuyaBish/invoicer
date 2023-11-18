@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 
-import { fetchInvoiceById } from "@/lib/functions"
+import { fetchInvoiceById } from "@/lib/functions/invoice-functions"
 import { useEditorTableStateStore } from "@/lib/stores/editor-table"
 import { Button } from "@/components/ui/button"
 import EditorPreview from "@/components/invoice-edit/EditorPreview"
@@ -17,11 +16,10 @@ import InvoicePreviewHeader from "@/components/invoice-preview/InvoicePreviewHea
 export default function InvoiceEdit({ params }: { params: { slug: string } }) {
   const [loading, setLoading] = useState(true)
   const tableState = useEditorTableStateStore()
-  const supabase = createClientComponentClient()
   const router = useRouter()
 
   useEffect(() => {
-    fetchInvoiceById(params.slug, supabase).then((data) => {
+    fetchInvoiceById(params.slug).then((data) => {
       tableState.setInfo(data!)
       setLoading(false)
     })

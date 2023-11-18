@@ -1,9 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
-import { fetchInvoiceById } from "@/lib/functions"
+import { fetchInvoiceById } from "@/lib/functions/invoice-functions"
 import { useEditorTableStateStore } from "@/lib/stores/editor-table"
 import EditorPreview from "@/components/invoice-edit/EditorPreview"
 
@@ -14,10 +13,9 @@ export default function DownloadInvoicePage({
 }) {
   const [loading, setLoading] = useState(true)
   const tableState = useEditorTableStateStore()
-  const supabase = createClientComponentClient()
 
   useEffect(() => {
-    fetchInvoiceById(params.slug, supabase).then((data) => {
+    fetchInvoiceById(params.slug).then((data) => {
       tableState.setInfo(data!)
       setLoading(false)
     })

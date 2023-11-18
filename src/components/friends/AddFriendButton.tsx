@@ -5,7 +5,6 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Check, Plus, Search } from "lucide-react"
 import { toast } from "sonner"
 
-import { findUserByEmail, sendFriendRequest } from "@/lib/functions"
 import { Friend } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
@@ -22,6 +21,7 @@ import {
 } from "../ui/dialog"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
+import { findUserByEmail, sendFriendRequest } from "@/lib/functions/friend-functions"
 
 export default function AddFriendButton() {
   const supabase = createClientComponentClient()
@@ -38,7 +38,7 @@ export default function AddFriendButton() {
 
     setLoading(true)
 
-    const friendData = await findUserByEmail(email.trim(), supabase)
+    const friendData = await findUserByEmail(email.trim())
 
     if (friendData) {
       setLoading(false)
@@ -130,7 +130,7 @@ export default function AddFriendButton() {
                   status: "pending",
                 }
 
-                await sendFriendRequest(newFriend, supabase).then((v) => {
+                await sendFriendRequest(newFriend).then((v) => {
                   setEmail("")
                   setFriendData({} as Friend)
                   setAddFriendLoading(false)

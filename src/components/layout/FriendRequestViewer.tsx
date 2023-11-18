@@ -1,7 +1,6 @@
 import { FC, useState } from "react"
 import { SupabaseClient } from "@supabase/auth-helpers-nextjs"
 
-import { acceptFriendRequest, declineFriendRequest } from "@/lib/functions"
 import { Friend } from "@/lib/types"
 
 import { Icons } from "../Icons"
@@ -15,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog"
+import { acceptFriendRequest, declineFriendRequest } from "@/lib/functions/friend-functions"
 
 interface FriendRequestViewerProps {
   friend: Friend

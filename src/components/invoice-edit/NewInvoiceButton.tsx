@@ -7,7 +7,6 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { toast } from "sonner"
 
 import { createClient, createInvoice } from "@/lib/actions"
-import { checkIfUserHasClients } from "@/lib/functions"
 import { Client } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import {
@@ -24,6 +23,7 @@ import { Label } from "@/components/ui/label"
 
 import ClientSelectBox from "../clients/ClientSelectBox"
 import { Icons } from "../Icons"
+import { checkIfUserHasClients } from "@/lib/functions/client-functions"
 
 export function NewInvoiceButton({ clients }: { clients: Client[] }) {
   const supabase = createClientComponentClient()
@@ -75,7 +75,7 @@ export function NewInvoiceButton({ clients }: { clients: Client[] }) {
         disabled={buttonLoading}
         onClick={async () => {
           setButtonLoading(true)
-          await checkIfUserHasClients(supabase).then((res) => {
+          await checkIfUserHasClients().then((res) => {
             if (!res) {
               toast.message("Please create a client first.", {
                 important: true,

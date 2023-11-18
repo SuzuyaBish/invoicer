@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Save, Trash } from "lucide-react"
 
-import { deleteClient, fetchClientById, saveClient } from "@/lib/functions"
+import {
+  deleteClient,
+  fetchClientById,
+  saveClient,
+} from "@/lib/functions/client-functions"
 import { useClientStore } from "@/lib/stores/client-profile"
 import { Client } from "@/lib/types"
 import { Button } from "@/components/ui/button"
@@ -17,7 +20,6 @@ import UserAvatar from "@/components/UserAvatar"
 
 export default function ClientEdit({ params }: { params: { slug: string } }) {
   const clientStore = useClientStore()
-  const supabase = createClientComponentClient()
   const client = clientStore.client
   const router = useRouter()
 
@@ -25,7 +27,7 @@ export default function ClientEdit({ params }: { params: { slug: string } }) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
 
   useEffect(() => {
-    fetchClientById(params.slug, supabase).then((client) => {
+    fetchClientById(params.slug).then((client) => {
       clientStore.setClient(client as Client)
     })
   }, [])
@@ -34,7 +36,7 @@ export default function ClientEdit({ params }: { params: { slug: string } }) {
     e.preventDefault()
 
     setSaveLoading(true)
-    await saveClient(supabase, client, selectedImage).then(() => {
+    await saveClient(client, selectedImage).then(() => {
       setSaveLoading(false)
     })
   }
@@ -276,7 +278,7 @@ export default function ClientEdit({ params }: { params: { slug: string } }) {
           variant="destructive"
           onClick={async () => {
             setSaveLoading(true)
-            await deleteClient(supabase, client.id).then(() => {
+            await deleteClient(client.id).then(() => {
               router.replace("/account/clients")
             })
           }}
