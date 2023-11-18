@@ -12,7 +12,7 @@ import {
   calculateSubTotal,
   calculateTax,
   calculateTotal,
-} from "@/lib/functions"
+} from "@/lib/functions/functions"
 import { Client } from "@/lib/types"
 
 import { Button } from "../ui/button"

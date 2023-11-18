@@ -1,8 +1,8 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { toast } from "sonner"
 
-import { getCurrentUser } from "../functions"
-import { Friend } from "../types"
+import { Friend, User } from "../types"
+import { getCurrentUser } from "./functions"
 
 const supabase = createClientComponentClient()
 
@@ -188,4 +188,28 @@ export const clearNotifications = async (): Promise<boolean> => {
     return false
   }
   return false
+}
+
+export const countTotalPendingFriendRequests = (currentUser: User): number => {
+  const total = currentUser.friends.filter(
+    (f) => f.status === "pending" && f.type === "received"
+  ).length
+
+  return total
+}
+
+export const countTotalSentFriendRequests = (currentUser: User): number => {
+  const total = currentUser.friends.filter(
+    (f) => f.status === "pending" && f.type === "sent"
+  ).length
+
+  return total
+}
+
+export const countTotalFriends = (currentUser: User): number => {
+  const total = currentUser.friends.filter(
+    (f) => f.status === "accepted"
+  ).length
+
+  return total
 }

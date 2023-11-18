@@ -28,7 +28,7 @@ export const navigation = [
     icon: DocumentDuplicateIcon,
   },
   { name: "Clients", href: "/account/clients", icon: UsersIcon },
-  { name: "Friends", href: "/account/friends", icon: ChatBubbleBottomCenterTextIcon },
+  { name: "Friends", href: "/account/friends?tab=friends", icon: ChatBubbleBottomCenterTextIcon },
   // { name: "Calendar", href: "#", icon: CalendarIcon },
   // { name: "Reports", href: "#", icon: ChartPieIcon },
 ]

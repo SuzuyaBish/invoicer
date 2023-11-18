@@ -10,7 +10,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { XIcon } from "lucide-react"
 import { toast } from "sonner"
 
-import { getCurrentUser } from "@/lib/functions"
+import { getCurrentUser } from "@/lib/functions/functions"
 import { clearNotifications } from "@/lib/functions/friend-functions"
 import { useStateStore } from "@/lib/stores/state"
 import { Friend } from "@/lib/types"

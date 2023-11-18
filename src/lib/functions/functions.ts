@@ -1,6 +1,6 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
-import { InvoiceTableItem, User } from "./types"
+import { InvoiceTableItem, User } from "../types"
 
 const supabase = createClientComponentClient()
 

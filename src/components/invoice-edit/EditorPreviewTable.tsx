@@ -2,7 +2,7 @@ import {
   calculateSubTotal,
   calculateTax,
   calculateTotal,
-} from "@/lib/functions"
+} from "@/lib/functions/functions"
 import { useEditorTableStateStore } from "@/lib/stores/editor-table"
 import { InvoiceTableItem } from "@/lib/types"
 

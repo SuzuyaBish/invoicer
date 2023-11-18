@@ -11,7 +11,7 @@ import {
   calculateSubTotal,
   calculateTax,
   calculateTotal,
-} from "@/lib/functions"
+} from "@/lib/functions/functions"
 import { Invoice } from "@/lib/types"
 
 interface InvoiceSummaryCardProps extends Invoice {}

@@ -10,7 +10,7 @@ import {
   calculateSubTotal,
   calculateTax,
   calculateTotal,
-} from "@/lib/functions"
+} from "@/lib/functions/functions"
 import { Invoice } from "@/lib/types"
 
 import { InvoiceListCheck } from "./InvoiceCheckColumn"
