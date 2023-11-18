@@ -1,6 +1,7 @@
 import { FC, useState } from "react"
 import { SupabaseClient } from "@supabase/auth-helpers-nextjs"
 
+import { acceptFriendRequest, declineFriendRequest } from "@/lib/functions"
 import { Friend } from "@/lib/types"
 
 import { Icons } from "../Icons"
@@ -14,11 +15,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog"
-// import { acceptFriendRequest } from "@/lib/functions"
 
 interface FriendRequestViewerProps {
-  friend: string
-  friend_email: string
+  friend: Friend
   supabase: SupabaseClient
   open: boolean
   setOpen: (open: boolean) => void
@@ -28,7 +27,6 @@ const FriendRequestViewer: FC<FriendRequestViewerProps> = ({
   friend,
   open,
   setOpen,
-  friend_email,
   supabase,
 }) => {
   const [loading, setLoading] = useState(false)
@@ -43,11 +41,34 @@ const FriendRequestViewer: FC<FriendRequestViewerProps> = ({
         <DialogHeader>
           <DialogTitle>Friend Request</DialogTitle>
           <DialogDescription>
-            Do you want to add the user with email {friend_email} as a friend?
+            Do you want to add the user with email {friend.email_address} as a
+            friend?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline" disabled={loading} onClick={() => {}}>
+          <Button
+            variant="outline"
+            disabled={loading}
+            onClick={async () => {
+              setLoading(true)
+
+              const { data } = await supabase
+                .from("users")
+                .select("*")
+                .eq("id", friend.id)
+              const friendsFriends = data![0].friends
+
+              const newFriend: Friend = {
+                ...friend,
+                seen: true,
+              }
+
+              await declineFriendRequest(newFriend, friendsFriends).then(() => {
+                setOpen(false)
+              })
+            }}
+          >
+            {loading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
             Decline
           </Button>
           <Button
@@ -59,13 +80,17 @@ const FriendRequestViewer: FC<FriendRequestViewerProps> = ({
               const { data } = await supabase
                 .from("users")
                 .select("*")
-                .eq("id", friend)
+                .eq("id", friend.id)
+              const friendsFriends = data![0].friends
 
-              const friendData = data![0] as Friend
+              const newFriend: Friend = {
+                ...friend,
+                seen: true,
+              }
 
-              // await acceptFriendRequest(friendData, supabase).then(() => {
-              //   setOpen(false)
-              // })
+              await acceptFriendRequest(newFriend, friendsFriends).then(() => {
+                setOpen(false)
+              })
             }}
           >
             {loading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}

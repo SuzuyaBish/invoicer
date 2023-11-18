@@ -271,10 +271,89 @@ export const sendFriendRequest = async (
   return false
 }
 
-// export const acceptFriendRequest = async (
-//   friends: Friend[],
-//   supabase: SupabaseClient
-// ): Promise<boolean> => {}
+export const acceptFriendRequest = async (
+  friendToAdd: Friend,
+  friendsFriends: Friend[]
+): Promise<boolean> => {
+  try {
+    const currentUser = await getCurrentUser()
+
+    const newFriends = currentUser.friends.map((f) => {
+      if (f.id === friendToAdd.id) {
+        return { ...f, status: "accepted", seen: true }
+      }
+      return f
+    })
+
+    const { data, error } = await supabase
+      .from("users")
+      .update({ friends: newFriends })
+      .eq("id", currentUser.id)
+      .single()
+
+    const { data: friendsFriendsData, error: friendsFriendsDataError } =
+      await supabase
+        .from("users")
+        .update({
+          friends: friendsFriends.map((f) => {
+            if (f.id === currentUser.id) {
+              return { ...f, status: "accepted" }
+            }
+            return f
+          }),
+        })
+        .eq("id", friendToAdd.id)
+        .single()
+
+    if (error || friendsFriendsDataError) {
+      console.log(error?.message || friendsFriendsDataError?.message)
+      return false
+    } else {
+      toast.success("Friend request accepted.")
+    }
+
+  } catch (error) {
+    return false
+  }
+  return false
+}
+
+export const declineFriendRequest = async (
+  friendToAdd: Friend,
+  friendsFriends: Friend[]
+): Promise<boolean> => {
+  try {
+    const currentUser = await getCurrentUser()
+
+    const newFriends = currentUser.friends.filter((f) => f.id !== friendToAdd.id)
+
+    const { data, error } = await supabase
+      .from("users")
+      .update({ friends: newFriends })
+      .eq("id", currentUser.id)
+      .single()
+
+    const { data: friendsFriendsData, error: friendsFriendsDataError } =
+      await supabase
+        .from("users")
+        .update({
+          friends: friendsFriends.filter((f) => f.id !== currentUser.id),
+        })
+        .eq("id", friendToAdd.id)
+        .single()
+
+    if (error || friendsFriendsDataError) {
+      console.log(error?.message || friendsFriendsDataError?.message)
+      return false
+    } else {
+      toast.success("Friend request declined.")
+    }
+
+  } catch (error) {
+    return false
+  }
+  return false
+}
 
 export const clearNotifications = async (): Promise<boolean> => {
   try {

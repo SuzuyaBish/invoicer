@@ -29,17 +29,22 @@ export function NotificationBell() {
   const supabase = createClientComponentClient()
   const state = useStateStore()
 
-  const [friend, setFriend] = useState<string>("")
-  const [friendEmail, setFriendEmail] = useState<string>("")
   const [friends, setFriends] = useState<Friend[]>([])
-  const [id, setId] = useState<string | undefined>("")
   const [clearLoading, setClearLoading] = useState(false)
   const [viewOpen, setViewOpen] = useState(false)
 
   useEffect(() => {
     getCurrentUser().then((data) => {
-      setId(data!.id)
-      setFriends(data.friends)
+      if (data.friends.length > 0) {
+        setFriends(
+          data.friends.filter((v) => v.seen === false && v.status === "pending")
+        )
+
+        const dbFriends = data.friends.filter((v) => v.seen === false)
+        if (dbFriends.length > 0) {
+          state.setNewNotification(true)
+        }
+      }
 
       supabase
         .channel("room1")
@@ -53,43 +58,39 @@ export function NotificationBell() {
           },
           (payload) => {
             const newUser = payload.new as User
-            const friends = newUser.friends.filter((v) => v.seen === false)
+            const dbFriends = newUser.friends.filter((v) => v.seen === false)
 
-            const mostRecentFriend = friends[friends.length - 1]
+            const mostRecentFriend = dbFriends[dbFriends.length - 1]
             const showNewFriendRequest =
               mostRecentFriend?.type === "sent" &&
-              mostRecentFriend?.seen === false
+              mostRecentFriend?.seen === false &&
+              mostRecentFriend.status === "pending"
                 ? true
                 : false
             const showReceivedFriendRequest =
               mostRecentFriend?.type === "received" &&
-              mostRecentFriend?.seen === false
+              mostRecentFriend?.seen === false &&
+              mostRecentFriend.status === "pending"
                 ? true
                 : false
 
-            if (friends.length > 0) {
-              setFriends(friends)
+            if (dbFriends.length > 0) {
+              setFriends(
+                dbFriends.filter(
+                  (v) => v.seen === false && v.status === "pending"
+                )
+              )
             }
 
             if (showNewFriendRequest) {
-              setFriend(mostRecentFriend.id)
-              setFriendEmail(mostRecentFriend.email_address)
-
               state.setNewNotification(true)
               toast.success("Friend request sent!")
             }
 
             if (showReceivedFriendRequest) {
-              setFriend(mostRecentFriend.id)
-              setFriendEmail(mostRecentFriend.email_address)
-
               state.setNewNotification(true)
               toast.message("Friend request received!", {
                 description: "From: " + mostRecentFriend.email_address,
-                action: {
-                  label: "View",
-                  onClick: () => setViewOpen(true),
-                },
               })
             }
           }
@@ -183,8 +184,7 @@ export function NotificationBell() {
                         </div>
                       ) : (
                         <FriendRequestViewer
-                          friend={friendRequest.id}
-                          friend_email={friendRequest.email_address}
+                          friend={friendRequest}
                           open={viewOpen}
                           setOpen={setViewOpen}
                           supabase={supabase}
