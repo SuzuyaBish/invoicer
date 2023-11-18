@@ -1,7 +1,12 @@
-import { SupabaseClient } from "@supabase/auth-helpers-nextjs"
+import {
+  createClientComponentClient,
+  SupabaseClient,
+} from "@supabase/auth-helpers-nextjs"
 import { toast } from "sonner"
 
-import { Client, Friend, FriendRequest, Invoice, InvoiceTableItem } from "./types"
+import { Client, Friend, Invoice, InvoiceTableItem, User } from "./types"
+
+const supabase = createClientComponentClient()
 
 export const calculateSubTotal = (table?: InvoiceTableItem[]) => {
   let sum = 0
@@ -15,6 +20,20 @@ export const calculateSubTotal = (table?: InvoiceTableItem[]) => {
   }
 
   return sum === 0 ? -1 : sum
+}
+
+export const getCurrentUser = async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("user_id", user?.id)
+    .single()
+
+  return data as User
 }
 
 export const calculateTax = (subTotal: number, tax: number) => {
@@ -180,9 +199,7 @@ export const findUserByEmail = async (
   try {
     const { data, error } = await supabase
       .from("users")
-      .select(
-        "id, first_name, last_name, imageUrl, email_address, friend_requests"
-      )
+      .select("id, first_name, last_name, imageUrl, email_address, friends")
       .eq("email_address", email)
       .single()
 
@@ -204,47 +221,42 @@ export const sendFriendRequest = async (
   supabase: SupabaseClient
 ): Promise<boolean> => {
   try {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    const currentUser = await getCurrentUser()
+    const friendInFriends = currentUser.friends.find((f) => f.id === friend.id)
 
-    const { data: currentUserData, error: currentUserError } = await supabase
+    if (friendInFriends) {
+      toast.error("You are already friends with this person.")
+      return false
+    }
+
+    const newFriends = [...currentUser.friends, friend]
+
+    const { data, error } = await supabase
       .from("users")
-      .select("id, friend_requests")
-      .eq("user_id", user?.id)
+      .update({ friends: newFriends })
+      .eq("id", currentUser?.id)
       .single()
 
-    const friendInFriendRequests = currentUserData?.friend_requests?.find(
-      (el: any) => el.id === friend.id
-    ) as Friend
+    // const get friends list of friends
+    const { data: friendsFriends, error: friendsFriendsError } = await supabase
+      .from("users")
+      .select("friends")
+      .eq("id", friend.id)
+      .single()
 
-    if (friendInFriendRequests) {
-      return false
-    } else {
-      const { data, error } = await supabase
+    // update the friends list of friends
+    const { data: friendsFriendsData, error: friendsFriendsDataError } =
+      await supabase
         .from("users")
         .update({
-          friend_requests: [
-            ...currentUserData?.friend_requests,
+          friends: [
+            ...friendsFriends?.friends,
             {
-              id: friend.id,
-              email_address: friend.email_address,
-              status: "pending",
-              type: "sent",
-              seen: false,
-            },
-          ],
-        })
-        .eq("user_id", user?.id)
-
-      const { data: friendData, error: friendError } = await supabase
-        .from("users")
-        .update({
-          friend_requests: [
-            ...friend.friend_requests,
-            {
-              id: currentUserData?.id,
-              email_address: user?.email,
+              id: currentUser?.id,
+              first_name: currentUser?.first_name,
+              last_name: currentUser?.last_name,
+              email_address: currentUser?.email_address,
+              imageUrl: currentUser?.imageUrl,
               status: "pending",
               type: "received",
               seen: false,
@@ -252,38 +264,30 @@ export const sendFriendRequest = async (
           ],
         })
         .eq("id", friend.id)
-
-      if (error?.message) {
-        console.log("Me", error?.message)
-        return false
-      }
-      if (friendError?.message) {
-        console.log("Friend", friendError?.message)
-        return false
-      }
-    }
-
-    if (currentUserError?.message) {
-      console.log("Current User", currentUserError?.message)
-      return false
-    }
-    return true
+        .single()
   } catch (error) {
-    console.log(error)
-    return false
+    throw error
   }
+  return false
 }
 
-export const clearNotifications = async (
-  user_id: string,
-  friend_requests: FriendRequest[],
-  supabase: SupabaseClient
-): Promise<boolean> => {
+// export const acceptFriendRequest = async (
+//   friends: Friend[],
+//   supabase: SupabaseClient
+// ): Promise<boolean> => {}
+
+export const clearNotifications = async (): Promise<boolean> => {
   try {
+    const currentUser = await getCurrentUser()
+
+    const newFriends = currentUser.friends.map((f) => {
+      return { ...f, seen: true }
+    })
+
     const { data, error } = await supabase
       .from("users")
-      .update({ friend_requests: friend_requests })
-      .eq("user_id", user_id)
+      .update({ friends: newFriends })
+      .eq("id", currentUser.id)
       .single()
 
     if (error) {

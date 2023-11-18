@@ -124,24 +124,17 @@ export default function AddFriendButton() {
                   email_address: friendData.email_address,
                   first_name: friendData.first_name,
                   last_name: friendData.last_name,
-                  friend_requests: friendData.friend_requests,
                   imageUrl: friendData.imageUrl,
+                  seen: false,
+                  type: "sent",
+                  status: "pending",
                 }
 
                 await sendFriendRequest(newFriend, supabase).then((v) => {
-                  if (v) {
-                    setEmail("")
-                    setFriendData({} as Friend)
-                    setAddFriendLoading(false)
-                    setOpen(false)
-                    // toast.success("Friend request sent!")
-                  } else {
-                    setAddFriendLoading(false)
-                    toast.error("Something went wrong.", {
-                      description:
-                        "Either you are already friends or you have already sent a friend request.",
-                    })
-                  }
+                  setEmail("")
+                  setFriendData({} as Friend)
+                  setAddFriendLoading(false)
+                  setOpen(false)
                 })
               }}
             >

@@ -70,7 +70,7 @@ const people = [
   },
 ]
 
-export default function Example() {
+export default function FriendsPage() {
   return (
     <>
       <div className="md:flex md:items-center md:justify-between">

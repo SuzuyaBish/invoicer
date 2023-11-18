@@ -10,9 +10,9 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { XIcon } from "lucide-react"
 import { toast } from "sonner"
 
-import { clearNotifications } from "@/lib/functions"
+import { clearNotifications, getCurrentUser } from "@/lib/functions"
 import { useStateStore } from "@/lib/stores/state"
-import { Friend, FriendRequest } from "@/lib/types"
+import { Friend } from "@/lib/types"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -21,39 +21,25 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
+import { User } from "../../lib/types"
 import { Icons } from "../Icons"
+import FriendRequestViewer from "./FriendRequestViewer"
 
 export function NotificationBell() {
   const supabase = createClientComponentClient()
   const state = useStateStore()
-  const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([])
-  const [userId, setUserId] = useState<string | undefined>("")
+
+  const [friend, setFriend] = useState<string>("")
+  const [friendEmail, setFriendEmail] = useState<string>("")
+  const [friends, setFriends] = useState<Friend[]>([])
+  const [id, setId] = useState<string | undefined>("")
   const [clearLoading, setClearLoading] = useState(false)
-
-  const getUserId = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
-
-    const { data } = await supabase
-      .from("users")
-      .select("*")
-      .eq("user_id", user?.id)
-
-    const unseenFriendRequests = data![0].friend_requests.filter(
-      (v: FriendRequest) => !v.seen
-    ) as FriendRequest[]
-
-    return {
-      userId: user?.id,
-      friendRequests: unseenFriendRequests,
-    }
-  }
+  const [viewOpen, setViewOpen] = useState(false)
 
   useEffect(() => {
-    getUserId().then((data) => {
-      setUserId(data!.userId)
-      setFriendRequests(data.friendRequests)
+    getCurrentUser().then((data) => {
+      setId(data!.id)
+      setFriends(data.friends)
 
       supabase
         .channel("room1")
@@ -63,55 +49,48 @@ export function NotificationBell() {
             event: "UPDATE",
             schema: "public",
             table: "users",
-            filter: "user_id=eq." + data.userId,
+            filter: "id=eq." + data.id,
           },
           (payload) => {
-            const { new: newUser } = payload
-            const friend = newUser as Friend
+            const newUser = payload.new as User
+            const friends = newUser.friends.filter((v) => v.seen === false)
 
-            const unseenFriendRequests = friend.friend_requests.filter(
-              (v) => !v.seen
-            ) as FriendRequest[]
-
-            setFriendRequests(unseenFriendRequests)
-
-            const sendCheck =
-              friend.friend_requests[friend.friend_requests.length - 1].seen ===
-                false &&
-              friend.friend_requests[friend.friend_requests.length - 1].type ===
-                "sent"
+            const mostRecentFriend = friends[friends.length - 1]
+            const showNewFriendRequest =
+              mostRecentFriend?.type === "sent" &&
+              mostRecentFriend?.seen === false
+                ? true
+                : false
+            const showReceivedFriendRequest =
+              mostRecentFriend?.type === "received" &&
+              mostRecentFriend?.seen === false
                 ? true
                 : false
 
-            const receiveCheck =
-              friend.friend_requests[friend.friend_requests.length - 1].seen ===
-                false &&
-              friend.friend_requests[friend.friend_requests.length - 1].type ===
-                "received"
-                ? true
-                : false
+            if (friends.length > 0) {
+              setFriends(friends)
+            }
 
-            if (friend.friend_requests.length > 0) {
-              if (sendCheck) {
-                state.setNewNotification(true)
-                toast.success("Friend request sent!")
-              } else {
-              }
+            if (showNewFriendRequest) {
+              setFriend(mostRecentFriend.id)
+              setFriendEmail(mostRecentFriend.email_address)
 
-              if (receiveCheck) {
-                state.setNewNotification(true)
-                toast.message("Friend request received!", {
-                  description:
-                    "From: " +
-                    friend.friend_requests[friend.friend_requests.length - 1]
-                      .email_address,
-                  action: {
-                    label: "View",
-                    onClick: () => console.log(friend.friend_requests),
-                  },
-                })
-              } else {
-              }
+              state.setNewNotification(true)
+              toast.success("Friend request sent!")
+            }
+
+            if (showReceivedFriendRequest) {
+              setFriend(mostRecentFriend.id)
+              setFriendEmail(mostRecentFriend.email_address)
+
+              state.setNewNotification(true)
+              toast.message("Friend request received!", {
+                description: "From: " + mostRecentFriend.email_address,
+                action: {
+                  label: "View",
+                  onClick: () => setViewOpen(true),
+                },
+              })
             }
           }
         )
@@ -145,24 +124,16 @@ export function NotificationBell() {
           <div className="space-y-1">
             <div className="flex items-center justify-between">
               <h4 className="font-medium leading-none">Notifications</h4>
-              {friendRequests.length > 0 && (
+              {friends?.length > 0 && (
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={async () => {
                     setClearLoading(true)
 
-                    const seenFriendRequests = friendRequests.map((v) => {
-                      return { ...v, seen: true }
-                    })
-
-                    await clearNotifications(
-                      userId!,
-                      seenFriendRequests,
-                      supabase
-                    ).then((v) => {
+                    await clearNotifications().then((v) => {
                       state.setNewNotification(false)
-                      setFriendRequests(seenFriendRequests)
+                      setFriends([])
                       setClearLoading(false)
                     })
                   }}
@@ -181,17 +152,15 @@ export function NotificationBell() {
             </p>
           </div>
           <div className="grid gap-3">
-            {friendRequests.length > 0 ? (
+            {friends?.length > 0 ? (
               <>
-                {friendRequests.map((friendRequest, index) => {
+                {friends.map((friendRequest, index) => {
                   return (
                     <div
                       key={friendRequest.id}
                       className={cn(
                         "flex items-center justify-between",
-                        index === friendRequests.length - 1
-                          ? ""
-                          : "border-b pb-3"
+                        index === friends.length - 1 ? "" : "border-b pb-3"
                       )}
                     >
                       <div className="flex items-center space-x-3">
@@ -213,9 +182,13 @@ export function NotificationBell() {
                           </div>
                         </div>
                       ) : (
-                        <div className="bg-secondary rounded px-3 py-1 text-sm">
-                          <div className="text-secondary-foreground">View</div>
-                        </div>
+                        <FriendRequestViewer
+                          friend={friendRequest.id}
+                          friend_email={friendRequest.email_address}
+                          open={viewOpen}
+                          setOpen={setViewOpen}
+                          supabase={supabase}
+                        />
                       )}
                     </div>
                   )
