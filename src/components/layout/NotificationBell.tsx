@@ -75,16 +75,30 @@ export function NotificationBell() {
 
             setFriendRequests(unseenFriendRequests)
 
-            if (friend.friend_requests.length > 0) {
-              if (
-                friend.friend_requests[friend.friend_requests.length - 1]
-                  .type === "sent"
-              ) {
+            const sendCheck =
+              friend.friend_requests[friend.friend_requests.length - 1].seen ===
+                false &&
+              friend.friend_requests[friend.friend_requests.length - 1].type ===
+                "sent"
+                ? true
+                : false
 
+            const receiveCheck =
+              friend.friend_requests[friend.friend_requests.length - 1].seen ===
+                false &&
+              friend.friend_requests[friend.friend_requests.length - 1].type ===
+                "received"
+                ? true
+                : false
+
+            if (friend.friend_requests.length > 0) {
+              if (sendCheck) {
                 state.setNewNotification(true)
                 toast.success("Friend request sent!")
-
               } else {
+              }
+
+              if (receiveCheck) {
                 state.setNewNotification(true)
                 toast.message("Friend request received!", {
                   description:
@@ -96,6 +110,7 @@ export function NotificationBell() {
                     onClick: () => console.log(friend.friend_requests),
                   },
                 })
+              } else {
               }
             }
           }
